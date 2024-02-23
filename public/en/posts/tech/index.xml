@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>👨🏻‍💻 技术 on Jeason&#39;s Blog</title>
+    <link>https://example.org/en/posts/tech/</link>
+    <description>Recent content in 👨🏻‍💻 技术 on Jeason&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Thu, 22 Feb 2024 10:31:03 +0800</lastBuildDate>
+    <atom:link href="https://example.org/en/posts/tech/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>AnnotationForge包构建非模式物种Orgdb包</title>
+      <link>https://example.org/en/posts/tech/annotationforge/</link>
+      <pubDate>Tue, 04 Apr 2023 10:31:03 +0800</pubDate>
+      <guid>https://example.org/en/posts/tech/annotationforge/</guid>
+      <description>AnnotationForge包构建非模式物种Orgdb包</description>
+    </item>
+    <item>
+      <title>R语言高级程序设计</title>
+      <link>https://example.org/en/posts/tech/advancer/</link>
+      <pubDate>Mon, 27 May 2019 00:00:00 +0000</pubDate>
+      <guid>https://example.org/en/posts/tech/advancer/</guid>
+      <description>介绍一下《R语言高级程序设计》中的一些容易忽略的点</description>
+    </item>
+  </channel>
+</rss>

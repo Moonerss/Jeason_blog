@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>R语言高级程序设计 | Jeason&#39;s Blog</title>
+<meta name="keywords" content="R">
+<meta name="description" content="介绍一下《R语言高级程序设计》中的一些容易忽略的点">
+<meta name="author" content="作者:Jeason">
+<link rel="canonical" href="https://example.org/en/posts/tech/advancer/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.9ef73d31a3b26f1f4eb411dce086d7ce0fa6afa072faa0b94885734af49a3271.css" integrity="sha256-nvc9MaOybx9OtBHc4IbXzg&#43;mr6By&#43;qC5SIVzSvSaMnE=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://example.org/img/avatar.jpeg">
+<link rel="icon" type="image/png" sizes="16x16" href="https://example.org/img/avatar.jpeg">
+<link rel="icon" type="image/png" sizes="32x32" href="https://example.org/img/avatar.jpeg">
+<link rel="apple-touch-icon" href="https://example.org/img/avatar.jpeg">
+<link rel="mask-icon" href="https://example.org/img/avatar.jpeg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://example.org/en/posts/tech/advancer/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = ""; 
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<meta property="og:title" content="R语言高级程序设计" />
+<meta property="og:description" content="介绍一下《R语言高级程序设计》中的一些容易忽略的点" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://example.org/en/posts/tech/advancer/" />
+<meta property="og:image" content="https://source.unsplash.com/random/400x200?code" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2019-05-27T00:00:00+00:00" />
+<meta property="article:modified_time" content="2024-02-22T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://source.unsplash.com/random/400x200?code" />
+<meta name="twitter:title" content="R语言高级程序设计"/>
+<meta name="twitter:description" content="介绍一下《R语言高级程序设计》中的一些容易忽略的点"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "📚 文章",
+      "item": "https://example.org/en/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "👨🏻‍💻 技术",
+      "item": "https://example.org/en/posts/tech/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "R语言高级程序设计",
+      "item": "https://example.org/en/posts/tech/advancer/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "R语言高级程序设计",
+  "name": "R语言高级程序设计",
+  "description": "介绍一下《R语言高级程序设计》中的一些容易忽略的点",
+  "keywords": [
+    "R"
+  ],
+  "articleBody": "数据结构 R 语言的基础数据结构可以按照维度来划分(1 维、 2 维…n 维)；也可以按照它们所包含的数据类型是否相同来划分。 这样就产生了五种数据类型，它们是数据分析中最常用的：\nHomogeneous Heterogeneous 1d Atomic vector List 2d Matrix Data frame nd Array 向量（vector） 向量包括：原子向量 （Atomic vector） 和列表 （List）。兩者都属于一维数据， 两者的区别在于： 原子向量中的所有元素都必须是相同的类型；而列表中的元素可以是不同的类型\nis.vector()并不能测试一个对象是不是向量。 相反，仅当对象是除了名字以外，不包含其它属性时，它才返回 TRUE。 所以，请使用 is.atomic(x) || is.list(x) 来测试一个对象是不是向量。\n向量具有三个共同属性：\n类型， typeof()，它是什么 长度， length()，它包含有多少元素 属性， attributes()，额外的任意元数据 原子向量 (Atomic vector) 原子向量类型：逻辑类型 (logical)、 整数类型 (integer)、 双精度数值类型 (double)、 字符类型 (character)、 复数类型 (complex)、 raw类型。 缺失值用 NA 表示，是一个长度为1的逻辑向量，NA可根据所处整体环境强制转换成正确的类型，或者使用 NA_real_(双精度浮点数向量)、 NA_integer_ 和 NA_character_ 来创建一系列确定类型的 NA typeof 确定具体的数据类型，is开头的函数（如：is.integer）来确定是否属于某一特定类型 is.atomic() 是检测原子向量最通用的 强制转换：一个原子向量中的所有元素都必须是相同的类型。 所以，当你试图合并不同类型的数据时，将向最灵活的类型进行强制转换。 以灵活程度排序，从小到大依次为：逻辑、 整数、双精度浮点数和字符。 如果转换遇到歧义，则需要使用 as.character()、 as.double()、 as.integer()或者 as.logical()等函数，进行明确的强制转换。 列表(List) c()可以将几个向量合并成一个。 如果原子向量和列表同时存在，那么在合并之前， c()会将原子向量强制转换成列表\nx \u003c- list(list(1, 2), c(3, 4)) y \u003c- c(list(1, 2), c(3, 4)) str(x) #\u003e List of 2 #\u003e $ :List of 2 #\u003e ..$ : num 1 #\u003e ..$ : num 2 #\u003e $ : num [1:2] 3 4 str(y) #\u003e List of 4 #\u003e $ : num 1 #\u003e $ : num 2 #\u003e $ : num 3 #\u003e $ : num 4 列表用来建立 R 语言中的许多更加复杂的数据结构。 比如， 数据框和其他复杂对象\nis.list(mtcars) #\u003e [1] TRUE 这里说明一点：data.frame是比list更为复杂的数据结构\n属性(Attributes) 所有的对象都可以拥有任意多个附加属性， 附加属性用来存取与该对象相关的元数据。 属性可以看做是已命名的列表(带有不重复的名字)。 属性可以使用 attr()函数一个一个的访问，也可以使用 attributes()函数一次性访问。\ny \u003c- 1:10 attr(y, \"my_attribute\") \u003c- \"This is a vector\" attr(y, \"alpha\") \u003c- \"This is a vector\" attr(y, \"my_attribute\") #\u003e [1] \"This is a vector\" attributes(y) #\u003e $my_attribute #\u003e [1] \"This is a vector\" #\u003e #\u003e $alpha #\u003e [1] \"This is a vector\" attr(y, \"my_attribute\") \u003c- \"alpha\" attributes(y) #\u003e $my_attribute #\u003e [1] \"alpha\" #\u003e #\u003e $alpha #\u003e [1] \"This is a vector\" structure() 函数返回一个带有属性的对象， 也可以用来修改属性\nstructure(y, alpha = \"alpha\") #\u003e [1] 1 2 3 4 5 6 7 8 9 10 #\u003e attr(,\"my_attribute\") #\u003e [1] \"alpha\" #\u003e attr(,\"alpha\") #\u003e [1] \"alpha\" 默认情况下，当修改向量时，数据的大多数属性会丢失，但有三种重要的属性不会丢失：名字(name)，维度(dimension)，类(class)\n三个特殊属性需要使用特定函数names(x)、 class(x)和 dim(x) 访问，而不是 attr(x, \"names\")、 attr(x, \"class\") 和 attr(x, \"dim\")\n数据框(data frame) 数据框是由等长向量构成的列表。 它也是二维结构，所以它具有矩阵和列表双重属性。也就是说，数据框拥有 names()、 colnames()和 rownames()，尽管 names()和 colnames()对数据框来说是一样的。 数据框的 length()是列表的长度，所以和 ncol()相同； nrow()则得到行数。\n由于数据框是一个包含向量的列表，所以数据框的某个是列表类型是有可能的：\ndf \u003c- data.frame(x = 1:3) df$y \u003c- list(1:2, 1:3, 1:4) df #\u003e x y #\u003e 1 1 1, 2 #\u003e 2 2 1, 2, 3 #\u003e 3 3 1, 2, 3, 4 当把列表传入 data.frame()函数时，该函数将试图把列表的每一个元素都放到单独的一列中。一种绕开的方法是使用 I()函数，它使得 data.frame()把列表看成一个整体单元\nR中的对象 S3对象 S3 对象是由原子向量、数组和列表组成的，所以你可以使用上面描述的技术对 S3 对象进行取子集操作。 你可以通过 str()函数获得的它们的结构信息。\nS4对象 对 S4 对象来说，有另外两种取子集操作符: @(相当于$)和 slot()(相当于[[)。 @比$更加严格，如果槽(slot)不存在，那么它会返回错误。\nAdvanced R\n",
+  "wordCount" : "1792",
+  "inLanguage": "en",
+  "image":"https://source.unsplash.com/random/400x200?code","datePublished": "2019-05-27T00:00:00Z",
+  "dateModified": "2024-02-22T00:00:00Z",
+  "author":{
+    "@type": "Person",
+    "name": "Jeason"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://example.org/en/posts/tech/advancer/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Jeason's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://example.org/img/avatar.jpeg"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://example.org/en/" accesskey="h" title="Jeason&#39;s Blog (Alt + H)">
+                <img src="https://example.org/img/avatar.jpeg" alt="" aria-label="logo"
+                    height="35">Jeason&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+                
+            </div>
+        </div>
+        <ul id="menu">
+            <li class="menu-item">
+                <a href="https://example.org/en/search" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
+                    <span>🔍 搜索</span>
+                    
+                </a>
+            
+            </li>
+            <li class="menu-item">
+                <a href="https://example.org/en/" title="🏡 主页">
+                    <span>🏡 主页</span>
+                    
+                </a>
+            
+            </li>
+            <li class="menu-item">
+                <a href="https://example.org/en/posts" title="📚 文章">
+                    <span>📚 文章</span>
+                    
+                </a>
+            
+            </li>
+            <li class="menu-item">
+                <a href="https://example.org/en/archives" title="📈 归档">
+                    <span>📈 归档</span>
+                    
+                </a>
+            
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main page">
+<article class="post-single">
+    <div id="single-content">
+        <header class="post-header">
+            <div class="breadcrumbs"><a href="https://example.org/en/">主页</a>&nbsp;»&nbsp;<a href="https://example.org/en/posts/">📚 文章</a>&nbsp;»&nbsp;<a href="https://example.org/en/posts/tech/">👨🏻‍💻 技术</a></div>
+            <h1 class="post-title">
+                R语言高级程序设计
+            </h1>
+            <div class="post-description">
+                介绍一下《R语言高级程序设计》中的一些容易忽略的点
+            </div>
+            <div class="post-meta">创建: 2019-05-27 | 更新: 2024-02-22 | 作者:Jeason
+
+
+
+
+                
+                <span id="busuanzi_container_page_pv">
+                    &nbsp;|&nbsp;访问:&nbsp;<span id="busuanzi_value_page_pv"></span>
+                </span>
+
+</div>
+        </header> <aside id="toc-container" class="toc-container wide">
+    <div class="toc">
+        <details  open>
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">文章目录</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#%e6%95%b0%e6%8d%ae%e7%bb%93%e6%9e%84" aria-label="数据结构">数据结构</a><ul>
+                        
+                <li>
+                    <a href="#%e5%90%91%e9%87%8fvector" aria-label="向量（vector）">向量（vector）</a><ul>
+                        
+                <li>
+                    <a href="#%e5%8e%9f%e5%ad%90%e5%90%91%e9%87%8f-atomic-vector" aria-label="原子向量 (Atomic vector)">原子向量 (Atomic vector)</a></li>
+                <li>
+                    <a href="#%e5%88%97%e8%a1%a8list" aria-label="列表(List)">列表(List)</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e5%b1%9e%e6%80%a7attributes" aria-label="属性(Attributes)">属性(Attributes)</a></li>
+                <li>
+                    <a href="#%e6%95%b0%e6%8d%ae%e6%a1%86data-frame" aria-label="数据框(data frame)">数据框(data frame)</a></li>
+                <li>
+                    <a href="#r%e4%b8%ad%e7%9a%84%e5%af%b9%e8%b1%a1" aria-label="R中的对象">R中的对象</a><ul>
+                        
+                <li>
+                    <a href="#s3%e5%af%b9%e8%b1%a1" aria-label="S3对象">S3对象</a></li>
+                <li>
+                    <a href="#s4%e5%af%b9%e8%b1%a1" aria-label="S4对象">S4对象</a>
+                </li>
+            </ul>
+            </li>
+            </ul>
+            </li>
+            </ul>
+        </div>
+        </details>
+    </div>
+</aside>
+<script>
+    let activeElement;
+    let elements;
+    window.addEventListener('DOMContentLoaded', function (event) {
+        checkTocPosition();
+
+        elements = document.querySelectorAll('h1[id],h2[id],h3[id],h4[id],h5[id],h6[id]');
+        
+        activeElement = elements[0];
+        const id = encodeURI(activeElement.getAttribute('id')).toLowerCase();
+        document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+    }, false);
+
+    window.addEventListener('resize', function(event) {
+        checkTocPosition();
+    }, false);
+
+    window.addEventListener('scroll', () => {
+        
+        activeElement = Array.from(elements).find((element) => {
+            if ((getOffsetTop(element) - window.pageYOffset) > 0 &&
+                (getOffsetTop(element) - window.pageYOffset) < window.innerHeight/2) {
+                return element;
+            }
+        }) || activeElement
+
+        elements.forEach(element => {
+            const id = encodeURI(element.getAttribute('id')).toLowerCase();
+            if (element === activeElement){
+                document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+            } else {
+                document.querySelector(`.inner ul li a[href="#${id}"]`).classList.remove('active');
+            }
+        })
+    }, false);
+
+    const main = parseInt(getComputedStyle(document.body).getPropertyValue('--article-width'), 10);
+    const toc = parseInt(getComputedStyle(document.body).getPropertyValue('--toc-width'), 10);
+    const gap = parseInt(getComputedStyle(document.body).getPropertyValue('--gap'), 10);
+
+    function checkTocPosition() {
+        const width = document.body.scrollWidth;
+        if (width - main - (toc * 2) - (gap * 4) > 0) {
+            document.getElementById("toc-container").classList.add("wide");
+        } else {
+            document.getElementById("toc-container").classList.remove("wide");
+        }
+    }
+
+    function getOffsetTop(element) {
+        if (!element.getClientRects().length) {
+            return 0;
+        }
+        let rect = element.getBoundingClientRect();
+        let win = element.ownerDocument.defaultView;
+        return rect.top + win.pageYOffset;
+    }
+</script>
+        <div class="post-content"><h2 id="数据结构">数据结构<a hidden class="anchor" aria-hidden="true" href="#数据结构">#</a></h2>
+<p>R 语言的<strong>基础数据结构</strong>可以按照<strong>维度</strong>来划分(1 维、 2 维&hellip;n 维)；也可以按照它们<strong>所包含的数据类型是否相同</strong>来划分。 这样就产生了五种数据类型，它们是数据分析中最常用的：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center"></th>
+<th style="text-align:center">Homogeneous</th>
+<th style="text-align:center">Heterogeneous</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">1d</td>
+<td style="text-align:center">Atomic vector</td>
+<td style="text-align:center">List</td>
+</tr>
+<tr>
+<td style="text-align:center">2d</td>
+<td style="text-align:center">Matrix</td>
+<td style="text-align:center">Data frame</td>
+</tr>
+<tr>
+<td style="text-align:center">nd</td>
+<td style="text-align:center">Array</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="向量vector">向量（vector）<a hidden class="anchor" aria-hidden="true" href="#向量vector">#</a></h3>
+<p>向量包括：原子向量 （Atomic vector） 和列表 （List）。兩者都属于<strong>一维数据</strong>， 两者的区别在于： <strong>原子向量中的所有元素都必须是相同的类型；而列表中的元素可以是不同的类型</strong></p>
+<blockquote>
+<p><code>is.vector()</code>并不能测试一个对象是不是向量。 相反，仅当对象是除了名字以外，不包含其它属性时，它才返回 <code>TRUE</code>。 所以，请使用 <code>is.atomic(x) || is.list(x)</code> 来测试一个对象是不是向量。</p>
+</blockquote>
+<p>向量具有三个共同属性：</p>
+<ol>
+<li><strong>类型</strong>， <code>typeof()</code>，它是什么</li>
+<li><strong>长度</strong>， <code>length()</code>，它包含有多少元素</li>
+<li><strong>属性</strong>， <code>attributes()</code>，额外的任意元数据</li>
+</ol>
+<h4 id="原子向量-atomic-vector">原子向量 (Atomic vector)<a hidden class="anchor" aria-hidden="true" href="#原子向量-atomic-vector">#</a></h4>
+<ul>
+<li>原子向量类型：<strong>逻辑类型</strong> (logical)、 <strong>整数类型</strong> (integer)、 <strong>双精度数值类型</strong> (double)、 <strong>字符类型</strong> (character)、 复数类型 (complex)、 raw类型。</li>
+<li>缺失值用 <code>NA</code> 表示，是一个长度为1的逻辑向量，NA可根据所处整体环境强制转换成正确的类型，或者使用 <code>NA_real_</code>(双精度浮点数向量)、 <code>NA_integer_</code> 和 <code>NA_character_</code> 来创建一系列确定类型的 <code>NA</code></li>
+<li><code>typeof</code> 确定具体的数据类型，<code>is</code>开头的函数（如：<code>is.integer</code>）来确定是否属于某一特定类型</li>
+<li><code>is.atomic()</code> 是检测原子向量最通用的</li>
+<li>强制转换：一个原子向量中的所有元素都必须是相同的类型。 所以，当你试图合并不同类型的数据时，将向最灵活的类型进行强制转换。 以灵活程度排序，从小到大依次为：逻辑、 整数、双精度浮点数和字符。</li>
+<li>如果转换遇到歧义，则需要使用 <code>as.character()</code>、 <code>as.double()</code>、 <code>as.integer()</code>或者 <code>as.logical()</code>等函数，进行明确的强制转换。</li>
+</ul>
+<h4 id="列表list">列表(List)<a hidden class="anchor" aria-hidden="true" href="#列表list">#</a></h4>
+<p>c()可以将几个向量合并成一个。 如果原子向量和列表同时存在，那么在合并之前， c()会将原子向量强制转换成列表</p>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-R" data-lang="R"><span style="display:flex;"><span>x <span style="color:#5bc4bf">&lt;-</span> <span style="color:#06b6ef">list</span>(<span style="color:#06b6ef">list</span>(<span style="color:#f99b15">1</span>, <span style="color:#f99b15">2</span>), <span style="color:#06b6ef">c</span>(<span style="color:#f99b15">3</span>, <span style="color:#f99b15">4</span>))
+</span></span><span style="display:flex;"><span>y <span style="color:#5bc4bf">&lt;-</span> <span style="color:#06b6ef">c</span>(<span style="color:#06b6ef">list</span>(<span style="color:#f99b15">1</span>, <span style="color:#f99b15">2</span>), <span style="color:#06b6ef">c</span>(<span style="color:#f99b15">3</span>, <span style="color:#f99b15">4</span>))
+</span></span><span style="display:flex;"><span><span style="color:#06b6ef">str</span>(x)
+</span></span><span style="display:flex;"><span><span style="color:#776e71">#&gt; List of 2</span>
+</span></span><span style="display:flex;"><span><span style="color:#776e71">#&gt; $ :List of 2</span>
+</span></span><span style="display:flex;"><span><span style="color:#776e71">#&gt; ..$ : num 1</span>
+</span></span><span style="display:flex;"><span><span style="color:#776e71">#&gt; ..$ : num 2</span>
+</span></span><span style="display:flex;"><span><span style="color:#776e71">#&gt; $ : num [1:2] 3 4</span>
+</span></span><span style="display:flex;"><span><span style="color:#06b6ef">str</span>(y)
+</span></span><span style="display:flex;"><span><span style="color:#776e71">#&gt; List of 4</span>
+</span></span><span style="display:flex;"><span><span style="color:#776e71">#&gt; $ : num 1</span>
+</span></span><span style="display:flex;"><span><span style="color:#776e71">#&gt; $ : num 2</span>
+</span></span><span style="display:flex;"><span><span style="color:#776e71">#&gt; $ : num 3</span>
+</span></span><span style="display:flex;"><span><span style="color:#776e71">#&gt; $ : num 4</span>
+</span></span></code></pre></div><p>列表用来建立 R 语言中的许多更加复杂的数据结构。 比如， <strong>数据框</strong>和其他复杂对象</p>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-R" data-lang="R"><span style="display:flex;"><span><span style="color:#06b6ef">is.list</span>(mtcars)
+</span></span><span style="display:flex;"><span><span style="color:#776e71">#&gt; [1] TRUE</span>
+</span></span></code></pre></div><blockquote>
+<p>这里说明一点：data.frame是比list更为复杂的数据结构</p>
+</blockquote>
+<h3 id="属性attributes">属性(Attributes)<a hidden class="anchor" aria-hidden="true" href="#属性attributes">#</a></h3>
+<p>所有的对象都可以拥有任意多个附加属性， 附加属性用来存取与该对象相关的元数据。 属性可以看做是已命名的列表(带有不重复的名字)。 属性可以使用 <code>attr()</code>函数一个一个的访问，也可以使用 attributes()函数一次性访问。</p>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-R" data-lang="R"><span style="display:flex;"><span>y <span style="color:#5bc4bf">&lt;-</span> <span style="color:#f99b15">1</span><span style="color:#5bc4bf">:</span><span style="color:#f99b15">10</span>
+</span></span><span style="display:flex;"><span><span style="color:#06b6ef">attr</span>(y, <span style="color:#48b685">&#34;my_attribute&#34;</span>) <span style="color:#5bc4bf">&lt;-</span> <span style="color:#48b685">&#34;This is a vector&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#06b6ef">attr</span>(y, <span style="color:#48b685">&#34;alpha&#34;</span>) <span style="color:#5bc4bf">&lt;-</span> <span style="color:#48b685">&#34;This is a vector&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#06b6ef">attr</span>(y, <span style="color:#48b685">&#34;my_attribute&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#776e71">#&gt; [1] &#34;This is a vector&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#06b6ef">attributes</span>(y)
+</span></span><span style="display:flex;"><span><span style="color:#776e71">#&gt; $my_attribute</span>
+</span></span><span style="display:flex;"><span><span style="color:#776e71">#&gt; [1] &#34;This is a vector&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#776e71">#&gt; </span>
+</span></span><span style="display:flex;"><span><span style="color:#776e71">#&gt; $alpha</span>
+</span></span><span style="display:flex;"><span><span style="color:#776e71">#&gt; [1] &#34;This is a vector&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#06b6ef">attr</span>(y, <span style="color:#48b685">&#34;my_attribute&#34;</span>) <span style="color:#5bc4bf">&lt;-</span> <span style="color:#48b685">&#34;alpha&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#06b6ef">attributes</span>(y)
+</span></span><span style="display:flex;"><span><span style="color:#776e71">#&gt; $my_attribute</span>
+</span></span><span style="display:flex;"><span><span style="color:#776e71">#&gt; [1] &#34;alpha&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#776e71">#&gt; </span>
+</span></span><span style="display:flex;"><span><span style="color:#776e71">#&gt; $alpha</span>
+</span></span><span style="display:flex;"><span><span style="color:#776e71">#&gt; [1] &#34;This is a vector&#34;</span>
+</span></span></code></pre></div><p><code>structure()</code> 函数返回一个带有属性的对象， 也可以用来修改属性</p>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-R" data-lang="R"><span style="display:flex;"><span><span style="color:#06b6ef">structure</span>(y, alpha <span style="color:#5bc4bf">=</span> <span style="color:#48b685">&#34;alpha&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#776e71">#&gt;  [1]  1  2  3  4  5  6  7  8  9 10</span>
+</span></span><span style="display:flex;"><span><span style="color:#776e71">#&gt; attr(,&#34;my_attribute&#34;)</span>
+</span></span><span style="display:flex;"><span><span style="color:#776e71">#&gt; [1] &#34;alpha&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#776e71">#&gt; attr(,&#34;alpha&#34;)</span>
+</span></span><span style="display:flex;"><span><span style="color:#776e71">#&gt; [1] &#34;alpha&#34;</span>
+</span></span></code></pre></div><p>默认情况下，当修改向量时，数据的大多数属性会丢失，但有三种重要的属性不会丢失：<strong>名字</strong>(name)，<strong>维度</strong>(dimension)，<strong>类</strong>(class)</p>
+<blockquote>
+<p>三个特殊属性需要使用特定函数<code>names(x)</code>、 <code>class(x)</code>和 <code>dim(x)</code> 访问，而不是 <code>attr(x, &quot;names&quot;)</code>、 <code>attr(x, &quot;class&quot;)</code> 和 <code>attr(x, &quot;dim&quot;)</code></p>
+</blockquote>
+<h3 id="数据框data-frame">数据框(data frame)<a hidden class="anchor" aria-hidden="true" href="#数据框data-frame">#</a></h3>
+<p>数据框是<strong>由等长向量构成的列表</strong>。 它也是二维结构，所以它具有<strong>矩阵</strong>和<strong>列表</strong>双重属性。也就是说，数据框拥有 <code>names()</code>、 <code>colnames()</code>和 <code>rownames()</code>，尽管 <code>names()</code>和 <code>colnames()</code>对数据框来说是一样的。 数据框的 <code>length()</code>是列表的长度，所以和 <code>ncol()</code>相同； <code>nrow()</code>则得到行数。</p>
+<p>由于数据框是一个包含向量的列表，所以数据框的某个是列表类型是有可能的：</p>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-R" data-lang="R"><span style="display:flex;"><span>df <span style="color:#5bc4bf">&lt;-</span> <span style="color:#06b6ef">data.frame</span>(x <span style="color:#5bc4bf">=</span> <span style="color:#f99b15">1</span><span style="color:#5bc4bf">:</span><span style="color:#f99b15">3</span>)
+</span></span><span style="display:flex;"><span>df<span style="color:#5bc4bf">$</span>y <span style="color:#5bc4bf">&lt;-</span> <span style="color:#06b6ef">list</span>(<span style="color:#f99b15">1</span><span style="color:#5bc4bf">:</span><span style="color:#f99b15">2</span>, <span style="color:#f99b15">1</span><span style="color:#5bc4bf">:</span><span style="color:#f99b15">3</span>, <span style="color:#f99b15">1</span><span style="color:#5bc4bf">:</span><span style="color:#f99b15">4</span>)
+</span></span><span style="display:flex;"><span>df
+</span></span><span style="display:flex;"><span><span style="color:#776e71">#&gt; x y</span>
+</span></span><span style="display:flex;"><span><span style="color:#776e71">#&gt; 1 1 1, 2</span>
+</span></span><span style="display:flex;"><span><span style="color:#776e71">#&gt; 2 2 1, 2, 3</span>
+</span></span><span style="display:flex;"><span><span style="color:#776e71">#&gt; 3 3 1, 2, 3, 4</span>
+</span></span></code></pre></div><blockquote>
+<p>当把列表传入 <code>data.frame()</code>函数时，该函数将试图把列表的每一个元素都放到单独的一列中。一种绕开的方法是使用 <code>I()</code>函数，它使得 <code>data.frame()</code>把列表看成一个整体单元</p>
+</blockquote>
+<h3 id="r中的对象">R中的对象<a hidden class="anchor" aria-hidden="true" href="#r中的对象">#</a></h3>
+<h4 id="s3对象">S3对象<a hidden class="anchor" aria-hidden="true" href="#s3对象">#</a></h4>
+<p>S3 对象是由原子向量、数组和列表组成的，所以你可以使用上面描述的技术对 S3 对象进行取子集操作。 你可以通过 <code>str()</code>函数获得的它们的结构信息。</p>
+<h4 id="s4对象">S4对象<a hidden class="anchor" aria-hidden="true" href="#s4对象">#</a></h4>
+<p>对 S4 对象来说，有另外两种取子集操作符: <code>@</code>(相当于<code>$</code>)和 <code>slot()</code>(相当于<code>[[</code>)。 <code>@</code>比<code>$</code>更加严格，如果槽(slot)不存在，那么它会返回错误。</p>
+<hr>
+<p><a href="http://adv-r.had.co.nz/" target="_blank" rel="noopener" style="color:#42b983";>Advanced R</a></p>
+
+
+        </div>
+
+        <footer class="post-footer">
+            
+<nav class="paginav">
+  <a class="prev" href="https://example.org/en/posts/tech/annotationforge/">
+    <span class="title">« 上一页</span>
+    <br>
+    <span>AnnotationForge包构建非模式物种Orgdb包</span>
+  </a>
+</nav>
+
+        </footer>
+    </div>
+
+
+
+<div>
+    <div class="pagination__title">
+        <span class="pagination__title-h" style="font-size: 20px;">💬评论</span>
+        <hr />
+    </div>
+
+    <div id="tcomment"></div>
+
+    <script src="https://cdn.staticfile.org/twikoo/1.6.15/twikoo.all.min.js">
+    </script>
+    
+
+    
+
+    <script>
+        twikoo.init({
+            envId: "https://twikoo.lvbibir.cn/", 
+            el: "#tcomment",
+            lang: 'zh-CN',
+            
+            path: window.TWIKOO_MAGIC_PATH||window.location.pathname,
+            
+            
+            
+            
+            
+            
+            
+        });
+    </script>
+
+</div>
+</article>
+</main>
+
+
+<footer class="footer">
+
+    <a href="https://gohugo.io/" target="_blank">
+        
+        <img style="display: unset;" src="https://image.lvbibir.cn/blog/frame-hugo-blue.svg">
+    </a>
+    <a href="https://github.com/adityatelange/hugo-PaperMod" target="_blank">
+        
+        <img style="display: unset;" src="https://image.lvbibir.cn/blog/theme-papermod-lightgrey.svg">
+    </a>
+
+    <br>
+
+    <span id="runtime_span"></span>
+    <script
+        type="text/javascript">function show_runtime() { window.setTimeout("show_runtime()", 1000); X = new Date("7/13/2021 1:00:00"); Y = new Date(); T = (Y.getTime() - X.getTime()); M = 24 * 60 * 60 * 1000; a = T / M; A = Math.floor(a); b = (a - A) * 24; B = Math.floor(b); c = (b - B) * 60; C = Math.floor((b - B) * 60); D = Math.floor((c - C) * 60); runtime_span.innerHTML = "网站已运行" + A + "天" + B + "小时"} show_runtime();</script>
+    |
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span id="busuanzi_container">
+        
+        总访客数:  <span id="busuanzi_value_site_uv"></span>
+        |
+        总访问量:  <span id="busuanzi_value_site_pv"></span>
+    </span>
+
+    <br>
+    <span>
+        Copyright
+        &copy;
+        2021-2024
+        <a href="https://example.org/en/" style="border-bottom:1px solid">Jeason&#39;s Blog</a>
+    </span>
+
+    
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <span class="topInner">
+        <svg class="topSvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+            <path d="M12 6H0l6-6z" />
+        </svg>
+        <span id="read_progress"></span>
+    </span>
+</a>
+
+<script>
+    document.addEventListener('scroll', function (e) {
+        const readProgress = document.getElementById("read_progress");
+        const scrollHeight = document.documentElement.scrollHeight;
+        const clientHeight = document.documentElement.clientHeight;
+        const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        
+        readProgress.innerText = ((scrollTop / (scrollHeight - clientHeight)).toFixed(2) * 100).toFixed(0);
+    })
+</script>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    let mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 400 || document.documentElement.scrollTop > 400) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+
+
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerText = '📄复制';
+
+        function copyingDone() {
+            copybutton.innerText = '👌🏻已复制!';
+            setTimeout(() => {
+                copybutton.innerText = '📄复制';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) {
+            }
+            ;
+            selection.removeRange(range);
+        });
+
+        let language = codeblock.className.replaceAll("language-", "")
+        let macTool = document.createElement("div")
+        let macTool1 = document.createElement("div")
+        let macTool2 = document.createElement("div")
+        let macTool3 = document.createElement("div")
+        let languageType = document.createElement("div")
+        languageType.innerText = language
+        macTool.setAttribute('class', 'mac-tool')
+        macTool1.setAttribute('class', 'mac bb1')
+        macTool2.setAttribute('class', 'mac bb2')
+        macTool3.setAttribute('class', 'mac bb3')
+        languageType.setAttribute('class', 'language-type')
+        macTool.appendChild(macTool1)
+        macTool.appendChild(macTool2)
+        macTool.appendChild(macTool3)
+        macTool.appendChild(languageType)
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+            container.appendChild(macTool)
+        } else if (container.parentNode.firstChild === container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName === "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+            container.appendChild(macTool)
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+            container.appendChild(macTool)
+        }
+    });
+</script>
+
+</body>
+
+</html>

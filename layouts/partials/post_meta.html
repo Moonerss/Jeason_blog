@@ -1,0 +1,36 @@
+<!--
+ * @Author: Erjie Zhao
+ * @TODO: what
+ * @LastEditors: Erjie Zhao
+ * @LastEditTime: 2024-02-23 10:09:18
+ * @Date: 2024-02-22 12:23:44
+-->
+{{- $scratch := newScratch }}
+{{- if not .Date.IsZero -}}
+{{- $scratch.Add "meta" (slice (printf "创建: %s" (.Date.Format (.Site.Params.dateFormat | default "2006-01-02")))) }}
+{{- end }}
+
+{{- if (.Param "ShowLastMod") -}}
+{{- $scratch.Add "meta" (slice (printf "更新: %s" (.Lastmod.Format (.Site.Params.dateFormat | default "2006-01-02")))) }}
+{{- end }}
+
+{{- if (.Param "ShowWordCounts") -}}
+{{- $scratch.Add "meta" (slice (default (printf "字数: %d字" .WordCount))) }}
+{{- end }}
+
+{{- if (.Param "ShowReadingTime") -}}
+{{- $scratch.Add "meta" (slice (default (printf "时长: %d分钟" .ReadingTime))) }}
+{{- end }}
+
+{{- with (partial "author.html" .) }}
+{{- $scratch.Add "meta" (slice .) }}
+{{- end }}
+
+{{- with ($scratch.Get "meta") }}
+{{- delimit . " | " -}}
+{{- end }}
+<!--
+{{- if (.Param "VisitCount") -}}
+{{- $scratch.Add "meta" (slice (printf "访问:&nbsp;<span id='%s'></span>" ("twikoo_visitors") )) }}
+{{- end }}-->
+
