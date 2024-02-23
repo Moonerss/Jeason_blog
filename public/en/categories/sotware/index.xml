@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Sotware on Jeason&#39;s Blog</title>
+    <link>http://localhost:1313/en/categories/sotware/</link>
+    <description>Recent content in Sotware on Jeason&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Fri, 23 Feb 2024 20:13:35 +0800</lastBuildDate>
+    <atom:link href="http://localhost:1313/en/categories/sotware/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Aspera的安装与使用</title>
+      <link>http://localhost:1313/en/posts/tech/aspera/</link>
+      <pubDate>Fri, 09 Oct 2020 20:13:35 +0800</pubDate>
+      <guid>http://localhost:1313/en/posts/tech/aspera/</guid>
+      <description>Aspera是一款高速下载工具，这里介绍它的安装和基本用法</description>
+    </item>
+  </channel>
+</rss>

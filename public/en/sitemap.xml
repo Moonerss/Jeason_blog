@@ -2,55 +2,64 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://jeason.netlify.app/en/posts/tech/</loc>
+    <loc>http://localhost:1313/en/posts/tech/</loc>
     <lastmod>2024-01-10T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://jeason.netlify.app/en/posts/blog/</loc>
+    <loc>http://localhost:1313/en/posts/blog/</loc>
     <lastmod>2024-01-10T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://jeason.netlify.app/en/posts/read/</loc>
+    <loc>http://localhost:1313/en/posts/read/</loc>
     <lastmod>2024-01-10T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://jeason.netlify.app/en/posts/life/</loc>
+    <loc>http://localhost:1313/en/posts/life/</loc>
     <lastmod>2024-01-10T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://jeason.netlify.app/en/categories/</loc>
+    <loc>http://localhost:1313/en/categories/</loc>
+    <lastmod>2024-02-23T20:13:35+08:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/en/</loc>
+    <lastmod>2024-02-23T20:13:35+08:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/en/tags/r/</loc>
     <lastmod>2024-02-23T19:46:13+08:00</lastmod>
   </url><url>
-    <loc>https://jeason.netlify.app/en/</loc>
+    <loc>http://localhost:1313/en/categories/r/</loc>
     <lastmod>2024-02-23T19:46:13+08:00</lastmod>
   </url><url>
-    <loc>https://jeason.netlify.app/en/tags/r/</loc>
+    <loc>http://localhost:1313/en/tags/</loc>
+    <lastmod>2024-02-23T20:13:35+08:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/en/posts/tech/apply/</loc>
     <lastmod>2024-02-23T19:46:13+08:00</lastmod>
   </url><url>
-    <loc>https://jeason.netlify.app/en/categories/r/</loc>
-    <lastmod>2024-02-23T19:46:13+08:00</lastmod>
-  </url><url>
-    <loc>https://jeason.netlify.app/en/tags/</loc>
-    <lastmod>2024-02-23T19:46:13+08:00</lastmod>
-  </url><url>
-    <loc>https://jeason.netlify.app/en/posts/tech/apply/</loc>
-    <lastmod>2024-02-23T19:46:13+08:00</lastmod>
-  </url><url>
-    <loc>https://jeason.netlify.app/en/posts/</loc>
+    <loc>http://localhost:1313/en/posts/</loc>
     <lastmod>2024-01-10T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://jeason.netlify.app/en/posts/tech/annotationforge/</loc>
+    <loc>http://localhost:1313/en/posts/tech/annotationforge/</loc>
     <lastmod>2024-02-22T10:31:03+08:00</lastmod>
   </url><url>
-    <loc>https://jeason.netlify.app/en/tags/bioconductor/</loc>
+    <loc>http://localhost:1313/en/tags/bioconductor/</loc>
     <lastmod>2024-02-22T10:31:03+08:00</lastmod>
   </url><url>
-    <loc>https://jeason.netlify.app/en/categories/bioconductor/</loc>
+    <loc>http://localhost:1313/en/categories/bioconductor/</loc>
     <lastmod>2024-02-22T10:31:03+08:00</lastmod>
   </url><url>
-    <loc>https://jeason.netlify.app/en/posts/tech/advancer/</loc>
+    <loc>http://localhost:1313/en/posts/tech/aspera/</loc>
+    <lastmod>2024-02-23T20:13:35+08:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/en/tags/sotware/</loc>
+    <lastmod>2024-02-23T20:13:35+08:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/en/categories/sotware/</loc>
+    <lastmod>2024-02-23T20:13:35+08:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/en/posts/tech/advancer/</loc>
     <lastmod>2024-02-22T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://jeason.netlify.app/en/archives/</loc>
+    <loc>http://localhost:1313/en/archives/</loc>
   </url><url>
-    <loc>https://jeason.netlify.app/en/search/</loc>
+    <loc>http://localhost:1313/en/search/</loc>
   </url><url>
-    <loc>https://jeason.netlify.app/en/series/</loc>
+    <loc>http://localhost:1313/en/series/</loc>
   </url>
 </urlset>
