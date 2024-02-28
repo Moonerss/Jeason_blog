@@ -2,38 +2,38 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Tags on Jeason&#39;s Blog</title>
-    <link>http://localhost:1313/en/tags/</link>
+    <link>https://jeason.netlify.app/en/tags/</link>
     <description>Recent content in Tags on Jeason&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Wed, 28 Feb 2024 14:09:13 +0800</lastBuildDate>
-    <atom:link href="http://localhost:1313/en/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 28 Feb 2024 15:49:16 +0800</lastBuildDate>
+    <atom:link href="https://jeason.netlify.app/en/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>R</title>
-      <link>http://localhost:1313/en/tags/r/</link>
+      <link>https://jeason.netlify.app/en/tags/r/</link>
       <pubDate>Fri, 23 Feb 2024 19:46:13 +0800</pubDate>
-      <guid>http://localhost:1313/en/tags/r/</guid>
+      <guid>https://jeason.netlify.app/en/tags/r/</guid>
       <description></description>
     </item>
     <item>
       <title>Resource</title>
-      <link>http://localhost:1313/en/tags/resource/</link>
+      <link>https://jeason.netlify.app/en/tags/resource/</link>
       <pubDate>Thu, 15 Feb 2024 14:09:13 +0800</pubDate>
-      <guid>http://localhost:1313/en/tags/resource/</guid>
+      <guid>https://jeason.netlify.app/en/tags/resource/</guid>
       <description></description>
     </item>
     <item>
       <title>Bioconductor</title>
-      <link>http://localhost:1313/en/tags/bioconductor/</link>
+      <link>https://jeason.netlify.app/en/tags/bioconductor/</link>
       <pubDate>Tue, 04 Apr 2023 10:31:03 +0800</pubDate>
-      <guid>http://localhost:1313/en/tags/bioconductor/</guid>
+      <guid>https://jeason.netlify.app/en/tags/bioconductor/</guid>
       <description></description>
     </item>
     <item>
       <title>Sotware</title>
-      <link>http://localhost:1313/en/tags/sotware/</link>
+      <link>https://jeason.netlify.app/en/tags/sotware/</link>
       <pubDate>Fri, 09 Oct 2020 20:13:35 +0800</pubDate>
-      <guid>http://localhost:1313/en/tags/sotware/</guid>
+      <guid>https://jeason.netlify.app/en/tags/sotware/</guid>
       <description></description>
     </item>
   </channel>

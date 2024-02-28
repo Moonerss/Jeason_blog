@@ -2,46 +2,53 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Jeason&#39;s Blog</title>
-    <link>http://localhost:1313/en/</link>
+    <link>https://jeason.netlify.app/en/</link>
     <description>Recent content on Jeason&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Wed, 28 Feb 2024 14:09:13 +0800</lastBuildDate>
-    <atom:link href="http://localhost:1313/en/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 28 Feb 2024 15:49:16 +0800</lastBuildDate>
+    <atom:link href="https://jeason.netlify.app/en/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>浅识apply家族</title>
-      <link>http://localhost:1313/en/posts/tech/apply/</link>
+      <link>https://jeason.netlify.app/en/posts/tech/apply/</link>
       <pubDate>Fri, 23 Feb 2024 19:46:13 +0800</pubDate>
-      <guid>http://localhost:1313/en/posts/tech/apply/</guid>
+      <guid>https://jeason.netlify.app/en/posts/tech/apply/</guid>
       <description>介绍R语言apply家族函数的相关应用</description>
     </item>
     <item>
       <title>生物信息学学习资源</title>
-      <link>http://localhost:1313/en/posts/read/bioinfo_resource/</link>
+      <link>https://jeason.netlify.app/en/posts/read/bioinfo_resource/</link>
       <pubDate>Thu, 15 Feb 2024 14:09:13 +0800</pubDate>
-      <guid>http://localhost:1313/en/posts/read/bioinfo_resource/</guid>
+      <guid>https://jeason.netlify.app/en/posts/read/bioinfo_resource/</guid>
       <description>这里总结了收集到的有用的生物信息学分析学习资源</description>
     </item>
     <item>
       <title>AnnotationForge包构建非模式物种Orgdb包</title>
-      <link>http://localhost:1313/en/posts/tech/annotationforge/</link>
+      <link>https://jeason.netlify.app/en/posts/tech/annotationforge/</link>
       <pubDate>Tue, 04 Apr 2023 10:31:03 +0800</pubDate>
-      <guid>http://localhost:1313/en/posts/tech/annotationforge/</guid>
+      <guid>https://jeason.netlify.app/en/posts/tech/annotationforge/</guid>
       <description>AnnotationForge包构建非模式物种Orgdb包</description>
     </item>
     <item>
       <title>Aspera的安装与使用</title>
-      <link>http://localhost:1313/en/posts/tech/aspera/</link>
+      <link>https://jeason.netlify.app/en/posts/tech/aspera/</link>
       <pubDate>Fri, 09 Oct 2020 20:13:35 +0800</pubDate>
-      <guid>http://localhost:1313/en/posts/tech/aspera/</guid>
+      <guid>https://jeason.netlify.app/en/posts/tech/aspera/</guid>
       <description>Aspera是一款高速下载工具，这里介绍它的安装和基本用法</description>
     </item>
     <item>
       <title>R语言高级程序设计</title>
-      <link>http://localhost:1313/en/posts/tech/advancer/</link>
+      <link>https://jeason.netlify.app/en/posts/tech/advancer/</link>
       <pubDate>Mon, 27 May 2019 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/en/posts/tech/advancer/</guid>
+      <guid>https://jeason.netlify.app/en/posts/tech/advancer/</guid>
       <description>介绍一下《R语言高级程序设计》中的一些容易忽略的点</description>
+    </item>
+    <item>
+      <title>typeof class mode storage.mode 的区别</title>
+      <link>https://jeason.netlify.app/en/posts/tech/typeof/</link>
+      <pubDate>Tue, 21 May 2019 15:49:16 +0800</pubDate>
+      <guid>https://jeason.netlify.app/en/posts/tech/typeof/</guid>
+      <description>介绍了R语言中class相关函数的使用及其区别</description>
     </item>
   </channel>
 </rss>
