@@ -147,7 +147,7 @@ img:active {
 
 
 .post-content {
-    font-family: Consolas, "LXGWWenKaiLite-Bold";
+    font-family: "FiraMono Nerd Font Mono", "CKFontVF.EL";
 }
 
 .dark .post-content {
@@ -157,7 +157,7 @@ img:active {
 body {
     font-size: 18px;
     line-height: 1.6;
-    font-family: Consolas, "LXGWWenKaiLite-Bold";
+    font-family: Consolas, "CKFontVF.EL";
 }
 
 /*引言*/
