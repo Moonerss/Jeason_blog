@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Docker | 构建镜像 | Jeason&#39;s Blog</title>
+<meta name="keywords" content="docker">
+<meta name="description" content="本文介绍了Docker如何构建可以分发的镜像">
+<meta name="author" content="作者:Jeason">
+<link rel="canonical" href="http://localhost:1313/en/posts/tech/docker_4/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.e029fa55ed0a02bb684da89d2a53a4e1ba9e26e3719fa48460be52776460b523.css" integrity="sha256-4Cn6Ve0KArtoTaidKlOk4bqeJuNxn6SEYL5Sd2RgtSM=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:1313/img/avatar.jpeg">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/img/avatar.jpeg">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/img/avatar.jpeg">
+<link rel="apple-touch-icon" href="http://localhost:1313/img/avatar.jpeg">
+<link rel="mask-icon" href="http://localhost:1313/img/avatar.jpeg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="http://localhost:1313/en/posts/tech/docker_4/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><script type="text/javascript"
+        async
+        src="https://cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\[\[','\]\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+});
+
+MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<style>
+code.has-jax {
+    font: inherit;
+    font-size: 100%;
+    background: inherit;
+    border: inherit;
+    color: #515151;
+}
+</style>
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = ""; 
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<meta property="og:title" content="Docker | 构建镜像" />
+<meta property="og:description" content="本文介绍了Docker如何构建可以分发的镜像" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://localhost:1313/en/posts/tech/docker_4/" />
+<meta property="og:image" content="https://source.unsplash.com/random/400x200?code" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-03-23T15:40:13+08:00" />
+<meta property="article:modified_time" content="2024-02-29T15:40:13+08:00" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://source.unsplash.com/random/400x200?code" />
+<meta name="twitter:title" content="Docker | 构建镜像"/>
+<meta name="twitter:description" content="本文介绍了Docker如何构建可以分发的镜像"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "📚 文章",
+      "item": "http://localhost:1313/en/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "👨🏻‍💻 技术",
+      "item": "http://localhost:1313/en/posts/tech/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "Docker | 构建镜像",
+      "item": "http://localhost:1313/en/posts/tech/docker_4/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Docker | 构建镜像",
+  "name": "Docker | 构建镜像",
+  "description": "本文介绍了Docker如何构建可以分发的镜像",
+  "keywords": [
+    "docker"
+  ],
+  "articleBody": "镜像的定制实际上就是定制每一层所添加的配置、文件。如果我们可以把每一层修改、安装、构建、操作的命令都写入一个脚本，用这个脚本来构建、定制镜像，那么之前提及的无法重复的问题、镜像构建透明性的问题、体积的问题就都会解决。这个脚本就是 Dockerfile。\nDockerfile 是一个文本文件，其内包含了一条条的 指令(Instruction)，每一条指令构建一层，因此每一条指令的内容，就是描述该层应当如何构建。\n使用Dockerfile定制镜像 在一个空白目录中，建立一个文本文件，并命名为 Dockerfile:\nmkdir mynginx cd mynginx touch Dockerfile 其内容为：\nFROM nginx RUN echo 'Hello, Docker!' \u003e /usr/share/nginx/html/index.html FROM 指定基础镜像 所谓定制镜像，那一定是以一个镜像为基础，在其上进行定制。而 FROM 就是指定基础镜像，因此一个 Dockerfile 中 FROM 是必备的指令，并且必须是第一条指令。\n除了选择现有镜像为基础镜像外，Docker 还存在一个特殊的镜像，名为 scratch。这个镜像是虚拟的概念，并不实际存在，它表示一个空白的镜像。 如果你以scratch为基础镜像的话，意味着你不以任何镜像为基础，接下来所写的指令将作为镜像第一层开始存在。\nRUN 执行命令 RUN 指令是用来执行命令行命令的。由于命令行的强大能力，RUN 指令在定制镜像时是最常用的指令之一。其格式有两种：\nshell 格式：RUN \u003c命令\u003e，就像直接在命令行中输入的命令一样。刚才写的 Dockerfile 中的 RUN 指令就是这种格式。 RUN echo 'Hello, Docker!' \u003e /usr/share/nginx/html/index.html exec 格式：RUN [“可执行文件”, “参数1”, “参数2”]，这更像是函数调用中的格式。 Dockerfile 中每一个指令都会建立一层，RUN 也不例外。每一个 RUN 的行为：新建立一层，在其上执行这些命令，执行结束后，commit 这一层的修改，构成新的镜像。 因此，在构建镜像时，不能每一个指令都单独在一个RUN中，这样是完全没有意义的，而且很多运行时不需要的东西，都被装进了镜像里，比如编译环境、更新的软件包等等。结果就是产生非常臃肿、非常多层的镜像，不仅仅增加了构建部署的时间，也很容易出错。 Dockerfile 正确的写法应该是这样：\nFROM debian:stretch RUN set -x; buildDeps='gcc libc6-dev make wget' \\ \u0026\u0026 apt-get update \\ \u0026\u0026 apt-get install -y $buildDeps \\ \u0026\u0026 wget -O redis.tar.gz \"http://download.redis.io/releases/redis-5.0.3.tar.gz\" \\ \u0026\u0026 mkdir -p /usr/src/redis \\ \u0026\u0026 tar -xzf redis.tar.gz -C /usr/src/redis --strip-components=1 \\ \u0026\u0026 make -C /usr/src/redis \\ \u0026\u0026 make -C /usr/src/redis install \\ \u0026\u0026 rm -rf /var/lib/apt/lists/* \\ \u0026\u0026 rm redis.tar.gz \\ \u0026\u0026 rm -r /usr/src/redis \\ \u0026\u0026 apt-get purge -y --auto-remove $buildDeps 首先，之前所有的命令只有一个目的，就是编译、安装 redis 可执行文件。因此没有必要建立很多层，这只是一层的事情。因此，这里没有使用很多个 RUN 一一对应不同的命令，而是仅仅使用一个 RUN 指令，并使用 \u0026\u0026 将各个所需命令串联起来。将之前的 7 层，简化为了 1 层。在撰写 Dockerfile 的时候，要经常提醒自己，这并不是在写 Shell 脚本，而是在定义每一层该如何构建。\n并且，这里为了格式化还进行了换行。Dockerfile 支持 Shell 类的行尾添加 \\ 的命令换行方式，以及行首 # 进行注释的格式。良好的格式，比如换行、缩进、注释等，会让维护、排障更为容易，这是一个比较好的习惯。\n此外，还可以看到这一组命令的最后添加了清理工作的命令，删除了为了编译构建所需要的软件，清理了所有下载、展开的文件，并且还清理了 apt 缓存文件。这是很重要的一步，我们之前说过，镜像是多层存储，每一层的东西并不会在下一层被删除，会一直跟随着镜像。因此镜像构建时，一定要确保每一层只添加真正需要添加的东西，任何无关的东西都应该清理掉。\n构建镜像 在 Dockerfile 文件所在目录执行：\ndocker build -t nginx:v3 . Sending build context to Docker daemon 2.048 kB Step 1 : FROM nginx ---\u003e e43d811ce2f4 Step 2 : RUN echo 'Hello, Docker!' \u003e /usr/share/nginx/html/index.html ---\u003e Running in 9cdc27646c7b ---\u003e 44aa4490ce2c Removing intermediate container 9cdc27646c7b Successfully built 44aa4490ce2c 从命令的输出结果中，我们可以清晰的看到镜像的构建过程。在 Step 2 中，如同我们之前所说的那样，RUN 指令启动了一个容器 9cdc27646c7b，执行了所要求的命令，并最后提交了这一层 44aa4490ce2c，随后删除了所用到的这个容器 9cdc27646c7b。 这里我们使用了 docker build 命令进行镜像构建。其格式为：\ndocker build [选项] \u003c上下文路径/URL/-\u003e Dockerfile指令 COPY复制文件 COPY [--chown=:] \u003c源路径\u003e... \u003c目标路径\u003e COPY 指令将从构建上下文目录中 \u003c源路径\u003e 的文件/目录复制到新的一层的镜像内的 \u003c目标路径\u003e 位置。比如：\nCOPY package.json /usr/src/app/ COPY hom* /mydir/ COPY hom?.txt /mydir/ 在使用该指令的时候还可以加上 --chown=: 选项来改变文件的所属用户及所属组。\nCOPY --chown=55:mygroup files* /mydir/ COPY --chown=bin files* /mydir/ COPY --chown=1 files* /mydir/ COPY --chown=10:11 files* /mydir/ ⚠️注意：如果源路径为文件夹，复制的时候不是直接复制该文件夹，而是将文件夹中的内容复制到目标路径。\nADD 高级复制文件 ADD 指令和 COPY 的格式和性质基本一致。但是在 COPY 基础上增加了一些功能。\n比如 \u003c源路径\u003e 可以是一个 URL，这种情况下，Docker 引擎会试图去下载这个链接的文件放到 \u003c目标路径\u003e 去。下载后的文件权限自动设置为 600，如果这并不是想要的权限，那么还需要增加额外的一层 RUN 进行权限调整，另外，如果下载的是个压缩包，需要解压缩，也一样还需要额外的一层 RUN 指令进行解压缩。\nADD明亮更加复杂，有时不如COPY命令好用，推荐使用COPY命令\nCMD 容器启动命令 CMD 指令的格式和 RUN 相似，也是两种格式：\nshell 格式：CMD \u003c命令\u003e exec 格式：CMD [\"可执行文件\", \"参数1\", \"参数2\"...] 参数列表格式：CMD [\"参数1\", \"参数2\"...]。在指定了 ENTRYPOINT 指令后，用 CMD 指定具体的参数。 Docker 不是虚拟机，容器就是进程。既然是进程，那么在启动容器的时候，需要指定所运行的程序及参数。CMD 指令就是用于指定默认的容器主进程的启动命令的。\n## 两者等同 CMD echo $HOME CMD [ \"sh\", \"-c\", \"echo $HOME\" ] ",
+  "wordCount" : "2258",
+  "inLanguage": "en",
+  "image":"https://source.unsplash.com/random/400x200?code","datePublished": "2023-03-23T15:40:13+08:00",
+  "dateModified": "2024-02-29T15:40:13+08:00",
+  "author":{
+    "@type": "Person",
+    "name": "Jeason"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "http://localhost:1313/en/posts/tech/docker_4/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Jeason's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "http://localhost:1313/img/avatar.jpeg"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="http://localhost:1313/en/" accesskey="h" title="Jeason&#39;s Blog (Alt + H)">
+                <img src="http://localhost:1313/img/avatar.jpeg" alt="" aria-label="logo"
+                    height="35">Jeason&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+                
+            </div>
+        </div>
+        <ul id="menu">
+            <li class="menu-item">
+                <a href="http://localhost:1313/en/search" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
+                    <span>🔍 搜索</span>
+                    
+                </a>
+            
+            </li>
+            <li class="menu-item">
+                <a href="http://localhost:1313/en/" title="🏡 主页">
+                    <span>🏡 主页</span>
+                    
+                </a>
+            
+            </li>
+            <li class="menu-item">
+                <a href="http://localhost:1313/en/posts" title="📚 文章">
+                    <span>📚 文章</span>
+                    
+                </a>
+            
+            </li>
+            <li class="menu-item">
+                <a href="http://localhost:1313/en/archives" title="📈 归档">
+                    <span>📈 归档</span>
+                    
+                </a>
+            
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main page">
+<article class="post-single">
+    <div id="single-content">
+        <header class="post-header">
+            <div class="breadcrumbs"><a href="http://localhost:1313/en/">主页</a>&nbsp;»&nbsp;<a href="http://localhost:1313/en/posts/">📚 文章</a>&nbsp;»&nbsp;<a href="http://localhost:1313/en/posts/tech/">👨🏻‍💻 技术</a></div>
+            <h1 class="post-title">
+                Docker | 构建镜像
+            </h1>
+            <div class="post-description">
+                本文介绍了Docker如何构建可以分发的镜像
+            </div>
+            <div class="post-meta">创建: 2023-03-23 | 更新: 2024-02-29 | 作者:Jeason
+
+
+
+
+                
+                <span id="busuanzi_container_page_pv">
+                    &nbsp;|&nbsp;访问:&nbsp;<span id="busuanzi_value_page_pv"></span>
+                </span>
+
+</div>
+        </header> <aside id="toc-container" class="toc-container wide">
+    <div class="toc">
+        <details  open>
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">文章目录</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#%e4%bd%bf%e7%94%a8dockerfile%e5%ae%9a%e5%88%b6%e9%95%9c%e5%83%8f" aria-label="使用Dockerfile定制镜像">使用<code>Dockerfile</code>定制镜像</a></li>
+                <li>
+                    <a href="#from-%e6%8c%87%e5%ae%9a%e5%9f%ba%e7%a1%80%e9%95%9c%e5%83%8f" aria-label="FROM 指定基础镜像"><code>FROM</code> 指定基础镜像</a></li>
+                <li>
+                    <a href="#run-%e6%89%a7%e8%a1%8c%e5%91%bd%e4%bb%a4" aria-label="RUN 执行命令"><code>RUN</code> 执行命令</a></li>
+                <li>
+                    <a href="#%e6%9e%84%e5%bb%ba%e9%95%9c%e5%83%8f" aria-label="构建镜像">构建镜像</a></li>
+                <li>
+                    <a href="#dockerfile%e6%8c%87%e4%bb%a4" aria-label="Dockerfile指令">Dockerfile指令</a><ul>
+                        
+                <li>
+                    <a href="#copy%e5%a4%8d%e5%88%b6%e6%96%87%e4%bb%b6" aria-label="COPY复制文件"><code>COPY</code>复制文件</a></li>
+                <li>
+                    <a href="#add-%e9%ab%98%e7%ba%a7%e5%a4%8d%e5%88%b6%e6%96%87%e4%bb%b6" aria-label="ADD 高级复制文件"><code>ADD</code> 高级复制文件</a></li>
+                <li>
+                    <a href="#cmd-%e5%ae%b9%e5%99%a8%e5%90%af%e5%8a%a8%e5%91%bd%e4%bb%a4" aria-label="CMD 容器启动命令"><code>CMD</code> 容器启动命令</a>
+                </li>
+            </ul>
+            </li>
+            </ul>
+        </div>
+        </details>
+    </div>
+</aside>
+<script>
+    let activeElement;
+    let elements;
+    window.addEventListener('DOMContentLoaded', function (event) {
+        checkTocPosition();
+
+        elements = document.querySelectorAll('h1[id],h2[id],h3[id],h4[id],h5[id],h6[id]');
+        
+        activeElement = elements[0];
+        const id = encodeURI(activeElement.getAttribute('id')).toLowerCase();
+        document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+    }, false);
+
+    window.addEventListener('resize', function(event) {
+        checkTocPosition();
+    }, false);
+
+    window.addEventListener('scroll', () => {
+        
+        activeElement = Array.from(elements).find((element) => {
+            if ((getOffsetTop(element) - window.pageYOffset) > 0 &&
+                (getOffsetTop(element) - window.pageYOffset) < window.innerHeight/2) {
+                return element;
+            }
+        }) || activeElement
+
+        elements.forEach(element => {
+            const id = encodeURI(element.getAttribute('id')).toLowerCase();
+            if (element === activeElement){
+                document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+            } else {
+                document.querySelector(`.inner ul li a[href="#${id}"]`).classList.remove('active');
+            }
+        })
+    }, false);
+
+    const main = parseInt(getComputedStyle(document.body).getPropertyValue('--article-width'), 10);
+    const toc = parseInt(getComputedStyle(document.body).getPropertyValue('--toc-width'), 10);
+    const gap = parseInt(getComputedStyle(document.body).getPropertyValue('--gap'), 10);
+
+    function checkTocPosition() {
+        const width = document.body.scrollWidth;
+        if (width - main - (toc * 2) - (gap * 4) > 0) {
+            document.getElementById("toc-container").classList.add("wide");
+        } else {
+            document.getElementById("toc-container").classList.remove("wide");
+        }
+    }
+
+    function getOffsetTop(element) {
+        if (!element.getClientRects().length) {
+            return 0;
+        }
+        let rect = element.getBoundingClientRect();
+        let win = element.ownerDocument.defaultView;
+        return rect.top + win.pageYOffset;
+    }
+</script>
+        <div class="post-content"><p>镜像的定制实际上就是定制每一层所添加的配置、文件。如果我们可以把每一层修改、安装、构建、操作的命令都写入一个脚本，用这个脚本来构建、定制镜像，那么之前提及的无法重复的问题、镜像构建透明性的问题、体积的问题就都会解决。这个脚本就是 <code>Dockerfile</code>。</p>
+<p><code>Dockerfile</code> 是一个文本文件，其内包含了一条条的 <strong>指令(Instruction)</strong>，每一条指令构建一层，因此每一条指令的内容，就是描述该层应当如何构建。</p>
+<h1 id="使用dockerfile定制镜像">使用<code>Dockerfile</code>定制镜像<a hidden class="anchor" aria-hidden="true" href="#使用dockerfile定制镜像">#</a></h1>
+<p>在一个空白目录中，建立一个文本文件，并命名为 <code>Dockerfile</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>mkdir mynginx
+</span></span><span style="display:flex;"><span>cd mynginx
+</span></span><span style="display:flex;"><span>touch Dockerfile
+</span></span></code></pre></div><p>其内容为：</p>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Dockerfile" data-lang="Dockerfile"><span style="display:flex;"><span><span style="color:#815ba4">FROM</span><span style="color:#48b685"> nginx</span><span style="color:#ef6155">
+</span></span></span><span style="display:flex;"><span><span style="color:#ef6155"></span><span style="color:#815ba4">RUN</span> echo <span style="color:#48b685">&#39;&lt;h1&gt;Hello, Docker!&lt;/h1&gt;&#39;</span> &gt; /usr/share/nginx/html/index.html<span style="color:#ef6155">
+</span></span></span></code></pre></div><h1 id="from-指定基础镜像"><code>FROM</code> 指定基础镜像<a hidden class="anchor" aria-hidden="true" href="#from-指定基础镜像">#</a></h1>
+<p>所谓定制镜像，那一定是以一个镜像为基础，在其上进行定制。而 <code>FROM</code> 就是指定<strong>基础镜像</strong>，因此一个 <code>Dockerfile</code> 中 <code>FROM</code> 是必备的指令，并且必须是第一条指令。</p>
+<p>除了选择现有镜像为基础镜像外，Docker 还存在一个特殊的镜像，名为 scratch。这个镜像是虚拟的概念，并不实际存在，它表示一个空白的镜像。
+如果你以<code>scratch</code>为基础镜像的话，意味着你不以任何镜像为基础，接下来所写的指令将作为镜像第一层开始存在。</p>
+<h1 id="run-执行命令"><code>RUN</code> 执行命令<a hidden class="anchor" aria-hidden="true" href="#run-执行命令">#</a></h1>
+<p><code>RUN</code> 指令是用来执行命令行命令的。由于命令行的强大能力，<code>RUN</code> 指令在定制镜像时是最常用的指令之一。其格式有两种：</p>
+<ul>
+<li><code>shell</code> 格式：RUN &lt;命令&gt;，就像直接在命令行中输入的命令一样。刚才写的 Dockerfile 中的 RUN 指令就是这种格式。</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Dockerfile" data-lang="Dockerfile"><span style="display:flex;"><span><span style="color:#815ba4">RUN</span> echo <span style="color:#48b685">&#39;&lt;h1&gt;Hello, Docker!&lt;/h1&gt;&#39;</span> &gt; /usr/share/nginx/html/index.html<span style="color:#ef6155">
+</span></span></span></code></pre></div><ul>
+<li><code>exec</code> 格式：RUN [&ldquo;可执行文件&rdquo;, &ldquo;参数1&rdquo;, &ldquo;参数2&rdquo;]，这更像是函数调用中的格式。</li>
+</ul>
+<p><code>Dockerfile</code> 中每一个指令都会建立一层，<code>RUN</code> 也不例外。每一个 <code>RUN</code> 的行为：新建立一层，在其上执行这些命令，执行结束后，<code>commit</code> 这一层的修改，构成新的镜像。
+因此，在构建镜像时，不能每一个指令都单独在一个<code>RUN</code>中，这样是完全没有意义的，而且很多运行时不需要的东西，都被装进了镜像里，比如编译环境、更新的软件包等等。结果就是产生非常臃肿、非常多层的镜像，不仅仅增加了构建部署的时间，也很容易出错。
+Dockerfile 正确的写法应该是这样：</p>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Dockerfile" data-lang="Dockerfile"><span style="display:flex;"><span><span style="color:#815ba4">FROM</span><span style="color:#48b685"> debian:stretch</span><span style="color:#ef6155">
+</span></span></span><span style="display:flex;"><span><span style="color:#ef6155">
+</span></span></span><span style="display:flex;"><span><span style="color:#ef6155"></span><span style="color:#815ba4">RUN</span> set -x; <span style="color:#ef6155">buildDeps</span><span style="color:#5bc4bf">=</span><span style="color:#48b685">&#39;gcc libc6-dev make wget&#39;</span> <span style="color:#f99b15">\
+</span></span></span><span style="display:flex;"><span><span style="color:#f99b15"></span>    <span style="color:#5bc4bf">&amp;&amp;</span> apt-get update <span style="color:#f99b15">\
+</span></span></span><span style="display:flex;"><span><span style="color:#f99b15"></span>    <span style="color:#5bc4bf">&amp;&amp;</span> apt-get install -y <span style="color:#ef6155">$buildDeps</span> <span style="color:#f99b15">\
+</span></span></span><span style="display:flex;"><span><span style="color:#f99b15"></span>    <span style="color:#5bc4bf">&amp;&amp;</span> wget -O redis.tar.gz <span style="color:#48b685">&#34;http://download.redis.io/releases/redis-5.0.3.tar.gz&#34;</span> <span style="color:#f99b15">\
+</span></span></span><span style="display:flex;"><span><span style="color:#f99b15"></span>    <span style="color:#5bc4bf">&amp;&amp;</span> mkdir -p /usr/src/redis <span style="color:#f99b15">\
+</span></span></span><span style="display:flex;"><span><span style="color:#f99b15"></span>    <span style="color:#5bc4bf">&amp;&amp;</span> tar -xzf redis.tar.gz -C /usr/src/redis --strip-components<span style="color:#5bc4bf">=</span><span style="color:#f99b15">1</span> <span style="color:#f99b15">\
+</span></span></span><span style="display:flex;"><span><span style="color:#f99b15"></span>    <span style="color:#5bc4bf">&amp;&amp;</span> make -C /usr/src/redis <span style="color:#f99b15">\
+</span></span></span><span style="display:flex;"><span><span style="color:#f99b15"></span>    <span style="color:#5bc4bf">&amp;&amp;</span> make -C /usr/src/redis install <span style="color:#f99b15">\
+</span></span></span><span style="display:flex;"><span><span style="color:#f99b15"></span>    <span style="color:#5bc4bf">&amp;&amp;</span> rm -rf /var/lib/apt/lists/* <span style="color:#f99b15">\
+</span></span></span><span style="display:flex;"><span><span style="color:#f99b15"></span>    <span style="color:#5bc4bf">&amp;&amp;</span> rm redis.tar.gz <span style="color:#f99b15">\
+</span></span></span><span style="display:flex;"><span><span style="color:#f99b15"></span>    <span style="color:#5bc4bf">&amp;&amp;</span> rm -r /usr/src/redis <span style="color:#f99b15">\
+</span></span></span><span style="display:flex;"><span><span style="color:#f99b15"></span>    <span style="color:#5bc4bf">&amp;&amp;</span> apt-get purge -y --auto-remove <span style="color:#ef6155">$buildDeps</span><span style="color:#ef6155">
+</span></span></span></code></pre></div><p>首先，之前所有的命令只有一个目的，就是编译、安装 <code>redis</code> 可执行文件。因此没有必要建立很多层，这只是一层的事情。因此，这里没有使用很多个 <code>RUN</code> 一一对应不同的命令，而是仅仅使用一个 <code>RUN</code> 指令，并使用 <code>&amp;&amp;</code> 将各个所需命令串联起来。将之前的 7 层，简化为了 1 层。在撰写 Dockerfile 的时候，要经常提醒自己，这并不是在写 Shell 脚本，而是在定义每一层该如何构建。</p>
+<p>并且，这里为了格式化还进行了换行。Dockerfile 支持 Shell 类的行尾添加 <code>\</code> 的命令换行方式，以及行首 <code>#</code> 进行注释的格式。良好的格式，比如换行、缩进、注释等，会让维护、排障更为容易，这是一个比较好的习惯。</p>
+<p>此外，还可以看到这一组命令的最后添加了清理工作的命令，删除了为了编译构建所需要的软件，清理了所有下载、展开的文件，并且还清理了 apt 缓存文件。这是很重要的一步，我们之前说过，镜像是多层存储，每一层的东西并不会在下一层被删除，会一直跟随着镜像。因此镜像构建时，一定要确保每一层只添加真正需要添加的东西，任何无关的东西都应该清理掉。</p>
+<h1 id="构建镜像">构建镜像<a hidden class="anchor" aria-hidden="true" href="#构建镜像">#</a></h1>
+<p>在 <code>Dockerfile</code> 文件所在目录执行：</p>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>docker build -t nginx:v3 .
+</span></span><span style="display:flex;"><span>Sending build context to Docker daemon 2.048 kB
+</span></span><span style="display:flex;"><span>Step <span style="color:#f99b15">1</span> : FROM nginx
+</span></span><span style="display:flex;"><span>---&gt; e43d811ce2f4
+</span></span><span style="display:flex;"><span>Step <span style="color:#f99b15">2</span> : RUN echo <span style="color:#48b685">&#39;&lt;h1&gt;Hello, Docker!&lt;/h1&gt;&#39;</span> &gt; /usr/share/nginx/html/index.html
+</span></span><span style="display:flex;"><span>---&gt; Running in 9cdc27646c7b
+</span></span><span style="display:flex;"><span>---&gt; 44aa4490ce2c
+</span></span><span style="display:flex;"><span>Removing intermediate container 9cdc27646c7b
+</span></span><span style="display:flex;"><span>Successfully built 44aa4490ce2c
+</span></span></code></pre></div><p>从命令的输出结果中，我们可以清晰的看到镜像的构建过程。在 <code>Step 2</code> 中，如同我们之前所说的那样，RUN 指令启动了一个容器 <code>9cdc27646c7b</code>，执行了所要求的命令，并最后提交了这一层 <code>44aa4490ce2c</code>，随后删除了所用到的这个容器 <code>9cdc27646c7b</code>。
+这里我们使用了 <code>docker build</code> 命令进行镜像构建。其格式为：</p>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>docker build <span style="color:#5bc4bf">[</span>选项<span style="color:#5bc4bf">]</span> &lt;上下文路径/URL/-&gt;
+</span></span></code></pre></div><h1 id="dockerfile指令">Dockerfile指令<a hidden class="anchor" aria-hidden="true" href="#dockerfile指令">#</a></h1>
+<h2 id="copy复制文件"><code>COPY</code>复制文件<a hidden class="anchor" aria-hidden="true" href="#copy复制文件">#</a></h2>
+<ul>
+<li><code>COPY [--chown=&lt;user&gt;:&lt;group&gt;] &lt;源路径&gt;... &lt;目标路径&gt;</code></li>
+</ul>
+<p><code>COPY</code> 指令将从构建上下文目录中 &lt;源路径&gt; 的文件/目录复制到新的一层的镜像内的 &lt;目标路径&gt; 位置。比如：</p>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>COPY package.json /usr/src/app/
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>COPY hom* /mydir/
+</span></span><span style="display:flex;"><span>COPY hom?.txt /mydir/
+</span></span></code></pre></div><p>在使用该指令的时候还可以加上 <code>--chown=&lt;user&gt;:&lt;group&gt;</code> 选项来改变文件的所属用户及所属组。</p>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Dockerfile" data-lang="Dockerfile"><span style="display:flex;"><span><span style="color:#815ba4">COPY</span> --chown<span style="color:#5bc4bf">=</span>55:mygroup files* /mydir/<span style="color:#ef6155">
+</span></span></span><span style="display:flex;"><span><span style="color:#ef6155"></span><span style="color:#815ba4">COPY</span> --chown<span style="color:#5bc4bf">=</span>bin files* /mydir/<span style="color:#ef6155">
+</span></span></span><span style="display:flex;"><span><span style="color:#ef6155"></span><span style="color:#815ba4">COPY</span> --chown<span style="color:#5bc4bf">=</span><span style="color:#f99b15">1</span> files* /mydir/<span style="color:#ef6155">
+</span></span></span><span style="display:flex;"><span><span style="color:#ef6155"></span><span style="color:#815ba4">COPY</span> --chown<span style="color:#5bc4bf">=</span>10:11 files* /mydir/<span style="color:#ef6155">
+</span></span></span></code></pre></div><blockquote>
+<p>⚠️注意：如果源路径为文件夹，复制的时候不是直接复制该文件夹，而是将文件夹中的内容复制到目标路径。</p>
+</blockquote>
+<h2 id="add-高级复制文件"><code>ADD</code> 高级复制文件<a hidden class="anchor" aria-hidden="true" href="#add-高级复制文件">#</a></h2>
+<p><code>ADD</code> 指令和 <code>COPY</code> 的格式和性质基本一致。但是在 <code>COPY</code> 基础上增加了一些功能。</p>
+<p>比如 &lt;源路径&gt; 可以是一个 URL，这种情况下，Docker 引擎会试图去下载这个链接的文件放到 &lt;目标路径&gt; 去。下载后的文件权限自动设置为 600，如果这并不是想要的权限，那么还需要增加额外的一层 RUN 进行权限调整，另外，如果下载的是个压缩包，需要解压缩，也一样还需要额外的一层 RUN 指令进行解压缩。</p>
+<blockquote>
+<p><code>ADD</code>明亮更加复杂，有时不如<code>COPY</code>命令好用，推荐使用<code>COPY</code>命令</p>
+</blockquote>
+<h2 id="cmd-容器启动命令"><code>CMD</code> 容器启动命令<a hidden class="anchor" aria-hidden="true" href="#cmd-容器启动命令">#</a></h2>
+<p><code>CMD</code> 指令的格式和 RUN 相似，也是两种格式：</p>
+<ul>
+<li><code>shell</code> 格式：<code>CMD &lt;命令&gt;</code></li>
+<li><code>exec</code> 格式：<code>CMD [&quot;可执行文件&quot;, &quot;参数1&quot;, &quot;参数2&quot;...]</code></li>
+<li>参数列表格式：<code>CMD [&quot;参数1&quot;, &quot;参数2&quot;...]</code>。在指定了 <code>ENTRYPOINT</code> 指令后，用 <code>CMD</code> 指定具体的参数。</li>
+</ul>
+<p><code>Docker</code> 不是虚拟机，容器就是进程。既然是进程，那么在启动容器的时候，需要指定所运行的程序及参数。<code>CMD</code> 指令就是用于指定默认的容器主进程的启动命令的。</p>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Dockerfile" data-lang="Dockerfile"><span style="display:flex;"><span><span style="color:#776e71">## 两者等同</span><span style="color:#ef6155">
+</span></span></span><span style="display:flex;"><span><span style="color:#ef6155"></span><span style="color:#815ba4">CMD</span> echo <span style="color:#ef6155">$HOME</span><span style="color:#ef6155">
+</span></span></span><span style="display:flex;"><span><span style="color:#ef6155">
+</span></span></span><span style="display:flex;"><span><span style="color:#ef6155"></span><span style="color:#815ba4">CMD</span> [ <span style="color:#48b685">&#34;sh&#34;</span>, <span style="color:#48b685">&#34;-c&#34;</span>, <span style="color:#48b685">&#34;echo $HOME&#34;</span> ]<span style="color:#ef6155">
+</span></span></span></code></pre></div>
+
+        </div>
+
+        
+
+        <footer class="post-footer">
+            
+<nav class="paginav">
+  <a class="prev" href="http://localhost:1313/en/posts/tech/annotationforge/">
+    <span class="title">« 上一页</span>
+    <br>
+    <span>AnnotationForge包构建非模式物种Orgdb包</span>
+  </a>
+  <a class="next" href="http://localhost:1313/en/posts/tech/docker_3/">
+    <span class="title">下一页 »</span>
+    <br>
+    <span>Docker | 常规操作</span>
+  </a>
+</nav>
+
+        </footer>
+    </div>
+
+
+
+<div>
+    <div class="pagination__title">
+        <span class="pagination__title-h" style="font-size: 20px;">💬评论</span>
+        <hr />
+    </div>
+
+    <div id="tcomment"></div>
+
+    <script src="https://cdn.staticfile.org/twikoo/1.6.15/twikoo.all.min.js">
+    </script>
+    
+
+    
+
+    <script>
+        twikoo.init({
+            envId: "https://twikoo.lvbibir.cn/", 
+            el: "#tcomment",
+            lang: 'zh-CN',
+            
+            path: window.TWIKOO_MAGIC_PATH||window.location.pathname,
+            
+            
+            
+            
+            
+            
+            
+        });
+    </script>
+
+</div>
+</article>
+</main>
+
+
+<footer class="footer">
+
+    <a href="https://gohugo.io/" target="_blank">
+        
+        <img style="display: unset;" src="https://image.lvbibir.cn/blog/frame-hugo-blue.svg">
+    </a>
+    <a href="https://github.com/adityatelange/hugo-PaperMod" target="_blank">
+        
+        <img style="display: unset;" src="https://image.lvbibir.cn/blog/theme-papermod-lightgrey.svg">
+    </a>
+
+    <br>
+
+    <span id="runtime_span"></span>
+    <script
+        type="text/javascript">function show_runtime() { window.setTimeout("show_runtime()", 1000); X = new Date("7/13/2021 1:00:00"); Y = new Date(); T = (Y.getTime() - X.getTime()); M = 24 * 60 * 60 * 1000; a = T / M; A = Math.floor(a); b = (a - A) * 24; B = Math.floor(b); c = (b - B) * 60; C = Math.floor((b - B) * 60); D = Math.floor((c - C) * 60); runtime_span.innerHTML = "网站已运行" + A + "天" + B + "小时"} show_runtime();</script>
+    |
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span id="busuanzi_container">
+        
+        总访客数:  <span id="busuanzi_value_site_uv"></span>
+        |
+        总访问量:  <span id="busuanzi_value_site_pv"></span>
+    </span>
+
+    <br>
+    <span>
+        Copyright
+        &copy;
+        2021-2024
+        <a href="http://localhost:1313/en/" style="border-bottom:1px solid">Jeason&#39;s Blog</a>
+    </span>
+
+    
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <span class="topInner">
+        <svg class="topSvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+            <path d="M12 6H0l6-6z" />
+        </svg>
+        <span id="read_progress"></span>
+    </span>
+</a>
+
+<script>
+    document.addEventListener('scroll', function (e) {
+        const readProgress = document.getElementById("read_progress");
+        const scrollHeight = document.documentElement.scrollHeight;
+        const clientHeight = document.documentElement.clientHeight;
+        const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        
+        readProgress.innerText = ((scrollTop / (scrollHeight - clientHeight)).toFixed(2) * 100).toFixed(0);
+    })
+</script>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    let mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 400 || document.documentElement.scrollTop > 400) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+
+
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerText = '📄复制';
+
+        function copyingDone() {
+            copybutton.innerText = '👌🏻已复制!';
+            setTimeout(() => {
+                copybutton.innerText = '📄复制';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) {
+            }
+            ;
+            selection.removeRange(range);
+        });
+
+        let language = codeblock.className.replaceAll("language-", "")
+        let macTool = document.createElement("div")
+        let macTool1 = document.createElement("div")
+        let macTool2 = document.createElement("div")
+        let macTool3 = document.createElement("div")
+        let languageType = document.createElement("div")
+        languageType.innerText = language
+        macTool.setAttribute('class', 'mac-tool')
+        macTool1.setAttribute('class', 'mac bb1')
+        macTool2.setAttribute('class', 'mac bb2')
+        macTool3.setAttribute('class', 'mac bb3')
+        languageType.setAttribute('class', 'language-type')
+        macTool.appendChild(macTool1)
+        macTool.appendChild(macTool2)
+        macTool.appendChild(macTool3)
+        macTool.appendChild(languageType)
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+            container.appendChild(macTool)
+        } else if (container.parentNode.firstChild === container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName === "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+            container.appendChild(macTool)
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+            container.appendChild(macTool)
+        }
+    });
+</script>
+
+</body>
+
+</html>

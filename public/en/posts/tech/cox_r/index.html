@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Cox模型的R实现 | Jeason&#39;s Blog</title>
+<meta name="keywords" content="Stats">
+<meta name="description" content="本文介绍了在R语言如何实现Cox比例风险回归模型以及结果的解释">
+<meta name="author" content="作者:Jeason">
+<link rel="canonical" href="http://localhost:1313/en/posts/tech/cox_r/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.e029fa55ed0a02bb684da89d2a53a4e1ba9e26e3719fa48460be52776460b523.css" integrity="sha256-4Cn6Ve0KArtoTaidKlOk4bqeJuNxn6SEYL5Sd2RgtSM=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:1313/img/avatar.jpeg">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/img/avatar.jpeg">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/img/avatar.jpeg">
+<link rel="apple-touch-icon" href="http://localhost:1313/img/avatar.jpeg">
+<link rel="mask-icon" href="http://localhost:1313/img/avatar.jpeg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="http://localhost:1313/en/posts/tech/cox_r/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><script type="text/javascript"
+        async
+        src="https://cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\[\[','\]\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+});
+
+MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<style>
+code.has-jax {
+    font: inherit;
+    font-size: 100%;
+    background: inherit;
+    border: inherit;
+    color: #515151;
+}
+</style>
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = ""; 
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<meta property="og:title" content="Cox模型的R实现" />
+<meta property="og:description" content="本文介绍了在R语言如何实现Cox比例风险回归模型以及结果的解释" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://localhost:1313/en/posts/tech/cox_r/" />
+<meta property="og:image" content="https://source.unsplash.com/random/400x200?code" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2018-05-08T15:57:22+08:00" />
+<meta property="article:modified_time" content="2024-02-29T15:57:22+08:00" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://source.unsplash.com/random/400x200?code" />
+<meta name="twitter:title" content="Cox模型的R实现"/>
+<meta name="twitter:description" content="本文介绍了在R语言如何实现Cox比例风险回归模型以及结果的解释"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "📚 文章",
+      "item": "http://localhost:1313/en/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "👨🏻‍💻 技术",
+      "item": "http://localhost:1313/en/posts/tech/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "Cox模型的R实现",
+      "item": "http://localhost:1313/en/posts/tech/cox_r/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Cox模型的R实现",
+  "name": "Cox模型的R实现",
+  "description": "本文介绍了在R语言如何实现Cox比例风险回归模型以及结果的解释",
+  "keywords": [
+    "Stats"
+  ],
+  "articleBody": "载入需要的R包 survival用于计算生存分析\nsurvminer用于可视化生存分析结果\nlibrary(\"survival\") library(\"survminer\") 计算COX model : coxph() coxph 可以用于构建计算 Cox proportional hazards regression model，常见用法如下：\ncoxph(formula, data, method) formula : 是通过\tSurv构建的生存对象 ，如：Surv(time, event)\ndata：包含变量的data.frame\nmethod：计算各项指标所用的检验方法\nUnivariate Cox regression 以survival包提供的lung数据为例，进行单变量的cox回归分析\nres.cox \u003c- coxph(Surv(time, status) ~ sex, data = lung) res.cox Call: coxph(formula = Surv(time, status) ~ sex, data = lung) coef exp(coef) se(coef) z p sex -0.531 0.588 0.167 -3.18 0.0015 Likelihood ratio test=10.6 on 1 df, p=0.00111 n= 228, number of events= 165 使用summary函数显示更加详细的结果：\nsummary(res.cox) Call: coxph(formula = Surv(time, status) ~ sex, data = lung) n= 228, number of events= 165 coef exp(coef) se(coef) z Pr(\u003e|z|) sex -0.5310 0.5880 0.1672 -3.176 0.00149 ** --- Signif. codes: 0 '*' 0.001 '' 0.01 '*' 0.05 '.' 0.1 ' ' 1 exp(coef) exp(-coef) lower .95 upper .95 sex 0.588 1.701 0.4237 0.816 Concordance= 0.579 (se = 0.022 ) Rsquare= 0.046 (max possible= 0.999 ) Likelihood ratio test= 10.63 on 1 df, p=0.001111 Wald test = 10.09 on 1 df, p=0.001491 Score (logrank) test = 10.33 on 1 df, p=0.001312 结果的各项指标解释如下：\nStatistical significance. z值给出了Wald统计值。它对应于每个回归系数与其标准误差的比率（z = coef / se（coef））。 wald统计量评估给定变量的系数（β）是否在统计学上显著，由上可知，变量性别具有高度统计上显著的系数。 The regression coefficients. Cox模型结果中要注意的第二个特征是回归系数（coef）的符号。如果回归系数为正值，说明死亡风险高，预后差；为负值，则风险低，预后好。 R给出的是第二组相对于第一组的风险比（HR），即女性对男性。在这些数据中，性别的β系数= -0.53表明女性的死亡风险（低存活率）低于男性。 Hazard ratios. 指数系数（exp（coef）= exp（-0.53）= 0.59）也称为风险比，给出协变量的效应大小。 例如，女性（性别= 2）的风险降低了0.59倍，即41％。 女性与预后良好相关。 Confidence intervals of the hazard ratios. 给出了风险比（exp（coef））的95％置信区间的上限和下限。 Global statistical significance of the model. 三个检验模型的P值：The likelihood-ratio test, Wald test, and score logrank statistics.这三种方法是类似的，如果样本量足够大，则三个方法会得到相同的结果，当样本量较小时，The likelihood-ratio test能得到较好的结果。 Multivariate Cox regression analysis 当我们纳入多个变量时，我们可以这样操作：\nres.cox \u003c- coxph(Surv(time, status) ~ age + sex + ph.ecog, data = lung) summary(res.cox) Call: coxph(formula = Surv(time, status) ~ age + sex + ph.ecog, data = lung) n= 227, number of events= 164 (1 observation deleted due to missingness) coef exp(coef) se(coef) z Pr(\u003e|z|) age 0.011067 1.011128 0.009267 1.194 0.232416 sex -0.552612 0.575445 0.167739 -3.294 0.000986 *** ph.ecog 0.463728 1.589991 0.113577 4.083 4.45e-05 *** --- Signif. codes: 0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 exp(coef) exp(-coef) lower .95 upper .95 age 1.0111 0.9890 0.9929 1.0297 sex 0.5754 1.7378 0.4142 0.7994 ph.ecog 1.5900 0.6289 1.2727 1.9864 Concordance= 0.637 (se = 0.026 ) Rsquare= 0.126 (max possible= 0.999 ) Likelihood ratio test= 30.5 on 3 df, p=1.083e-06 Wald test = 29.93 on 3 df, p=1.428e-06 Score (logrank) test = 30.5 on 3 df, p=1.083e-06 由上可知：在三种检验方法中，p值都是显著的。这表明了该模型的重要性。\n在多变量Cox分析中，协变量sex和ph.ecog仍然显着（p \u003c0.05）。然而，协变量age并不显着（p = 0.23）。\nsex的p值为0.000986，危险比HR = exp（coef）= 0.58，表明患者性别与死亡风险降低之间有很强的关系。协变量的风险比可以解释为对风险的倍增效应。例如，将其他协变量保持不变，即女性（sex= 2）可将风险降低0.58倍，即降低42％。我们的结论是，女性与良好的预后相关。\n类似地，ph.ecog的p值为4.45e-05，危险比HR = 1.59，表明ph.ecog值与死亡风险增加之间的强关系。保持其他协变量不变，ph.ecog的较高值与生存率较差相关。\n相比之下，age的p = 0.23。风险比HR = exp（coef）= 1.01，95％置信区间为0.99至1.03。由于HR的置信区间包括1，因此这些结果表明年龄在调整ph.ecog和sex后对HR差异的贡献较小，并且仅趋向于显着性。例如，将其他协变量保持不变，额外的一年会导致每日死亡风险的因数为exp（beta）= 1.01或1％，这不是一个重大贡献。\nReferences: Cox Proportional Hazards Modelhttp://www.sthda.com/english/wiki/cox-proportional-hazards-model\n",
+  "wordCount" : "1488",
+  "inLanguage": "en",
+  "image":"https://source.unsplash.com/random/400x200?code","datePublished": "2018-05-08T15:57:22+08:00",
+  "dateModified": "2024-02-29T15:57:22+08:00",
+  "author":{
+    "@type": "Person",
+    "name": "Jeason"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "http://localhost:1313/en/posts/tech/cox_r/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Jeason's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "http://localhost:1313/img/avatar.jpeg"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="http://localhost:1313/en/" accesskey="h" title="Jeason&#39;s Blog (Alt + H)">
+                <img src="http://localhost:1313/img/avatar.jpeg" alt="" aria-label="logo"
+                    height="35">Jeason&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+                
+            </div>
+        </div>
+        <ul id="menu">
+            <li class="menu-item">
+                <a href="http://localhost:1313/en/search" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
+                    <span>🔍 搜索</span>
+                    
+                </a>
+            
+            </li>
+            <li class="menu-item">
+                <a href="http://localhost:1313/en/" title="🏡 主页">
+                    <span>🏡 主页</span>
+                    
+                </a>
+            
+            </li>
+            <li class="menu-item">
+                <a href="http://localhost:1313/en/posts" title="📚 文章">
+                    <span>📚 文章</span>
+                    
+                </a>
+            
+            </li>
+            <li class="menu-item">
+                <a href="http://localhost:1313/en/archives" title="📈 归档">
+                    <span>📈 归档</span>
+                    
+                </a>
+            
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main page">
+<article class="post-single">
+    <div id="single-content">
+        <header class="post-header">
+            <div class="breadcrumbs"><a href="http://localhost:1313/en/">主页</a>&nbsp;»&nbsp;<a href="http://localhost:1313/en/posts/">📚 文章</a>&nbsp;»&nbsp;<a href="http://localhost:1313/en/posts/tech/">👨🏻‍💻 技术</a></div>
+            <h1 class="post-title">
+                Cox模型的R实现
+            </h1>
+            <div class="post-description">
+                本文介绍了在R语言如何实现Cox比例风险回归模型以及结果的解释
+            </div>
+            <div class="post-meta">创建: 2018-05-08 | 更新: 2024-02-29 | 作者:Jeason
+
+
+
+
+                
+                <span id="busuanzi_container_page_pv">
+                    &nbsp;|&nbsp;访问:&nbsp;<span id="busuanzi_value_page_pv"></span>
+                </span>
+
+</div>
+        </header> <aside id="toc-container" class="toc-container wide">
+    <div class="toc">
+        <details  open>
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">文章目录</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#%e8%bd%bd%e5%85%a5%e9%9c%80%e8%a6%81%e7%9a%84r%e5%8c%85" aria-label="载入需要的R包">载入需要的R包</a></li>
+                <li>
+                    <a href="#%e8%ae%a1%e7%ae%97cox-model--coxph" aria-label="计算COX model : coxph()">计算COX model : coxph()</a></li>
+                <li>
+                    <a href="#univariate-cox-regression" aria-label="Univariate Cox regression">Univariate Cox regression</a></li>
+                <li>
+                    <a href="#multivariate-cox-regression-analysis" aria-label="Multivariate Cox regression analysis">Multivariate Cox regression analysis</a></li>
+                <li>
+                    <a href="#references" aria-label="References:">References:</a>
+                </li>
+            </ul>
+        </div>
+        </details>
+    </div>
+</aside>
+<script>
+    let activeElement;
+    let elements;
+    window.addEventListener('DOMContentLoaded', function (event) {
+        checkTocPosition();
+
+        elements = document.querySelectorAll('h1[id],h2[id],h3[id],h4[id],h5[id],h6[id]');
+        
+        activeElement = elements[0];
+        const id = encodeURI(activeElement.getAttribute('id')).toLowerCase();
+        document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+    }, false);
+
+    window.addEventListener('resize', function(event) {
+        checkTocPosition();
+    }, false);
+
+    window.addEventListener('scroll', () => {
+        
+        activeElement = Array.from(elements).find((element) => {
+            if ((getOffsetTop(element) - window.pageYOffset) > 0 &&
+                (getOffsetTop(element) - window.pageYOffset) < window.innerHeight/2) {
+                return element;
+            }
+        }) || activeElement
+
+        elements.forEach(element => {
+            const id = encodeURI(element.getAttribute('id')).toLowerCase();
+            if (element === activeElement){
+                document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+            } else {
+                document.querySelector(`.inner ul li a[href="#${id}"]`).classList.remove('active');
+            }
+        })
+    }, false);
+
+    const main = parseInt(getComputedStyle(document.body).getPropertyValue('--article-width'), 10);
+    const toc = parseInt(getComputedStyle(document.body).getPropertyValue('--toc-width'), 10);
+    const gap = parseInt(getComputedStyle(document.body).getPropertyValue('--gap'), 10);
+
+    function checkTocPosition() {
+        const width = document.body.scrollWidth;
+        if (width - main - (toc * 2) - (gap * 4) > 0) {
+            document.getElementById("toc-container").classList.add("wide");
+        } else {
+            document.getElementById("toc-container").classList.remove("wide");
+        }
+    }
+
+    function getOffsetTop(element) {
+        if (!element.getClientRects().length) {
+            return 0;
+        }
+        let rect = element.getBoundingClientRect();
+        let win = element.ownerDocument.defaultView;
+        return rect.top + win.pageYOffset;
+    }
+</script>
+        <div class="post-content"><h3 id="载入需要的r包">载入需要的R包<a hidden class="anchor" aria-hidden="true" href="#载入需要的r包">#</a></h3>
+<ul>
+<li>
+<p><strong>survival</strong>用于计算生存分析</p>
+</li>
+<li>
+<p><strong>survminer</strong>用于可视化生存分析结果</p>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-R" data-lang="R"><span style="display:flex;"><span><span style="color:#06b6ef">library</span>(<span style="color:#48b685">&#34;survival&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#06b6ef">library</span>(<span style="color:#48b685">&#34;survminer&#34;</span>)
+</span></span></code></pre></div><h3 id="计算cox-model--coxph">计算COX model : coxph()<a hidden class="anchor" aria-hidden="true" href="#计算cox-model--coxph">#</a></h3>
+<p><code>coxph</code> 可以用于构建计算 Cox proportional hazards regression model，常见用法如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-R" data-lang="R"><span style="display:flex;"><span><span style="color:#06b6ef">coxph</span>(formula, data, method)
+</span></span></code></pre></div><blockquote>
+<p>formula : 是通过	<code>Surv</code>构建的生存对象 ，如：<em>Surv(time, event)</em></p>
+<p>data：包含变量的data.frame</p>
+<p>method：计算各项指标所用的检验方法</p>
+</blockquote>
+<h3 id="univariate-cox-regression">Univariate Cox regression<a hidden class="anchor" aria-hidden="true" href="#univariate-cox-regression">#</a></h3>
+<p>以<code>survival</code>包提供的<code>lung</code>数据为例，进行单变量的cox回归分析</p>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-R" data-lang="R"><span style="display:flex;"><span>res.cox <span style="color:#5bc4bf">&lt;-</span> <span style="color:#06b6ef">coxph</span>(<span style="color:#06b6ef">Surv</span>(time, status) <span style="color:#5bc4bf">~</span> sex, data <span style="color:#5bc4bf">=</span> lung)
+</span></span><span style="display:flex;"><span>res.cox
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-R" data-lang="R"><span style="display:flex;"><span>Call<span style="color:#5bc4bf">:</span>
+</span></span><span style="display:flex;"><span><span style="color:#06b6ef">coxph</span>(formula <span style="color:#5bc4bf">=</span> <span style="color:#06b6ef">Surv</span>(time, status) <span style="color:#5bc4bf">~</span> sex, data <span style="color:#5bc4bf">=</span> lung)
+</span></span><span style="display:flex;"><span>      coef <span style="color:#06b6ef">exp</span>(coef) <span style="color:#06b6ef">se</span>(coef)     z      p
+</span></span><span style="display:flex;"><span>sex <span style="color:#f99b15">-0.531</span>     <span style="color:#f99b15">0.588</span>    <span style="color:#f99b15">0.167</span> <span style="color:#f99b15">-3.18</span> <span style="color:#f99b15">0.0015</span>
+</span></span><span style="display:flex;"><span>Likelihood ratio test<span style="color:#5bc4bf">=</span><span style="color:#f99b15">10.6</span>  on <span style="color:#f99b15">1</span> df, p<span style="color:#5bc4bf">=</span><span style="color:#f99b15">0.00111</span>
+</span></span><span style="display:flex;"><span>n<span style="color:#5bc4bf">=</span> <span style="color:#f99b15">228</span>, number of events<span style="color:#5bc4bf">=</span> <span style="color:#f99b15">165</span> 
+</span></span></code></pre></div><p>使用<code>summary</code>函数显示更加详细的结果：</p>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-R" data-lang="R"><span style="display:flex;"><span><span style="color:#06b6ef">summary</span>(res.cox)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-R" data-lang="R"><span style="display:flex;"><span>Call<span style="color:#5bc4bf">:</span>
+</span></span><span style="display:flex;"><span><span style="color:#06b6ef">coxph</span>(formula <span style="color:#5bc4bf">=</span> <span style="color:#06b6ef">Surv</span>(time, status) <span style="color:#5bc4bf">~</span> sex, data <span style="color:#5bc4bf">=</span> lung)
+</span></span><span style="display:flex;"><span>  n<span style="color:#5bc4bf">=</span> <span style="color:#f99b15">228</span>, number of events<span style="color:#5bc4bf">=</span> <span style="color:#f99b15">165</span> 
+</span></span><span style="display:flex;"><span>       coef <span style="color:#06b6ef">exp</span>(coef) <span style="color:#06b6ef">se</span>(coef)      z <span style="color:#06b6ef">Pr</span>(<span style="color:#5bc4bf">&gt;|</span>z<span style="color:#5bc4bf">|</span>)   
+</span></span><span style="display:flex;"><span>sex <span style="color:#f99b15">-0.5310</span>    <span style="color:#f99b15">0.5880</span>   <span style="color:#f99b15">0.1672</span> <span style="color:#f99b15">-3.176</span>  <span style="color:#f99b15">0.00149</span> <span style="color:#5bc4bf">**</span>  
+</span></span><span style="display:flex;"><span><span style="color:#5bc4bf">---</span>
+</span></span><span style="display:flex;"><span>Signif. codes<span style="color:#5bc4bf">:</span>  <span style="color:#f99b15">0</span> <span style="color:#48b685">&#39;*&#39;</span> <span style="color:#f99b15">0.001</span> <span style="color:#48b685">&#39;&#39;</span> <span style="color:#f99b15">0.01</span> <span style="color:#48b685">&#39;*&#39;</span> <span style="color:#f99b15">0.05</span> <span style="color:#48b685">&#39;.&#39;</span> <span style="color:#f99b15">0.1</span> <span style="color:#48b685">&#39; &#39;</span> <span style="color:#f99b15">1</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#06b6ef">exp</span>(coef) <span style="color:#06b6ef">exp</span>(<span style="color:#5bc4bf">-</span>coef) lower <span style="color:#f99b15">.95</span> upper <span style="color:#f99b15">.95</span>
+</span></span><span style="display:flex;"><span>sex     <span style="color:#f99b15">0.588</span>      <span style="color:#f99b15">1.701</span>    <span style="color:#f99b15">0.4237</span>     <span style="color:#f99b15">0.816</span>
+</span></span><span style="display:flex;"><span>Concordance<span style="color:#5bc4bf">=</span> <span style="color:#f99b15">0.579</span>  (se <span style="color:#5bc4bf">=</span> <span style="color:#f99b15">0.022</span> )
+</span></span><span style="display:flex;"><span>Rsquare<span style="color:#5bc4bf">=</span> <span style="color:#f99b15">0.046</span>   (max possible<span style="color:#5bc4bf">=</span> <span style="color:#f99b15">0.999</span> )
+</span></span><span style="display:flex;"><span>Likelihood ratio test<span style="color:#5bc4bf">=</span> <span style="color:#f99b15">10.63</span>  on <span style="color:#f99b15">1</span> df,   p<span style="color:#5bc4bf">=</span><span style="color:#f99b15">0.001111</span>
+</span></span><span style="display:flex;"><span>Wald test            <span style="color:#5bc4bf">=</span> <span style="color:#f99b15">10.09</span>  on <span style="color:#f99b15">1</span> df,   p<span style="color:#5bc4bf">=</span><span style="color:#f99b15">0.001491</span>
+</span></span><span style="display:flex;"><span><span style="color:#06b6ef">Score </span>(logrank) test <span style="color:#5bc4bf">=</span> <span style="color:#f99b15">10.33</span>  on <span style="color:#f99b15">1</span> df,   p<span style="color:#5bc4bf">=</span><span style="color:#f99b15">0.001312</span>
+</span></span></code></pre></div><p>结果的各项指标解释如下：</p>
+<ol>
+<li><em><strong>Statistical significance</strong></em>. z值给出了Wald统计值。它对应于每个回归系数与其标准误差的比率（z = coef / se（coef））。 wald统计量评估给定变量的系数（β）是否在统计学上显著，由上可知，变量性别具有高度统计上显著的系数。</li>
+<li><em><strong>The regression coefficients</strong></em>. Cox模型结果中要注意的第二个特征是回归系数（coef）的符号。如果回归系数为正值，说明死亡风险高，预后差；为负值，则风险低，预后好。 R给出的是第二组相对于第一组的风险比（HR），即女性对男性。在这些数据中，性别的β系数= -0.53表明女性的死亡风险（低存活率）低于男性。</li>
+<li><em><strong>Hazard ratios</strong></em>. 指数系数（exp（coef）= exp（-0.53）= 0.59）也称为风险比，给出协变量的效应大小。 例如，女性（性别= 2）的风险降低了0.59倍，即41％。 女性与预后良好相关。</li>
+<li><em><strong>Confidence intervals of the hazard ratios</strong></em>. 给出了风险比（exp（coef））的95％置信区间的上限和下限。</li>
+<li><em><strong>Global statistical significance of the model</strong></em>.  三个检验模型的P值：The likelihood-ratio test, Wald test, and score logrank statistics.这三种方法是类似的，如果样本量足够大，则三个方法会得到相同的结果，当样本量较小时，The likelihood-ratio test能得到较好的结果。</li>
+</ol>
+<h3 id="multivariate-cox-regression-analysis">Multivariate Cox regression analysis<a hidden class="anchor" aria-hidden="true" href="#multivariate-cox-regression-analysis">#</a></h3>
+<p>当我们纳入多个变量时，我们可以这样操作：</p>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-R" data-lang="R"><span style="display:flex;"><span>res.cox <span style="color:#5bc4bf">&lt;-</span> <span style="color:#06b6ef">coxph</span>(<span style="color:#06b6ef">Surv</span>(time, status) <span style="color:#5bc4bf">~</span> age <span style="color:#5bc4bf">+</span> sex <span style="color:#5bc4bf">+</span> ph.ecog, data <span style="color:#5bc4bf">=</span>  lung)
+</span></span><span style="display:flex;"><span><span style="color:#06b6ef">summary</span>(res.cox)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-R" data-lang="R"><span style="display:flex;"><span>Call<span style="color:#5bc4bf">:</span>
+</span></span><span style="display:flex;"><span><span style="color:#06b6ef">coxph</span>(formula <span style="color:#5bc4bf">=</span> <span style="color:#06b6ef">Surv</span>(time, status) <span style="color:#5bc4bf">~</span> age <span style="color:#5bc4bf">+</span> sex <span style="color:#5bc4bf">+</span> ph.ecog, data <span style="color:#5bc4bf">=</span> lung)
+</span></span><span style="display:flex;"><span>  n<span style="color:#5bc4bf">=</span> <span style="color:#f99b15">227</span>, number of events<span style="color:#5bc4bf">=</span> <span style="color:#f99b15">164</span> 
+</span></span><span style="display:flex;"><span>   (<span style="color:#f99b15">1</span> observation deleted due to missingness)
+</span></span><span style="display:flex;"><span>             coef <span style="color:#06b6ef">exp</span>(coef)  <span style="color:#06b6ef">se</span>(coef)      z <span style="color:#06b6ef">Pr</span>(<span style="color:#5bc4bf">&gt;|</span>z<span style="color:#5bc4bf">|</span>)    
+</span></span><span style="display:flex;"><span>age      <span style="color:#f99b15">0.011067</span>  <span style="color:#f99b15">1.011128</span>  <span style="color:#f99b15">0.009267</span>  <span style="color:#f99b15">1.194</span> <span style="color:#f99b15">0.232416</span>    
+</span></span><span style="display:flex;"><span>sex     <span style="color:#f99b15">-0.552612</span>  <span style="color:#f99b15">0.575445</span>  <span style="color:#f99b15">0.167739</span> <span style="color:#f99b15">-3.294</span> <span style="color:#f99b15">0.000986</span> <span style="color:#5bc4bf">***</span>
+</span></span><span style="display:flex;"><span>ph.ecog  <span style="color:#f99b15">0.463728</span>  <span style="color:#f99b15">1.589991</span>  <span style="color:#f99b15">0.113577</span>  <span style="color:#f99b15">4.083</span> <span style="color:#f99b15">4.45e-05</span> <span style="color:#5bc4bf">***</span>
+</span></span><span style="display:flex;"><span><span style="color:#5bc4bf">---</span>
+</span></span><span style="display:flex;"><span>Signif. codes<span style="color:#5bc4bf">:</span>  <span style="color:#f99b15">0</span> <span style="color:#48b685">&#39;***&#39;</span> <span style="color:#f99b15">0.001</span> <span style="color:#48b685">&#39;**&#39;</span> <span style="color:#f99b15">0.01</span> <span style="color:#48b685">&#39;*&#39;</span> <span style="color:#f99b15">0.05</span> <span style="color:#48b685">&#39;.&#39;</span> <span style="color:#f99b15">0.1</span> <span style="color:#48b685">&#39; &#39;</span> <span style="color:#f99b15">1</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#06b6ef">exp</span>(coef) <span style="color:#06b6ef">exp</span>(<span style="color:#5bc4bf">-</span>coef) lower <span style="color:#f99b15">.95</span> upper <span style="color:#f99b15">.95</span>
+</span></span><span style="display:flex;"><span>age        <span style="color:#f99b15">1.0111</span>     <span style="color:#f99b15">0.9890</span>    <span style="color:#f99b15">0.9929</span>    <span style="color:#f99b15">1.0297</span>
+</span></span><span style="display:flex;"><span>sex        <span style="color:#f99b15">0.5754</span>     <span style="color:#f99b15">1.7378</span>    <span style="color:#f99b15">0.4142</span>    <span style="color:#f99b15">0.7994</span>
+</span></span><span style="display:flex;"><span>ph.ecog    <span style="color:#f99b15">1.5900</span>     <span style="color:#f99b15">0.6289</span>    <span style="color:#f99b15">1.2727</span>    <span style="color:#f99b15">1.9864</span>
+</span></span><span style="display:flex;"><span>Concordance<span style="color:#5bc4bf">=</span> <span style="color:#f99b15">0.637</span>  (se <span style="color:#5bc4bf">=</span> <span style="color:#f99b15">0.026</span> )
+</span></span><span style="display:flex;"><span>Rsquare<span style="color:#5bc4bf">=</span> <span style="color:#f99b15">0.126</span>   (max possible<span style="color:#5bc4bf">=</span> <span style="color:#f99b15">0.999</span> )
+</span></span><span style="display:flex;"><span>Likelihood ratio test<span style="color:#5bc4bf">=</span> <span style="color:#f99b15">30.5</span>  on <span style="color:#f99b15">3</span> df,   p<span style="color:#5bc4bf">=</span><span style="color:#f99b15">1.083e-06</span>
+</span></span><span style="display:flex;"><span>Wald test            <span style="color:#5bc4bf">=</span> <span style="color:#f99b15">29.93</span>  on <span style="color:#f99b15">3</span> df,   p<span style="color:#5bc4bf">=</span><span style="color:#f99b15">1.428e-06</span>
+</span></span><span style="display:flex;"><span><span style="color:#06b6ef">Score </span>(logrank) test <span style="color:#5bc4bf">=</span> <span style="color:#f99b15">30.5</span>  on <span style="color:#f99b15">3</span> df,   p<span style="color:#5bc4bf">=</span><span style="color:#f99b15">1.083e-06</span>
+</span></span></code></pre></div><p>由上可知：在三种检验方法中，p值都是显著的。这表明了该模型的重要性。</p>
+<p>在多变量Cox分析中，协变量<code>sex</code>和<code>ph.ecog</code>仍然显着（p &lt;0.05）。然而，协变量<code>age</code>并不显着（p = 0.23）。</p>
+<blockquote>
+<p><code>sex</code>的p值为0.000986，危险比HR = exp（coef）= 0.58，表明患者性别与死亡风险降低之间有很强的关系。协变量的风险比可以解释为对风险的倍增效应。例如，将其他协变量保持不变，即女性（<code>sex</code>= 2）可将风险降低0.58倍，即降低42％。我们的结论是，女性与良好的预后相关。</p>
+<p>类似地，<code>ph.ecog</code>的p值为4.45e-05，危险比HR = 1.59，表明<code>ph.ecog</code>值与死亡风险增加之间的强关系。保持其他协变量不变，<code>ph.ecog</code>的较高值与生存率较差相关。</p>
+<p>相比之下，<code>age</code>的p = 0.23。风险比HR = exp（coef）= 1.01，95％置信区间为0.99至1.03。由于HR的置信区间包括1，因此这些结果表明年龄在调整<code>ph.ecog</code>和<code>sex</code>后对HR差异的贡献较小，并且仅趋向于显着性。例如，将其他协变量保持不变，额外的一年会导致每日死亡风险的因数为exp（beta）= 1.01或1％，这不是一个重大贡献。</p>
+</blockquote>
+<h3 id="references">References:<a hidden class="anchor" aria-hidden="true" href="#references">#</a></h3>
+<p>Cox Proportional Hazards Model<a href="http://www.sthda.com/english/wiki/cox-proportional-hazards-model" target="_blank" rel="noopener" style="color:#42b983";>http://www.sthda.com/english/wiki/cox-proportional-hazards-model</a></p>
+
+
+        </div>
+
+        
+
+        <footer class="post-footer">
+            
+<nav class="paginav">
+  <a class="prev" href="http://localhost:1313/en/posts/tech/git/">
+    <span class="title">« 上一页</span>
+    <br>
+    <span>git | 基本用法</span>
+  </a>
+</nav>
+
+        </footer>
+    </div>
+
+
+
+<div>
+    <div class="pagination__title">
+        <span class="pagination__title-h" style="font-size: 20px;">💬评论</span>
+        <hr />
+    </div>
+
+    <div id="tcomment"></div>
+
+    <script src="https://cdn.staticfile.org/twikoo/1.6.15/twikoo.all.min.js">
+    </script>
+    
+
+    
+
+    <script>
+        twikoo.init({
+            envId: "https://twikoo.lvbibir.cn/", 
+            el: "#tcomment",
+            lang: 'zh-CN',
+            
+            path: window.TWIKOO_MAGIC_PATH||window.location.pathname,
+            
+            
+            
+            
+            
+            
+            
+        });
+    </script>
+
+</div>
+</article>
+</main>
+
+
+<footer class="footer">
+
+    <a href="https://gohugo.io/" target="_blank">
+        
+        <img style="display: unset;" src="https://image.lvbibir.cn/blog/frame-hugo-blue.svg">
+    </a>
+    <a href="https://github.com/adityatelange/hugo-PaperMod" target="_blank">
+        
+        <img style="display: unset;" src="https://image.lvbibir.cn/blog/theme-papermod-lightgrey.svg">
+    </a>
+
+    <br>
+
+    <span id="runtime_span"></span>
+    <script
+        type="text/javascript">function show_runtime() { window.setTimeout("show_runtime()", 1000); X = new Date("7/13/2021 1:00:00"); Y = new Date(); T = (Y.getTime() - X.getTime()); M = 24 * 60 * 60 * 1000; a = T / M; A = Math.floor(a); b = (a - A) * 24; B = Math.floor(b); c = (b - B) * 60; C = Math.floor((b - B) * 60); D = Math.floor((c - C) * 60); runtime_span.innerHTML = "网站已运行" + A + "天" + B + "小时"} show_runtime();</script>
+    |
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span id="busuanzi_container">
+        
+        总访客数:  <span id="busuanzi_value_site_uv"></span>
+        |
+        总访问量:  <span id="busuanzi_value_site_pv"></span>
+    </span>
+
+    <br>
+    <span>
+        Copyright
+        &copy;
+        2021-2024
+        <a href="http://localhost:1313/en/" style="border-bottom:1px solid">Jeason&#39;s Blog</a>
+    </span>
+
+    
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <span class="topInner">
+        <svg class="topSvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+            <path d="M12 6H0l6-6z" />
+        </svg>
+        <span id="read_progress"></span>
+    </span>
+</a>
+
+<script>
+    document.addEventListener('scroll', function (e) {
+        const readProgress = document.getElementById("read_progress");
+        const scrollHeight = document.documentElement.scrollHeight;
+        const clientHeight = document.documentElement.clientHeight;
+        const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        
+        readProgress.innerText = ((scrollTop / (scrollHeight - clientHeight)).toFixed(2) * 100).toFixed(0);
+    })
+</script>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    let mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 400 || document.documentElement.scrollTop > 400) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+
+
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerText = '📄复制';
+
+        function copyingDone() {
+            copybutton.innerText = '👌🏻已复制!';
+            setTimeout(() => {
+                copybutton.innerText = '📄复制';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) {
+            }
+            ;
+            selection.removeRange(range);
+        });
+
+        let language = codeblock.className.replaceAll("language-", "")
+        let macTool = document.createElement("div")
+        let macTool1 = document.createElement("div")
+        let macTool2 = document.createElement("div")
+        let macTool3 = document.createElement("div")
+        let languageType = document.createElement("div")
+        languageType.innerText = language
+        macTool.setAttribute('class', 'mac-tool')
+        macTool1.setAttribute('class', 'mac bb1')
+        macTool2.setAttribute('class', 'mac bb2')
+        macTool3.setAttribute('class', 'mac bb3')
+        languageType.setAttribute('class', 'language-type')
+        macTool.appendChild(macTool1)
+        macTool.appendChild(macTool2)
+        macTool.appendChild(macTool3)
+        macTool.appendChild(languageType)
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+            container.appendChild(macTool)
+        } else if (container.parentNode.firstChild === container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName === "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+            container.appendChild(macTool)
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+            container.appendChild(macTool)
+        }
+    });
+</script>
+
+</body>
+
+</html>

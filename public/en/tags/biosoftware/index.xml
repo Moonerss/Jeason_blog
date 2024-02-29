@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Biosoftware on Jeason&#39;s Blog</title>
+    <link>http://localhost:1313/en/tags/biosoftware/</link>
+    <description>Recent content in Biosoftware on Jeason&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Wed, 28 Feb 2024 21:07:07 +0800</lastBuildDate>
+    <atom:link href="http://localhost:1313/en/tags/biosoftware/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>测序质控软件trim_galore安装</title>
+      <link>http://localhost:1313/en/posts/tech/trim_galore/</link>
+      <pubDate>Wed, 23 Sep 2020 20:42:14 +0800</pubDate>
+      <guid>http://localhost:1313/en/posts/tech/trim_galore/</guid>
+      <description>这里描述了测序去接头软件trim galore的安装及其使用方法</description>
+    </item>
+    <item>
+      <title>SRAtoolkit 安装与使用</title>
+      <link>http://localhost:1313/en/posts/tech/sratools/</link>
+      <pubDate>Thu, 03 Oct 2019 21:07:07 +0800</pubDate>
+      <guid>http://localhost:1313/en/posts/tech/sratools/</guid>
+      <description>本文介绍了SRAtoolkit的安装与使用</description>
+    </item>
+  </channel>
+</rss>

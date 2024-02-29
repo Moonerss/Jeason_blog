@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Stats on Jeason&#39;s Blog</title>
+    <link>http://localhost:1313/en/categories/stats/</link>
+    <description>Recent content in Stats on Jeason&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Thu, 29 Feb 2024 16:40:54 +0800</lastBuildDate>
+    <atom:link href="http://localhost:1313/en/categories/stats/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>C-index计算的相关问题</title>
+      <link>http://localhost:1313/en/posts/tech/c_index/</link>
+      <pubDate>Thu, 29 Feb 2024 15:08:18 +0800</pubDate>
+      <guid>http://localhost:1313/en/posts/tech/c_index/</guid>
+      <description>背景 在进行Cox模型的预后能力评估比较时，C-index作为一个重要的评价指标被广泛的使用。目前有多个R包 可以实现C-index的计算，如：Hmisc，survcomp等。但是，当进行计算时，发现一个问题，使用不同的 R包计算出的C-index值可能不同，虽然这一结果可能是由于对于</description>
+    </item>
+    <item>
+      <title>PCA分析原理</title>
+      <link>http://localhost:1313/en/posts/tech/pca/</link>
+      <pubDate>Sat, 27 Nov 2021 21:14:44 +0800</pubDate>
+      <guid>http://localhost:1313/en/posts/tech/pca/</guid>
+      <description>本文介绍了PCA分析的原理和基本思想，以及在R语言中的实现过程</description>
+    </item>
+    <item>
+      <title>归一化与标准化</title>
+      <link>http://localhost:1313/en/posts/tech/data_preprocess/</link>
+      <pubDate>Mon, 11 Oct 2021 14:33:21 +0800</pubDate>
+      <guid>http://localhost:1313/en/posts/tech/data_preprocess/</guid>
+      <description>本文主要介绍了数据预处理中的归一化和标准化之间的异同以及使用的场景</description>
+    </item>
+    <item>
+      <title>Time-dependent ROC 曲线</title>
+      <link>http://localhost:1313/en/posts/tech/timeroc/</link>
+      <pubDate>Fri, 13 Nov 2020 16:34:51 +0800</pubDate>
+      <guid>http://localhost:1313/en/posts/tech/timeroc/</guid>
+      <description>基本概念 在对biomarker进行分析时，我们通常会对预测模型的预测性能通过ROC曲线来进行评估，但是对于一些生存资料相关数据的预测模型需要考虑到生存信息与时间因素进去，于是就有了时间依赖的ROC曲线。 传统的ROC曲线分析方法认为个体的事件（疾病）状态和markers是随着时间的</description>
+    </item>
+    <item>
+      <title>R 语言统计检验函数汇总</title>
+      <link>http://localhost:1313/en/posts/read/r_stat/</link>
+      <pubDate>Fri, 31 Jul 2020 16:40:54 +0800</pubDate>
+      <guid>http://localhost:1313/en/posts/read/r_stat/</guid>
+      <description>连续型数据 基于分布的检验 T检验 t.test(1:10, 10:20) ## ## Welch Two Sample t-test ## ## data: 1:10 and 10:20 ## t = -7, df = 19, p-value = 2e-06 ## alternative hypothesis: true difference in means is not equal to 0 ## 95 percent confidence interval: ## -12.4 -6.6 ## sample estimates: ## mean of x mean of y ## 5.5 15.0 配对 t 检验： t.test(rnorm(10), rnorm(10, mean = 1), paired = TRUE) ## ## Paired t-test ## ## data: rnorm(10) and rnorm(10, mean = 1) ## t = -2, df = 9, p-value = 0.03 ## alternative hypothesis: true difference in means is not equal to 0 ## 95 percent confidence interval: ## -1.981 -0.096 ## sample estimates: ## mean of the differences ## -1.04 使</description>
+    </item>
+    <item>
+      <title>超几何分布和二项分布</title>
+      <link>http://localhost:1313/en/posts/tech/hypergeometric/</link>
+      <pubDate>Thu, 21 Feb 2019 14:21:53 +0800</pubDate>
+      <guid>http://localhost:1313/en/posts/tech/hypergeometric/</guid>
+      <description>本文介绍了超几何分布和二项分布的原理和具体解释</description>
+    </item>
+    <item>
+      <title>Fisher精确检验</title>
+      <link>http://localhost:1313/en/posts/tech/fisher/</link>
+      <pubDate>Tue, 19 Feb 2019 15:04:55 +0800</pubDate>
+      <guid>http://localhost:1313/en/posts/tech/fisher/</guid>
+      <description>本文主要介绍了Fisher精确检验的原理</description>
+    </item>
+    <item>
+      <title>卡方检验的原理及应用</title>
+      <link>http://localhost:1313/en/posts/tech/chisq/</link>
+      <pubDate>Mon, 12 Nov 2018 15:10:27 +0800</pubDate>
+      <guid>http://localhost:1313/en/posts/tech/chisq/</guid>
+      <description>卡方检验 卡方检验(Chi-square test/Chi-Square Goodness-of-Fit Test) 基本概念 卡方检验是一种非参数假设检验，主要用于比较两个分类变量的关联性分析，其根本思想就是在于比较理论频数和实际频数的吻合程度或拟合优度问题。 它在分类资料统计推断中的应用，包括：两个率或两个构成比比较的卡方检验；多个率或多个构成比比较的</description>
+    </item>
+    <item>
+      <title>ROC曲线和AUC</title>
+      <link>http://localhost:1313/en/posts/tech/roc_auc/</link>
+      <pubDate>Wed, 10 Oct 2018 16:39:08 +0800</pubDate>
+      <guid>http://localhost:1313/en/posts/tech/roc_auc/</guid>
+      <description>ROC和AUC简介 ROC（Receiver Operating Characteristic）曲线和AUC常被用来评价一个二值分类器（binary classifier）的优劣，对两者的简单介绍见wiki百科这篇博文主要简单介绍ROC和AUC的特点，以及如何通过R语言绘制ROC曲线和计算AUC值。 RO</description>
+    </item>
+    <item>
+      <title>Cox模型的R实现</title>
+      <link>http://localhost:1313/en/posts/tech/cox_r/</link>
+      <pubDate>Tue, 08 May 2018 15:57:22 +0800</pubDate>
+      <guid>http://localhost:1313/en/posts/tech/cox_r/</guid>
+      <description>本文介绍了在R语言如何实现Cox比例风险回归模型以及结果的解释</description>
+    </item>
+  </channel>
+</rss>

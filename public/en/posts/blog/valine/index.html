@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Jekyll-theme-next添加Valine评论系统 | Jeason&#39;s Blog</title>
+<meta name="keywords" content="blog">
+<meta name="description" content="
+title: Jekyll-theme-next添加Valine评论系统
+date: 2019-03-18 19:42:02
+categories:
+
+Blog
+tags:
+blog
+
+
+给Jekyll添加Valine评论系统">
+<meta name="author" content="作者:Jeason">
+<link rel="canonical" href="http://localhost:1313/en/posts/blog/valine/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.e029fa55ed0a02bb684da89d2a53a4e1ba9e26e3719fa48460be52776460b523.css" integrity="sha256-4Cn6Ve0KArtoTaidKlOk4bqeJuNxn6SEYL5Sd2RgtSM=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:1313/img/avatar.jpeg">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/img/avatar.jpeg">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/img/avatar.jpeg">
+<link rel="apple-touch-icon" href="http://localhost:1313/img/avatar.jpeg">
+<link rel="mask-icon" href="http://localhost:1313/img/avatar.jpeg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="http://localhost:1313/en/posts/blog/valine/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><script type="text/javascript"
+        async
+        src="https://cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\[\[','\]\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+});
+
+MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<style>
+code.has-jax {
+    font: inherit;
+    font-size: 100%;
+    background: inherit;
+    border: inherit;
+    color: #515151;
+}
+</style>
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = ""; 
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<meta property="og:title" content="Jekyll-theme-next添加Valine评论系统" />
+<meta property="og:description" content="
+title: Jekyll-theme-next添加Valine评论系统
+date: 2019-03-18 19:42:02
+categories:
+
+Blog
+tags:
+blog
+
+
+给Jekyll添加Valine评论系统" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://localhost:1313/en/posts/blog/valine/" />
+<meta property="og:image" content="https://source.unsplash.com/random/400x200?code" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2019-03-18T16:33:19+08:00" />
+<meta property="article:modified_time" content="2024-02-29T16:33:19+08:00" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://source.unsplash.com/random/400x200?code" />
+<meta name="twitter:title" content="Jekyll-theme-next添加Valine评论系统"/>
+<meta name="twitter:description" content="
+title: Jekyll-theme-next添加Valine评论系统
+date: 2019-03-18 19:42:02
+categories:
+
+Blog
+tags:
+blog
+
+
+给Jekyll添加Valine评论系统"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "📚 文章",
+      "item": "http://localhost:1313/en/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "🏗️ 建站",
+      "item": "http://localhost:1313/en/posts/blog/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "Jekyll-theme-next添加Valine评论系统",
+      "item": "http://localhost:1313/en/posts/blog/valine/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Jekyll-theme-next添加Valine评论系统",
+  "name": "Jekyll-theme-next添加Valine评论系统",
+  "description": " title: Jekyll-theme-next添加Valine评论系统 date: 2019-03-18 19:42:02 categories:\nBlog tags: blog 给Jekyll添加Valine评论系统\n",
+  "keywords": [
+    "blog"
+  ],
+  "articleBody": " title: Jekyll-theme-next添加Valine评论系统 date: 2019-03-18 19:42:02 categories:\nBlog tags: blog 给Jekyll添加Valine评论系统\n一直想给博客配置一款简洁的评论系统，但是没有发现合适的，最近倒腾一下Valine之后，发现效果还不错☺️\n详情请访问官网：https://valine.js.org\n这个评论系统是基于LeanCloud的，对Jekyll的博客是支持的，官网网址：https://leancloud.cn\n获取 APP ID 和 APP KEY 需要注册登录LeanCloud然后创建应用获取\n点击这里登录或注册Leancloud\n然后创建应用\n选择刚刚创建的应用\u003e设置\u003e应用 Key，然后你就能看到你的APP ID和APP KEY\n然后填写应用\u003e设置\u003e安全设置中的Web 安全域名\n在blog中添加valine评论系统 由于我使用的是jekyll-theme-next, 所以可能在其他模板中不适用\n创建valine.html 在 /_includes/_third-party/comments文件夹中添加一个文件valine.html 在文件里添加代码：\n中间几行需要配置在_config.yml文件当中\n添加_config.yml配置 将app_id，app_key， placeholde等信息添加到_config.yml配置当中 具体使用代码：\nvaline_comment: enable: true # app_id leancloud_appid: XXX # app_key leancloud_appkey: XXX # placeholde placeholder: “Just go go” 更改调用valine.html 由于前面创建了valine.html，要jekyll博客能够运行这个页面的代码，使评论框显示在每篇文章的页面，需要在/_includes/_third-party/comments/index.html里面适当位置添加以下代码：\n此外，在/_includes/_partials/comments.html里面插入下列代码：\n最后生成的评论框如下：\n感觉还不错！！\n",
+  "wordCount" : "766",
+  "inLanguage": "en",
+  "image":"https://source.unsplash.com/random/400x200?code","datePublished": "2019-03-18T16:33:19+08:00",
+  "dateModified": "2024-02-29T16:33:19+08:00",
+  "author":{
+    "@type": "Person",
+    "name": "Jeason"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "http://localhost:1313/en/posts/blog/valine/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Jeason's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "http://localhost:1313/img/avatar.jpeg"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="http://localhost:1313/en/" accesskey="h" title="Jeason&#39;s Blog (Alt + H)">
+                <img src="http://localhost:1313/img/avatar.jpeg" alt="" aria-label="logo"
+                    height="35">Jeason&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+                
+            </div>
+        </div>
+        <ul id="menu">
+            <li class="menu-item">
+                <a href="http://localhost:1313/en/search" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
+                    <span>🔍 搜索</span>
+                    
+                </a>
+            
+            </li>
+            <li class="menu-item">
+                <a href="http://localhost:1313/en/" title="🏡 主页">
+                    <span>🏡 主页</span>
+                    
+                </a>
+            
+            </li>
+            <li class="menu-item">
+                <a href="http://localhost:1313/en/posts" title="📚 文章">
+                    <span>📚 文章</span>
+                    
+                </a>
+            
+            </li>
+            <li class="menu-item">
+                <a href="http://localhost:1313/en/archives" title="📈 归档">
+                    <span>📈 归档</span>
+                    
+                </a>
+            
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main page">
+<article class="post-single">
+    <div id="single-content">
+        <header class="post-header">
+            <div class="breadcrumbs"><a href="http://localhost:1313/en/">主页</a>&nbsp;»&nbsp;<a href="http://localhost:1313/en/posts/">📚 文章</a>&nbsp;»&nbsp;<a href="http://localhost:1313/en/posts/blog/">🏗️ 建站</a></div>
+            <h1 class="post-title">
+                Jekyll-theme-next添加Valine评论系统
+            </h1>
+            <div class="post-meta">创建: 2019-03-18 | 更新: 2024-02-29 | 作者:Jeason
+
+
+
+
+                
+                <span id="busuanzi_container_page_pv">
+                    &nbsp;|&nbsp;访问:&nbsp;<span id="busuanzi_value_page_pv"></span>
+                </span>
+
+</div>
+        </header> <aside id="toc-container" class="toc-container wide">
+    <div class="toc">
+        <details  open>
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">文章目录</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#%e8%8e%b7%e5%8f%96-app-id-%e5%92%8c-app-key" aria-label="获取 APP ID 和 APP KEY">获取 APP ID 和 APP KEY</a></li>
+                <li>
+                    <a href="#%e5%9c%a8blog%e4%b8%ad%e6%b7%bb%e5%8a%a0valine%e8%af%84%e8%ae%ba%e7%b3%bb%e7%bb%9f" aria-label="在blog中添加valine评论系统">在blog中添加valine评论系统</a><ul>
+                        
+                <li>
+                    <a href="#%e5%88%9b%e5%bb%bavalinehtml" aria-label="创建valine.html">创建valine.html</a></li>
+                <li>
+                    <a href="#%e6%b7%bb%e5%8a%a0_configyml%e9%85%8d%e7%bd%ae" aria-label="添加_config.yml配置">添加_config.yml配置</a></li>
+                <li>
+                    <a href="#%e6%9b%b4%e6%94%b9%e8%b0%83%e7%94%a8valinehtml" aria-label="更改调用valine.html">更改调用valine.html</a>
+                </li>
+            </ul>
+            </li>
+            </ul>
+        </div>
+        </details>
+    </div>
+</aside>
+<script>
+    let activeElement;
+    let elements;
+    window.addEventListener('DOMContentLoaded', function (event) {
+        checkTocPosition();
+
+        elements = document.querySelectorAll('h1[id],h2[id],h3[id],h4[id],h5[id],h6[id]');
+        
+        activeElement = elements[0];
+        const id = encodeURI(activeElement.getAttribute('id')).toLowerCase();
+        document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+    }, false);
+
+    window.addEventListener('resize', function(event) {
+        checkTocPosition();
+    }, false);
+
+    window.addEventListener('scroll', () => {
+        
+        activeElement = Array.from(elements).find((element) => {
+            if ((getOffsetTop(element) - window.pageYOffset) > 0 &&
+                (getOffsetTop(element) - window.pageYOffset) < window.innerHeight/2) {
+                return element;
+            }
+        }) || activeElement
+
+        elements.forEach(element => {
+            const id = encodeURI(element.getAttribute('id')).toLowerCase();
+            if (element === activeElement){
+                document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+            } else {
+                document.querySelector(`.inner ul li a[href="#${id}"]`).classList.remove('active');
+            }
+        })
+    }, false);
+
+    const main = parseInt(getComputedStyle(document.body).getPropertyValue('--article-width'), 10);
+    const toc = parseInt(getComputedStyle(document.body).getPropertyValue('--toc-width'), 10);
+    const gap = parseInt(getComputedStyle(document.body).getPropertyValue('--gap'), 10);
+
+    function checkTocPosition() {
+        const width = document.body.scrollWidth;
+        if (width - main - (toc * 2) - (gap * 4) > 0) {
+            document.getElementById("toc-container").classList.add("wide");
+        } else {
+            document.getElementById("toc-container").classList.remove("wide");
+        }
+    }
+
+    function getOffsetTop(element) {
+        if (!element.getClientRects().length) {
+            return 0;
+        }
+        let rect = element.getBoundingClientRect();
+        let win = element.ownerDocument.defaultView;
+        return rect.top + win.pageYOffset;
+    }
+</script>
+        <div class="post-content"><hr>
+<p>title: Jekyll-theme-next添加Valine评论系统
+date: 2019-03-18 19:42:02
+categories:</p>
+<ul>
+<li>Blog
+tags:</li>
+<li>blog</li>
+</ul>
+<hr>
+<p>给Jekyll添加Valine评论系统</p>
+<p>一直想给博客配置一款简洁的评论系统，但是没有发现合适的，最近倒腾一下Valine之后，发现效果还不错☺️</p>
+<p>详情请访问官网：<a href="https://valine.js.org/" target="_blank" rel="noopener" style="color:#42b983";>https://valine.js.org</a></p>
+<p>这个评论系统是基于LeanCloud的，对Jekyll的博客是支持的，官网网址：<a href="https://leancloud.cn/" target="_blank" rel="noopener" style="color:#42b983";>https://leancloud.cn</a></p>
+<h4 id="获取-app-id-和-app-key">获取 APP ID 和 APP KEY<a hidden class="anchor" aria-hidden="true" href="#获取-app-id-和-app-key">#</a></h4>
+<p>需要注册登录LeanCloud然后创建应用获取</p>
+<ol>
+<li>
+<p><a href="https://leancloud.cn/dashboard/login.html#/signup" target="_blank" rel="noopener" style="color:#42b983";>点击这里登录或注册Leancloud</a></p>
+</li>
+<li>
+<p>然后<a href="https://leancloud.cn/dashboard/applist.html#/newapp" target="_blank" rel="noopener" style="color:#42b983";>创建应用</a></p>
+<p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/valine/blog1.png" alt="blog"  />
+</p>
+</li>
+<li>
+<p>选择刚刚创建的<code>应用</code>&gt;<code>设置</code>&gt;<code>应用 Key</code>，然后你就能看到你的<code>APP ID</code>和<code>APP KEY</code></p>
+<p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/valine/blog2.png" alt="blog2"  />
+</p>
+</li>
+<li>
+<p>然后填写<code>应用</code>&gt;<code>设置</code>&gt;<code>安全设置</code>中的<code>Web 安全域名</code></p>
+<p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/valine/blog3.png" alt="blog3"  />
+</p>
+</li>
+</ol>
+<h4 id="在blog中添加valine评论系统">在blog中添加valine评论系统<a hidden class="anchor" aria-hidden="true" href="#在blog中添加valine评论系统">#</a></h4>
+<blockquote>
+<p>由于我使用的是<a href="https://github.com/Simpleyyt/jekyll-theme-next" target="_blank" rel="noopener" style="color:#42b983";>jekyll-theme-next</a>, 所以可能在其他模板中不适用</p>
+</blockquote>
+<h5 id="创建valinehtml">创建valine.html<a hidden class="anchor" aria-hidden="true" href="#创建valinehtml">#</a></h5>
+<p>在 <code>/_includes/_third-party/comments</code>文件夹中添加一个文件<code>valine.html</code>
+在文件里添加代码：</p>
+<p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/valine/blog6.png" alt="blog4"  />
+</p>
+<p>中间几行需要配置在_config.yml文件当中</p>
+<h5 id="添加_configyml配置">添加_config.yml配置<a hidden class="anchor" aria-hidden="true" href="#添加_configyml配置">#</a></h5>
+<p>将<code>app_id</code>，<code>app_key</code>， <code>placeholde</code>等信息添加到_config.yml配置当中
+具体使用代码：</p>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#5bc4bf">valine_comment</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#5bc4bf">enable</span>: <span style="color:#815ba4">true</span>
+</span></span><span style="display:flex;"><span><span style="color:#776e71"># app_id</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#5bc4bf">leancloud_appid</span>: <span style="color:#f99b15">XXX</span>
+</span></span><span style="display:flex;"><span><span style="color:#776e71"># app_key</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#5bc4bf">leancloud_appkey</span>: <span style="color:#f99b15">XXX</span>
+</span></span><span style="display:flex;"><span><span style="color:#776e71"># placeholde</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#5bc4bf">placeholder</span>: <span style="color:#f99b15">“Just go go”</span>
+</span></span></code></pre></div><h5 id="更改调用valinehtml">更改调用valine.html<a hidden class="anchor" aria-hidden="true" href="#更改调用valinehtml">#</a></h5>
+<p>由于前面创建了valine.html，要jekyll博客能够运行这个页面的代码，使评论框显示在每篇文章的页面，需要在<code>/_includes/_third-party/comments/index.html</code>里面适当位置添加以下代码：</p>
+<p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/valine/blog7.png" alt="blog5"  />
+</p>
+<p>此外，在<code>/_includes/_partials/comments.html</code>里面插入下列代码：</p>
+<p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/valine/blog4.png" alt="blog6"  />
+</p>
+<p>最后生成的评论框如下：</p>
+<p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/valine/blog5.png" alt="blog7"  />
+</p>
+<p>感觉还不错！！</p>
+
+        </div>
+
+        
+
+        <footer class="post-footer">
+            
+<nav class="paginav">
+  <a class="prev" href="http://localhost:1313/en/posts/blog/emoji/">
+    <span class="title">« 上一页</span>
+    <br>
+    <span>emoji表情收集</span>
+  </a>
+  <a class="next" href="http://localhost:1313/en/posts/tech/trycatch/">
+    <span class="title">下一页 »</span>
+    <br>
+    <span>tryCatch抓取错误</span>
+  </a>
+</nav>
+
+        </footer>
+    </div>
+
+
+
+<div>
+    <div class="pagination__title">
+        <span class="pagination__title-h" style="font-size: 20px;">💬评论</span>
+        <hr />
+    </div>
+
+    <div id="tcomment"></div>
+
+    <script src="https://cdn.staticfile.org/twikoo/1.6.15/twikoo.all.min.js">
+    </script>
+    
+
+    
+
+    <script>
+        twikoo.init({
+            envId: "https://twikoo.lvbibir.cn/", 
+            el: "#tcomment",
+            lang: 'zh-CN',
+            
+            path: window.TWIKOO_MAGIC_PATH||window.location.pathname,
+            
+            
+            
+            
+            
+            
+            
+        });
+    </script>
+
+</div>
+</article>
+</main>
+
+
+<footer class="footer">
+
+    <a href="https://gohugo.io/" target="_blank">
+        
+        <img style="display: unset;" src="https://image.lvbibir.cn/blog/frame-hugo-blue.svg">
+    </a>
+    <a href="https://github.com/adityatelange/hugo-PaperMod" target="_blank">
+        
+        <img style="display: unset;" src="https://image.lvbibir.cn/blog/theme-papermod-lightgrey.svg">
+    </a>
+
+    <br>
+
+    <span id="runtime_span"></span>
+    <script
+        type="text/javascript">function show_runtime() { window.setTimeout("show_runtime()", 1000); X = new Date("7/13/2021 1:00:00"); Y = new Date(); T = (Y.getTime() - X.getTime()); M = 24 * 60 * 60 * 1000; a = T / M; A = Math.floor(a); b = (a - A) * 24; B = Math.floor(b); c = (b - B) * 60; C = Math.floor((b - B) * 60); D = Math.floor((c - C) * 60); runtime_span.innerHTML = "网站已运行" + A + "天" + B + "小时"} show_runtime();</script>
+    |
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span id="busuanzi_container">
+        
+        总访客数:  <span id="busuanzi_value_site_uv"></span>
+        |
+        总访问量:  <span id="busuanzi_value_site_pv"></span>
+    </span>
+
+    <br>
+    <span>
+        Copyright
+        &copy;
+        2021-2024
+        <a href="http://localhost:1313/en/" style="border-bottom:1px solid">Jeason&#39;s Blog</a>
+    </span>
+
+    
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <span class="topInner">
+        <svg class="topSvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+            <path d="M12 6H0l6-6z" />
+        </svg>
+        <span id="read_progress"></span>
+    </span>
+</a>
+
+<script>
+    document.addEventListener('scroll', function (e) {
+        const readProgress = document.getElementById("read_progress");
+        const scrollHeight = document.documentElement.scrollHeight;
+        const clientHeight = document.documentElement.clientHeight;
+        const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        
+        readProgress.innerText = ((scrollTop / (scrollHeight - clientHeight)).toFixed(2) * 100).toFixed(0);
+    })
+</script>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    let mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 400 || document.documentElement.scrollTop > 400) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+
+
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerText = '📄复制';
+
+        function copyingDone() {
+            copybutton.innerText = '👌🏻已复制!';
+            setTimeout(() => {
+                copybutton.innerText = '📄复制';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) {
+            }
+            ;
+            selection.removeRange(range);
+        });
+
+        let language = codeblock.className.replaceAll("language-", "")
+        let macTool = document.createElement("div")
+        let macTool1 = document.createElement("div")
+        let macTool2 = document.createElement("div")
+        let macTool3 = document.createElement("div")
+        let languageType = document.createElement("div")
+        languageType.innerText = language
+        macTool.setAttribute('class', 'mac-tool')
+        macTool1.setAttribute('class', 'mac bb1')
+        macTool2.setAttribute('class', 'mac bb2')
+        macTool3.setAttribute('class', 'mac bb3')
+        languageType.setAttribute('class', 'language-type')
+        macTool.appendChild(macTool1)
+        macTool.appendChild(macTool2)
+        macTool.appendChild(macTool3)
+        macTool.appendChild(languageType)
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+            container.appendChild(macTool)
+        } else if (container.parentNode.firstChild === container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName === "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+            container.appendChild(macTool)
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+            container.appendChild(macTool)
+        }
+    });
+</script>
+
+</body>
+
+</html>

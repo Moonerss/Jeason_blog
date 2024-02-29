@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>归一化与标准化 | Jeason&#39;s Blog</title>
+<meta name="keywords" content="Stats">
+<meta name="description" content="本文主要介绍了数据预处理中的归一化和标准化之间的异同以及使用的场景">
+<meta name="author" content="作者:Jeason">
+<link rel="canonical" href="http://localhost:1313/en/posts/tech/data_preprocess/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.e029fa55ed0a02bb684da89d2a53a4e1ba9e26e3719fa48460be52776460b523.css" integrity="sha256-4Cn6Ve0KArtoTaidKlOk4bqeJuNxn6SEYL5Sd2RgtSM=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:1313/img/avatar.jpeg">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/img/avatar.jpeg">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/img/avatar.jpeg">
+<link rel="apple-touch-icon" href="http://localhost:1313/img/avatar.jpeg">
+<link rel="mask-icon" href="http://localhost:1313/img/avatar.jpeg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="http://localhost:1313/en/posts/tech/data_preprocess/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><script type="text/javascript"
+        async
+        src="https://cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\[\[','\]\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+});
+
+MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<style>
+code.has-jax {
+    font: inherit;
+    font-size: 100%;
+    background: inherit;
+    border: inherit;
+    color: #515151;
+}
+</style>
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = ""; 
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<meta property="og:title" content="归一化与标准化" />
+<meta property="og:description" content="本文主要介绍了数据预处理中的归一化和标准化之间的异同以及使用的场景" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://localhost:1313/en/posts/tech/data_preprocess/" />
+<meta property="og:image" content="https://source.unsplash.com/random/400x200?code" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-10-11T14:33:21+08:00" />
+<meta property="article:modified_time" content="2024-02-29T14:33:21+08:00" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://source.unsplash.com/random/400x200?code" />
+<meta name="twitter:title" content="归一化与标准化"/>
+<meta name="twitter:description" content="本文主要介绍了数据预处理中的归一化和标准化之间的异同以及使用的场景"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "📚 文章",
+      "item": "http://localhost:1313/en/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "👨🏻‍💻 技术",
+      "item": "http://localhost:1313/en/posts/tech/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "归一化与标准化",
+      "item": "http://localhost:1313/en/posts/tech/data_preprocess/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "归一化与标准化",
+  "name": "归一化与标准化",
+  "description": "本文主要介绍了数据预处理中的归一化和标准化之间的异同以及使用的场景",
+  "keywords": [
+    "Stats"
+  ],
+  "articleBody": "归一化 归一化（normalization）特指将数据进行缩放到一个固定的区间内。通常来讲，这个区间是[0，1]，但是在实际的情况中，这个区间可以是[-1,1]。总之符合使用的需求。\n通过归⼀化，我们可以消除不同量纲下的数据对最终结果的影响。例如，我们通过身高（单位：⽶）和体重（单位：公 ⽄）来衡量两个⼈之间的差异，两个⼈的的体重相差 20 公⽄，⾝⾼相差 0.1 ⽶，因此在这样的量纲下衡量这两个⼈的差 异时，体重的差异会把⾝⾼的差异遮盖掉，但这往往不是我们想要的结果。但通例如我们假设体重的最小值和最⼤值分 别为 0 和 200 公⽄，⾝⾼的最小值和最⼤值分别为 0 和 2 ⽶，因此归⼀化后体重和⾝⾼的差距变为 0.1 和 0.05，因此通过归⼀下则可以避免这样的问题的出现。\n归一化目的 把数据缩放到特定区间内\n主要是为了数据处理方便提出来的，把数据映射到0～1范围之内处理，更加便捷快速，应该归到数字信号处理范畴之内。\n数据无量纲化\n归一化是一种简化计算的方式，即将有量纲的表达式，经过变换，化为无量纲的表达式，成为纯量，降低了数据的复杂度。\n归一化计算 针对一般的情况，归一化的结果可以表示为： $$ x’=\\frac{x-x_{min}}{x_{max}-x_{min}} $$ 其中$x_{min}$表示$x$的最小值，$x_{max}$表示$x$中的最大值\n这种归一化方法一般叫做min-max归一化，归一化之后数据的区间为[0,1]\n另外，使用均值进行归一化操作的方式叫做均值归一化，归一化之后数据的区间为[-1,1]\n公式表示为： $$ x’=\\frac{x-x_{mean}}{x_{max}-x_{min}} $$\n归一化的应用 归一化应用于在对数据范围有严格要求的情况下。在不涉及距离度量和数据整体协方差分布的情况下可以使用归一化。如果数据有异常值，一定不要用归一化。\n标准化 标准化(Standardization)特指将数据进行变化，使其符合均值为0，标准差为1的分布。注意：这里的分布并非一定是正态分布\n标准化会改变数据的均值、标准差，也就是说改变了原来的分布，但是分布的类型依然是不变的，原来是什么类型，标准化之后依然是什么类型。标准化后的分布并不一定就是标准正态，完全取决于原始数据的分布类型\n标准化目的 消除量纲影响，利于不同级别数据的比较，得到合理的结果\n加速建模的建立与求解，提高运算速度\n标准化的计算 最常见的标准化方法是标准差标准化： $$ x’=\\frac{x-{\\mu}}{\\sigma} $$ 标准化过后的数据符合取值范围无固定区间\n标准化的应用 数据的标准化广泛的运用于数据建模和机器学习当中。在分类、聚类算法中，需要使用距离来度量相似性的时候、或者使用PCA技术进行降维的时候，标准化表现更好\n归一化和标准化的差异与关联 差异 结果差异 Normalization会严格的限定变换后数据的范围，如[0,1],[-1,1]。Standardization变换后无严格的区间限制，只要求其均值为0，标准差为1。 Normalization对数据的缩放比例仅仅和极值有关，Standardization受到极值影响比较大。 关联 Normalization和Standardization在本质上都是对数据的线性变换，两者都不会改变原始的数据排布顺序\n标准化和归一化的原因及用途 统计建模中，如回归模型，自变量X XX的量纲不一致导致了回归系数无法直接解读或者错误解读；需要将X XX都处理到统一量纲下，这样才有可比性； 机器学习和统计学中有很多地方要用到“距离”的计算，比如PCA，KNN，kmeans等等，不同维度量纲不同可能会导致距离的计算依赖于量纲较大的那些特征而得到不合理的结果； 参数估计时使用梯度下降，在使用梯度下降的方法求解最优化问题时， 归一化/标准化后可以加快梯度下降的求解速度，即提升模型的收敛速度。 标准化和归一化的使用场景 如果你对处理后的数据范围有严格要求，需要使用归一化； 如果数据不稳定，存在过大或过小的值（也可以说是异常值），不能使用归一化操作； 标准化是机器学习中最常用的方式，如果无法判断可以直接使用标准化； 对于分类、聚类算法，需要使用距离来度量相似性的时候、或者使用PCA技术进行降维的时候，标准化表现更好； 在不涉及距离度量、协方差计算的时候，可以使用归一化方法。 不需要使用标准化和归一化的场景 数据不同特征之间存在较大的差异，数据量纲不一致时需要预处理，反之则不需要； 当要使用的模型不涉及到距离和标准差异的衡量时，可以不使用标准化和归一化操作； 使用概率模型时可以不进行操作，因为它不关注数据本身，关注的是出现概率。 Reference 标准化和归一化，请勿混为一谈，透彻理解数据变换 标准化和归一化什么区别？–知乎 R 语言数据科学导论 机器学习中常见的几种归一化方法以及原因 Normalization vs Standardization — Quantitative analysis Feature Scaling for Machine Learning: Understanding the Difference Between Normalization vs. Standardization ",
+  "wordCount" : "1866",
+  "inLanguage": "en",
+  "image":"https://source.unsplash.com/random/400x200?code","datePublished": "2021-10-11T14:33:21+08:00",
+  "dateModified": "2024-02-29T14:33:21+08:00",
+  "author":{
+    "@type": "Person",
+    "name": "Jeason"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "http://localhost:1313/en/posts/tech/data_preprocess/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Jeason's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "http://localhost:1313/img/avatar.jpeg"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="http://localhost:1313/en/" accesskey="h" title="Jeason&#39;s Blog (Alt + H)">
+                <img src="http://localhost:1313/img/avatar.jpeg" alt="" aria-label="logo"
+                    height="35">Jeason&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+                
+            </div>
+        </div>
+        <ul id="menu">
+            <li class="menu-item">
+                <a href="http://localhost:1313/en/search" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
+                    <span>🔍 搜索</span>
+                    
+                </a>
+            
+            </li>
+            <li class="menu-item">
+                <a href="http://localhost:1313/en/" title="🏡 主页">
+                    <span>🏡 主页</span>
+                    
+                </a>
+            
+            </li>
+            <li class="menu-item">
+                <a href="http://localhost:1313/en/posts" title="📚 文章">
+                    <span>📚 文章</span>
+                    
+                </a>
+            
+            </li>
+            <li class="menu-item">
+                <a href="http://localhost:1313/en/archives" title="📈 归档">
+                    <span>📈 归档</span>
+                    
+                </a>
+            
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main page">
+<article class="post-single">
+    <div id="single-content">
+        <header class="post-header">
+            <div class="breadcrumbs"><a href="http://localhost:1313/en/">主页</a>&nbsp;»&nbsp;<a href="http://localhost:1313/en/posts/">📚 文章</a>&nbsp;»&nbsp;<a href="http://localhost:1313/en/posts/tech/">👨🏻‍💻 技术</a></div>
+            <h1 class="post-title">
+                归一化与标准化
+            </h1>
+            <div class="post-description">
+                本文主要介绍了数据预处理中的归一化和标准化之间的异同以及使用的场景
+            </div>
+            <div class="post-meta">创建: 2021-10-11 | 更新: 2024-02-29 | 作者:Jeason
+
+
+
+
+                
+                <span id="busuanzi_container_page_pv">
+                    &nbsp;|&nbsp;访问:&nbsp;<span id="busuanzi_value_page_pv"></span>
+                </span>
+
+</div>
+        </header> <aside id="toc-container" class="toc-container wide">
+    <div class="toc">
+        <details  open>
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">文章目录</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#%e5%bd%92%e4%b8%80%e5%8c%96" aria-label="归一化">归一化</a><ul>
+                        
+                <li>
+                    <a href="#%e5%bd%92%e4%b8%80%e5%8c%96%e7%9b%ae%e7%9a%84" aria-label="归一化目的">归一化目的</a></li>
+                <li>
+                    <a href="#%e5%bd%92%e4%b8%80%e5%8c%96%e8%ae%a1%e7%ae%97" aria-label="归一化计算">归一化计算</a></li>
+                <li>
+                    <a href="#%e5%bd%92%e4%b8%80%e5%8c%96%e7%9a%84%e5%ba%94%e7%94%a8" aria-label="归一化的应用">归一化的应用</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e6%a0%87%e5%87%86%e5%8c%96" aria-label="标准化">标准化</a><ul>
+                        
+                <li>
+                    <a href="#%e6%a0%87%e5%87%86%e5%8c%96%e7%9b%ae%e7%9a%84" aria-label="标准化目的">标准化目的</a></li>
+                <li>
+                    <a href="#%e6%a0%87%e5%87%86%e5%8c%96%e7%9a%84%e8%ae%a1%e7%ae%97" aria-label="标准化的计算">标准化的计算</a></li>
+                <li>
+                    <a href="#%e6%a0%87%e5%87%86%e5%8c%96%e7%9a%84%e5%ba%94%e7%94%a8" aria-label="标准化的应用">标准化的应用</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e5%bd%92%e4%b8%80%e5%8c%96%e5%92%8c%e6%a0%87%e5%87%86%e5%8c%96%e7%9a%84%e5%b7%ae%e5%bc%82%e4%b8%8e%e5%85%b3%e8%81%94" aria-label="归一化和标准化的差异与关联">归一化和标准化的差异与关联</a><ul>
+                        
+                <li>
+                    <a href="#%e5%b7%ae%e5%bc%82" aria-label="差异">差异</a></li>
+                <li>
+                    <a href="#%e5%85%b3%e8%81%94" aria-label="关联">关联</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e6%a0%87%e5%87%86%e5%8c%96%e5%92%8c%e5%bd%92%e4%b8%80%e5%8c%96%e7%9a%84%e5%8e%9f%e5%9b%a0%e5%8f%8a%e7%94%a8%e9%80%94" aria-label="标准化和归一化的原因及用途">标准化和归一化的原因及用途</a></li>
+                <li>
+                    <a href="#%e6%a0%87%e5%87%86%e5%8c%96%e5%92%8c%e5%bd%92%e4%b8%80%e5%8c%96%e7%9a%84%e4%bd%bf%e7%94%a8%e5%9c%ba%e6%99%af" aria-label="标准化和归一化的使用场景">标准化和归一化的使用场景</a></li>
+                <li>
+                    <a href="#%e4%b8%8d%e9%9c%80%e8%a6%81%e4%bd%bf%e7%94%a8%e6%a0%87%e5%87%86%e5%8c%96%e5%92%8c%e5%bd%92%e4%b8%80%e5%8c%96%e7%9a%84%e5%9c%ba%e6%99%af" aria-label="不需要使用标准化和归一化的场景">不需要使用标准化和归一化的场景</a></li>
+                <li>
+                    <a href="#reference" aria-label="Reference">Reference</a>
+                </li>
+            </ul>
+        </div>
+        </details>
+    </div>
+</aside>
+<script>
+    let activeElement;
+    let elements;
+    window.addEventListener('DOMContentLoaded', function (event) {
+        checkTocPosition();
+
+        elements = document.querySelectorAll('h1[id],h2[id],h3[id],h4[id],h5[id],h6[id]');
+        
+        activeElement = elements[0];
+        const id = encodeURI(activeElement.getAttribute('id')).toLowerCase();
+        document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+    }, false);
+
+    window.addEventListener('resize', function(event) {
+        checkTocPosition();
+    }, false);
+
+    window.addEventListener('scroll', () => {
+        
+        activeElement = Array.from(elements).find((element) => {
+            if ((getOffsetTop(element) - window.pageYOffset) > 0 &&
+                (getOffsetTop(element) - window.pageYOffset) < window.innerHeight/2) {
+                return element;
+            }
+        }) || activeElement
+
+        elements.forEach(element => {
+            const id = encodeURI(element.getAttribute('id')).toLowerCase();
+            if (element === activeElement){
+                document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+            } else {
+                document.querySelector(`.inner ul li a[href="#${id}"]`).classList.remove('active');
+            }
+        })
+    }, false);
+
+    const main = parseInt(getComputedStyle(document.body).getPropertyValue('--article-width'), 10);
+    const toc = parseInt(getComputedStyle(document.body).getPropertyValue('--toc-width'), 10);
+    const gap = parseInt(getComputedStyle(document.body).getPropertyValue('--gap'), 10);
+
+    function checkTocPosition() {
+        const width = document.body.scrollWidth;
+        if (width - main - (toc * 2) - (gap * 4) > 0) {
+            document.getElementById("toc-container").classList.add("wide");
+        } else {
+            document.getElementById("toc-container").classList.remove("wide");
+        }
+    }
+
+    function getOffsetTop(element) {
+        if (!element.getClientRects().length) {
+            return 0;
+        }
+        let rect = element.getBoundingClientRect();
+        let win = element.ownerDocument.defaultView;
+        return rect.top + win.pageYOffset;
+    }
+</script>
+        <div class="post-content"><h3 id="归一化">归一化<a hidden class="anchor" aria-hidden="true" href="#归一化">#</a></h3>
+<p>归一化（<code>normalization</code>）特指将<strong>数据进行缩放到一个固定的区间内</strong>。通常来讲，这个区间是[0，1]，但是在实际的情况中，这个区间可以是[-1,1]。总之符合使用的需求。</p>
+<p>通过归⼀化，我们可以<strong>消除不同量纲下的数据对最终结果的影响</strong>。例如，我们通过身高（单位：⽶）和体重（单位：公 ⽄）来衡量两个⼈之间的差异，两个⼈的的体重相差 20 公⽄，⾝⾼相差 0.1 ⽶，因此在这样的量纲下衡量这两个⼈的差 异时，体重的差异会把⾝⾼的差异遮盖掉，但这往往不是我们想要的结果。但通例如我们假设体重的最小值和最⼤值分 别为 0 和 200 公⽄，⾝⾼的最小值和最⼤值分别为 0 和 2 ⽶，因此归⼀化后体重和⾝⾼的差距变为 0.1 和 0.05，因此通过归⼀下则可以避免这样的问题的出现。</p>
+<h4 id="归一化目的">归一化目的<a hidden class="anchor" aria-hidden="true" href="#归一化目的">#</a></h4>
+<ol>
+<li>
+<p>把数据缩放到特定区间内</p>
+<p>主要是为了数据处理方便提出来的，把数据映射到0～1范围之内处理，更加便捷快速，应该归到数字信号处理范畴之内。</p>
+</li>
+<li>
+<p>数据无量纲化</p>
+<p>归一化是一种简化计算的方式，即将有量纲的表达式，经过变换，化为无量纲的表达式，成为纯量，降低了数据的复杂度。</p>
+</li>
+</ol>
+<h4 id="归一化计算">归一化计算<a hidden class="anchor" aria-hidden="true" href="#归一化计算">#</a></h4>
+<p>针对一般的情况，归一化的结果可以表示为：
+$$
+x&rsquo;=\frac{x-x_{min}}{x_{max}-x_{min}}
+$$
+其中$x_{min}$表示$x$的最小值，$x_{max}$表示$x$中的最大值</p>
+<p>这种归一化方法一般叫做<strong>min-max归一化</strong>，归一化之后数据的区间为[0,1]</p>
+<p>另外，使用均值进行归一化操作的方式叫做<strong>均值归一化</strong>，归一化之后数据的区间为[-1,1]</p>
+<p>公式表示为：
+$$
+x&rsquo;=\frac{x-x_{mean}}{x_{max}-x_{min}}
+$$</p>
+<h4 id="归一化的应用">归一化的应用<a hidden class="anchor" aria-hidden="true" href="#归一化的应用">#</a></h4>
+<p>归一化应用于在对数据范围有严格要求的情况下。在不涉及距离度量和数据整体协方差分布的情况下可以使用归一化。如果数据有异常值，一定不要用归一化。</p>
+<h3 id="标准化">标准化<a hidden class="anchor" aria-hidden="true" href="#标准化">#</a></h3>
+<p>标准化(<code>Standardization</code>)特指将数据进行变化，使其符合均值为0，标准差为1的分布。<strong>注意：这里的分布并非一定是正态分布</strong></p>
+<blockquote>
+<p>标准化会改变数据的均值、标准差，也就是说改变了原来的分布，但是分布的类型依然是不变的，原来是什么类型，标准化之后依然是什么类型。标准化后的分布并不一定就是标准正态，完全取决于原始数据的分布类型</p>
+</blockquote>
+<h4 id="标准化目的">标准化目的<a hidden class="anchor" aria-hidden="true" href="#标准化目的">#</a></h4>
+<ol>
+<li>
+<p>消除量纲影响，利于不同级别数据的比较，得到合理的结果</p>
+</li>
+<li>
+<p>加速建模的建立与求解，提高运算速度</p>
+</li>
+</ol>
+<h4 id="标准化的计算">标准化的计算<a hidden class="anchor" aria-hidden="true" href="#标准化的计算">#</a></h4>
+<p>最常见的标准化方法是标准差标准化：
+$$
+x&rsquo;=\frac{x-{\mu}}{\sigma}
+$$
+标准化过后的数据符合取值范围无固定区间</p>
+<h4 id="标准化的应用">标准化的应用<a hidden class="anchor" aria-hidden="true" href="#标准化的应用">#</a></h4>
+<p>数据的标准化广泛的运用于数据建模和机器学习当中。在分类、聚类算法中，需要使用距离来度量相似性的时候、或者使用PCA技术进行降维的时候，标准化表现更好</p>
+<h3 id="归一化和标准化的差异与关联">归一化和标准化的差异与关联<a hidden class="anchor" aria-hidden="true" href="#归一化和标准化的差异与关联">#</a></h3>
+<h4 id="差异">差异<a hidden class="anchor" aria-hidden="true" href="#差异">#</a></h4>
+<ol>
+<li>结果差异</li>
+</ol>
+<ul>
+<li>Normalization会严格的限定变换后数据的范围，如[0,1],[-1,1]。Standardization变换后无严格的区间限制，只要求其均值为0，标准差为1。</li>
+<li>Normalization对数据的缩放比例仅仅和极值有关，Standardization受到极值影响比较大。</li>
+</ul>
+<h4 id="关联">关联<a hidden class="anchor" aria-hidden="true" href="#关联">#</a></h4>
+<p>Normalization和Standardization在本质上都是对数据的线性变换，两者都不会改变原始的数据排布顺序</p>
+<h3 id="标准化和归一化的原因及用途">标准化和归一化的原因及用途<a hidden class="anchor" aria-hidden="true" href="#标准化和归一化的原因及用途">#</a></h3>
+<ol>
+<li>统计建模中，如回归模型，自变量X XX的量纲不一致导致了回归系数无法直接解读或者错误解读；需要将X XX都处理到统一量纲下，这样才有可比性；</li>
+<li>机器学习和统计学中有很多地方要用到“距离”的计算，比如PCA，KNN，kmeans等等，不同维度量纲不同可能会导致距离的计算依赖于量纲较大的那些特征而得到不合理的结果；</li>
+<li>参数估计时使用梯度下降，在使用梯度下降的方法求解最优化问题时， 归一化/标准化后可以加快梯度下降的求解速度，即提升模型的收敛速度。</li>
+</ol>
+<h3 id="标准化和归一化的使用场景">标准化和归一化的使用场景<a hidden class="anchor" aria-hidden="true" href="#标准化和归一化的使用场景">#</a></h3>
+<ol>
+<li>如果你对处理后的数据范围有严格要求，需要使用归一化；</li>
+<li>如果数据不稳定，存在过大或过小的值（也可以说是异常值），不能使用归一化操作；</li>
+<li>标准化是机器学习中最常用的方式，如果无法判断可以直接使用标准化；</li>
+<li>对于分类、聚类算法，需要使用距离来度量相似性的时候、或者使用PCA技术进行降维的时候，标准化表现更好；</li>
+<li>在不涉及距离度量、协方差计算的时候，可以使用归一化方法。</li>
+</ol>
+<h3 id="不需要使用标准化和归一化的场景">不需要使用标准化和归一化的场景<a hidden class="anchor" aria-hidden="true" href="#不需要使用标准化和归一化的场景">#</a></h3>
+<ol>
+<li>数据不同特征之间存在较大的差异，数据量纲不一致时需要预处理，反之则不需要；</li>
+<li>当要使用的模型不涉及到距离和标准差异的衡量时，可以不使用标准化和归一化操作；</li>
+<li>使用概率模型时可以不进行操作，因为它不关注数据本身，关注的是出现概率。</li>
+</ol>
+<h3 id="reference">Reference<a hidden class="anchor" aria-hidden="true" href="#reference">#</a></h3>
+<ul>
+<li><a href="https://blog.csdn.net/weixin_36604953/article/details/102652160" target="_blank" rel="noopener" style="color:#42b983";>标准化和归一化，请勿混为一谈，透彻理解数据变换</a></li>
+<li><a href="https://www.zhihu.com/question/20467170" target="_blank" rel="noopener" style="color:#42b983";>标准化和归一化什么区别？&ndash;知乎</a></li>
+<li><a href="https://ds-r.leovan.tech/feature-engineering/feature-engineering.pdf" target="_blank" rel="noopener" style="color:#42b983";>R 语言数据科学导论</a></li>
+<li><a href="https://blog.csdn.net/UESTC_C2_403/article/details/75804617" target="_blank" rel="noopener" style="color:#42b983";>机器学习中常见的几种归一化方法以及原因</a></li>
+<li><a href="https://towardsdatascience.com/normalization-vs-standardization-quantitative-analysis-a91e8a79cebf" target="_blank" rel="noopener" style="color:#42b983";>Normalization vs Standardization — Quantitative analysis</a></li>
+<li><a href="https://www.analyticsvidhya.com/blog/2020/04/feature-scaling-machine-learning-normalization-standardization/" target="_blank" rel="noopener" style="color:#42b983";>Feature Scaling for Machine Learning: Understanding the Difference Between Normalization vs. Standardization</a></li>
+</ul>
+
+
+        </div>
+
+        
+
+        <footer class="post-footer">
+            
+<nav class="paginav">
+  <a class="prev" href="http://localhost:1313/en/posts/read/latex/">
+    <span class="title">« 上一页</span>
+    <br>
+    <span>Latex 公式语法参考</span>
+  </a>
+  <a class="next" href="http://localhost:1313/en/posts/tech/time_r/">
+    <span class="title">下一页 »</span>
+    <br>
+    <span>计算R代码运行的时间</span>
+  </a>
+</nav>
+
+        </footer>
+    </div>
+
+
+
+<div>
+    <div class="pagination__title">
+        <span class="pagination__title-h" style="font-size: 20px;">💬评论</span>
+        <hr />
+    </div>
+
+    <div id="tcomment"></div>
+
+    <script src="https://cdn.staticfile.org/twikoo/1.6.15/twikoo.all.min.js">
+    </script>
+    
+
+    
+
+    <script>
+        twikoo.init({
+            envId: "https://twikoo.lvbibir.cn/", 
+            el: "#tcomment",
+            lang: 'zh-CN',
+            
+            path: window.TWIKOO_MAGIC_PATH||window.location.pathname,
+            
+            
+            
+            
+            
+            
+            
+        });
+    </script>
+
+</div>
+</article>
+</main>
+
+
+<footer class="footer">
+
+    <a href="https://gohugo.io/" target="_blank">
+        
+        <img style="display: unset;" src="https://image.lvbibir.cn/blog/frame-hugo-blue.svg">
+    </a>
+    <a href="https://github.com/adityatelange/hugo-PaperMod" target="_blank">
+        
+        <img style="display: unset;" src="https://image.lvbibir.cn/blog/theme-papermod-lightgrey.svg">
+    </a>
+
+    <br>
+
+    <span id="runtime_span"></span>
+    <script
+        type="text/javascript">function show_runtime() { window.setTimeout("show_runtime()", 1000); X = new Date("7/13/2021 1:00:00"); Y = new Date(); T = (Y.getTime() - X.getTime()); M = 24 * 60 * 60 * 1000; a = T / M; A = Math.floor(a); b = (a - A) * 24; B = Math.floor(b); c = (b - B) * 60; C = Math.floor((b - B) * 60); D = Math.floor((c - C) * 60); runtime_span.innerHTML = "网站已运行" + A + "天" + B + "小时"} show_runtime();</script>
+    |
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span id="busuanzi_container">
+        
+        总访客数:  <span id="busuanzi_value_site_uv"></span>
+        |
+        总访问量:  <span id="busuanzi_value_site_pv"></span>
+    </span>
+
+    <br>
+    <span>
+        Copyright
+        &copy;
+        2021-2024
+        <a href="http://localhost:1313/en/" style="border-bottom:1px solid">Jeason&#39;s Blog</a>
+    </span>
+
+    
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <span class="topInner">
+        <svg class="topSvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+            <path d="M12 6H0l6-6z" />
+        </svg>
+        <span id="read_progress"></span>
+    </span>
+</a>
+
+<script>
+    document.addEventListener('scroll', function (e) {
+        const readProgress = document.getElementById("read_progress");
+        const scrollHeight = document.documentElement.scrollHeight;
+        const clientHeight = document.documentElement.clientHeight;
+        const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        
+        readProgress.innerText = ((scrollTop / (scrollHeight - clientHeight)).toFixed(2) * 100).toFixed(0);
+    })
+</script>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    let mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 400 || document.documentElement.scrollTop > 400) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+
+
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerText = '📄复制';
+
+        function copyingDone() {
+            copybutton.innerText = '👌🏻已复制!';
+            setTimeout(() => {
+                copybutton.innerText = '📄复制';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) {
+            }
+            ;
+            selection.removeRange(range);
+        });
+
+        let language = codeblock.className.replaceAll("language-", "")
+        let macTool = document.createElement("div")
+        let macTool1 = document.createElement("div")
+        let macTool2 = document.createElement("div")
+        let macTool3 = document.createElement("div")
+        let languageType = document.createElement("div")
+        languageType.innerText = language
+        macTool.setAttribute('class', 'mac-tool')
+        macTool1.setAttribute('class', 'mac bb1')
+        macTool2.setAttribute('class', 'mac bb2')
+        macTool3.setAttribute('class', 'mac bb3')
+        languageType.setAttribute('class', 'language-type')
+        macTool.appendChild(macTool1)
+        macTool.appendChild(macTool2)
+        macTool.appendChild(macTool3)
+        macTool.appendChild(languageType)
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+            container.appendChild(macTool)
+        } else if (container.parentNode.firstChild === container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName === "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+            container.appendChild(macTool)
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+            container.appendChild(macTool)
+        }
+    });
+</script>
+
+</body>
+
+</html>

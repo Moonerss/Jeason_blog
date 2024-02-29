@@ -2,46 +2,291 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>👨🏻‍💻 技术 on Jeason&#39;s Blog</title>
-    <link>https://jeason.netlify.app/en/posts/tech/</link>
+    <link>http://localhost:1313/en/posts/tech/</link>
     <description>Recent content in 👨🏻‍💻 技术 on Jeason&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Wed, 28 Feb 2024 15:49:16 +0800</lastBuildDate>
-    <atom:link href="https://jeason.netlify.app/en/posts/tech/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 29 Feb 2024 16:50:44 +0800</lastBuildDate>
+    <atom:link href="http://localhost:1313/en/posts/tech/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>C-index计算的相关问题</title>
+      <link>http://localhost:1313/en/posts/tech/c_index/</link>
+      <pubDate>Thu, 29 Feb 2024 15:08:18 +0800</pubDate>
+      <guid>http://localhost:1313/en/posts/tech/c_index/</guid>
+      <description>背景 在进行Cox模型的预后能力评估比较时，C-index作为一个重要的评价指标被广泛的使用。目前有多个R包 可以实现C-index的计算，如：Hmisc，survcomp等。但是，当进行计算时，发现一个问题，使用不同的 R包计算出的C-index值可能不同，虽然这一结果可能是由于对于</description>
+    </item>
     <item>
       <title>浅识apply家族</title>
-      <link>https://jeason.netlify.app/en/posts/tech/apply/</link>
+      <link>http://localhost:1313/en/posts/tech/apply/</link>
       <pubDate>Fri, 23 Feb 2024 19:46:13 +0800</pubDate>
-      <guid>https://jeason.netlify.app/en/posts/tech/apply/</guid>
+      <guid>http://localhost:1313/en/posts/tech/apply/</guid>
       <description>介绍R语言apply家族函数的相关应用</description>
     </item>
     <item>
+      <title>人类基因组知识汇总</title>
+      <link>http://localhost:1313/en/posts/tech/genome/</link>
+      <pubDate>Tue, 14 Nov 2023 16:31:58 +0800</pubDate>
+      <guid>http://localhost:1313/en/posts/tech/genome/</guid>
+      <description>基因组大小 人类基因组主要由细胞核的23对染色体组成(核基因组)，还包括线粒体中的小DNA分子(线粒体基因组)。 单倍体基因组大概有30亿个碱基对组成，具体到每个染色体的碱基对长度与基因数量可见下图: 在这30亿个碱基中，仅有1.5%的区域是2~3w个可编码蛋白质的基因。 平均基因长度有</description>
+    </item>
+    <item>
+      <title>nohup用法</title>
+      <link>http://localhost:1313/en/posts/tech/nohup/</link>
+      <pubDate>Tue, 04 Apr 2023 16:24:59 +0800</pubDate>
+      <guid>http://localhost:1313/en/posts/tech/nohup/</guid>
+      <description>nohup和&amp;amp;使用方法 nohup(不挂断) nohup是no hung up的缩写，意思是不挂断 。 nohup 语法格式： nohup command [arg...] 说明： 除了无法进行输入操作（比如输入命令、换行、打空格等） 外 ，标准输出 保存到 nohup.out文件中。 关闭客户端后，命令仍然会运行，不会挂断。 例如： 执行 nohup sh test.s</description>
+    </item>
+    <item>
       <title>AnnotationForge包构建非模式物种Orgdb包</title>
-      <link>https://jeason.netlify.app/en/posts/tech/annotationforge/</link>
+      <link>http://localhost:1313/en/posts/tech/annotationforge/</link>
       <pubDate>Tue, 04 Apr 2023 10:31:03 +0800</pubDate>
-      <guid>https://jeason.netlify.app/en/posts/tech/annotationforge/</guid>
+      <guid>http://localhost:1313/en/posts/tech/annotationforge/</guid>
       <description>AnnotationForge包构建非模式物种Orgdb包</description>
     </item>
     <item>
+      <title>Docker | 构建镜像</title>
+      <link>http://localhost:1313/en/posts/tech/docker_4/</link>
+      <pubDate>Thu, 23 Mar 2023 15:40:13 +0800</pubDate>
+      <guid>http://localhost:1313/en/posts/tech/docker_4/</guid>
+      <description>本文介绍了Docker如何构建可以分发的镜像</description>
+    </item>
+    <item>
+      <title>Docker | 常规操作</title>
+      <link>http://localhost:1313/en/posts/tech/docker_3/</link>
+      <pubDate>Thu, 23 Mar 2023 15:38:36 +0800</pubDate>
+      <guid>http://localhost:1313/en/posts/tech/docker_3/</guid>
+      <description>本文介绍了Docker的常规操作使用命令</description>
+    </item>
+    <item>
+      <title>Docker | 镜像使用</title>
+      <link>http://localhost:1313/en/posts/tech/docker_2/</link>
+      <pubDate>Thu, 23 Mar 2023 15:30:52 +0800</pubDate>
+      <guid>http://localhost:1313/en/posts/tech/docker_2/</guid>
+      <description>本文介绍了Docker镜像的下载与使用</description>
+    </item>
+    <item>
+      <title>PCA分析原理</title>
+      <link>http://localhost:1313/en/posts/tech/pca/</link>
+      <pubDate>Sat, 27 Nov 2021 21:14:44 +0800</pubDate>
+      <guid>http://localhost:1313/en/posts/tech/pca/</guid>
+      <description>本文介绍了PCA分析的原理和基本思想，以及在R语言中的实现过程</description>
+    </item>
+    <item>
+      <title>归一化与标准化</title>
+      <link>http://localhost:1313/en/posts/tech/data_preprocess/</link>
+      <pubDate>Mon, 11 Oct 2021 14:33:21 +0800</pubDate>
+      <guid>http://localhost:1313/en/posts/tech/data_preprocess/</guid>
+      <description>本文主要介绍了数据预处理中的归一化和标准化之间的异同以及使用的场景</description>
+    </item>
+    <item>
+      <title>计算R代码运行的时间</title>
+      <link>http://localhost:1313/en/posts/tech/time_r/</link>
+      <pubDate>Mon, 04 Oct 2021 20:07:03 +0800</pubDate>
+      <guid>http://localhost:1313/en/posts/tech/time_r/</guid>
+      <description>这里主要介绍了在R语言中如何实现计算运行时间的问题，以及不同方法的使用示例</description>
+    </item>
+    <item>
+      <title>SCENT包Debug</title>
+      <link>http://localhost:1313/en/posts/tech/scent/</link>
+      <pubDate>Fri, 20 Nov 2020 20:53:51 +0800</pubDate>
+      <guid>http://localhost:1313/en/posts/tech/scent/</guid>
+      <description>本文记录了在使用`SCENT`包进行分析时出现的错误，以及解决方法。</description>
+    </item>
+    <item>
+      <title>SSH连接自动断开问题</title>
+      <link>http://localhost:1313/en/posts/tech/ssh/</link>
+      <pubDate>Mon, 16 Nov 2020 16:11:25 +0800</pubDate>
+      <guid>http://localhost:1313/en/posts/tech/ssh/</guid>
+      <description>本文主要介绍了在使用ssh连接时如何解决自动断开的问题</description>
+    </item>
+    <item>
+      <title>Time-dependent ROC 曲线</title>
+      <link>http://localhost:1313/en/posts/tech/timeroc/</link>
+      <pubDate>Fri, 13 Nov 2020 16:34:51 +0800</pubDate>
+      <guid>http://localhost:1313/en/posts/tech/timeroc/</guid>
+      <description>基本概念 在对biomarker进行分析时，我们通常会对预测模型的预测性能通过ROC曲线来进行评估，但是对于一些生存资料相关数据的预测模型需要考虑到生存信息与时间因素进去，于是就有了时间依赖的ROC曲线。 传统的ROC曲线分析方法认为个体的事件（疾病）状态和markers是随着时间的</description>
+    </item>
+    <item>
+      <title>Conda使用指南（安装部署篇）</title>
+      <link>http://localhost:1313/en/posts/tech/conda/</link>
+      <pubDate>Tue, 10 Nov 2020 19:43:36 +0800</pubDate>
+      <guid>http://localhost:1313/en/posts/tech/conda/</guid>
+      <description>这里介绍了conda软件在安装和基本使用场景中的用法</description>
+    </item>
+    <item>
       <title>Aspera的安装与使用</title>
-      <link>https://jeason.netlify.app/en/posts/tech/aspera/</link>
+      <link>http://localhost:1313/en/posts/tech/aspera/</link>
       <pubDate>Fri, 09 Oct 2020 20:13:35 +0800</pubDate>
-      <guid>https://jeason.netlify.app/en/posts/tech/aspera/</guid>
+      <guid>http://localhost:1313/en/posts/tech/aspera/</guid>
       <description>Aspera是一款高速下载工具，这里介绍它的安装和基本用法</description>
     </item>
     <item>
+      <title>测序质控软件trim_galore安装</title>
+      <link>http://localhost:1313/en/posts/tech/trim_galore/</link>
+      <pubDate>Wed, 23 Sep 2020 20:42:14 +0800</pubDate>
+      <guid>http://localhost:1313/en/posts/tech/trim_galore/</guid>
+      <description>这里描述了测序去接头软件trim galore的安装及其使用方法</description>
+    </item>
+    <item>
+      <title>ggplot2 | 小部件参考</title>
+      <link>http://localhost:1313/en/posts/tech/ggplot2/</link>
+      <pubDate>Tue, 22 Sep 2020 15:55:09 +0800</pubDate>
+      <guid>http://localhost:1313/en/posts/tech/ggplot2/</guid>
+      <description>本文主要介绍了在使用ggplot2绘图时会修改到的部分小细节</description>
+    </item>
+    <item>
+      <title>scRNA的细胞质控</title>
+      <link>http://localhost:1313/en/posts/tech/sc_qc/</link>
+      <pubDate>Wed, 12 Aug 2020 16:50:44 +0800</pubDate>
+      <guid>http://localhost:1313/en/posts/tech/sc_qc/</guid>
+      <description>动机 scRNA-seq数据的低质量文库可能来自于：细胞分选环节的破坏、文库制备失误（没有足够的反转录或PCR次数）… 表现在：细胞总表达量低、基本没有表达的基因、高线粒体或spike-in占比。 这些低质量的库是有问题的，因为它们可能在下游分析中导致误导的结果 。 聚类问题： 低质量的细胞</description>
+    </item>
+    <item>
+      <title>Docker | 安装与运行</title>
+      <link>http://localhost:1313/en/posts/tech/docker_1/</link>
+      <pubDate>Mon, 08 Jun 2020 15:15:53 +0800</pubDate>
+      <guid>http://localhost:1313/en/posts/tech/docker_1/</guid>
+      <description>本文介绍一下Docker最基本的安装和使用命令</description>
+    </item>
+    <item>
+      <title>基因ID转换相关知识</title>
+      <link>http://localhost:1313/en/posts/tech/id_convert/</link>
+      <pubDate>Fri, 29 May 2020 20:04:34 +0800</pubDate>
+      <guid>http://localhost:1313/en/posts/tech/id_convert/</guid>
+      <description>这里介绍了与基因ID及其互相转换相关的知识</description>
+    </item>
+    <item>
+      <title>高通量测序常用概念</title>
+      <link>http://localhost:1313/en/posts/tech/ngs/</link>
+      <pubDate>Wed, 09 Oct 2019 16:30:46 +0800</pubDate>
+      <guid>http://localhost:1313/en/posts/tech/ngs/</guid>
+      <description>高通量测序技术（High-throughput sequencing，HTS）是对传统Sanger测序（称为一代测序技术）革命性的改变,一次对几十万到几百万条核酸分子进行序列测定, 因此在有些文献中称其为下一代测序技术(next generation sequencing，NGS )足见其划时代的改变, 同时</description>
+    </item>
+    <item>
+      <title>SRAtoolkit 安装与使用</title>
+      <link>http://localhost:1313/en/posts/tech/sratools/</link>
+      <pubDate>Thu, 03 Oct 2019 21:07:07 +0800</pubDate>
+      <guid>http://localhost:1313/en/posts/tech/sratools/</guid>
+      <description>本文介绍了SRAtoolkit的安装与使用</description>
+    </item>
+    <item>
+      <title>Linux下百度云快速下载</title>
+      <link>http://localhost:1313/en/posts/tech/baiduyun_ubuntu/</link>
+      <pubDate>Thu, 19 Sep 2019 20:57:38 +0800</pubDate>
+      <guid>http://localhost:1313/en/posts/tech/baiduyun_ubuntu/</guid>
+      <description>这里介绍了在Linux环境下如何通过BaiduPCS-Go软件快速下载百度云文件</description>
+    </item>
+    <item>
+      <title>TCGA barcode（样本ID）</title>
+      <link>http://localhost:1313/en/posts/tech/tcga_barcode/</link>
+      <pubDate>Thu, 19 Sep 2019 16:36:35 +0800</pubDate>
+      <guid>http://localhost:1313/en/posts/tech/tcga_barcode/</guid>
+      <description>接触和分析过TCGA数据的朋友肯定会经常处理TCGA barcode的7个编码信息，每个编码信息用横杠-隔开，如下所示： 接触和分析过TCGA数据的朋友肯定会经常处理TCGA barcode的前15位（有时12位），实际从上图可以看出TCGA的barcode设计总共有28位之多。 每一个</description>
+    </item>
+    <item>
+      <title>Ubuntu 系统下Rstudio不能输入中文的解决办法</title>
+      <link>http://localhost:1313/en/posts/tech/rstudio_ubuntu/</link>
+      <pubDate>Thu, 05 Sep 2019 20:39:47 +0800</pubDate>
+      <guid>http://localhost:1313/en/posts/tech/rstudio_ubuntu/</guid>
+      <description>本文介绍了在Ubuntu系统下安装Rstudio软件不能输入中文内容的解决方法</description>
+    </item>
+    <item>
+      <title>从源码安装R3.6(Ubuntu 18.04LTS)</title>
+      <link>http://localhost:1313/en/posts/tech/r_ubuntu/</link>
+      <pubDate>Wed, 28 Aug 2019 20:44:21 +0800</pubDate>
+      <guid>http://localhost:1313/en/posts/tech/r_ubuntu/</guid>
+      <description>本文介绍了在Ubuntu系统下如何通过手动编译的方式从源码安装R</description>
+    </item>
+    <item>
       <title>R语言高级程序设计</title>
-      <link>https://jeason.netlify.app/en/posts/tech/advancer/</link>
+      <link>http://localhost:1313/en/posts/tech/advancer/</link>
       <pubDate>Mon, 27 May 2019 00:00:00 +0000</pubDate>
-      <guid>https://jeason.netlify.app/en/posts/tech/advancer/</guid>
+      <guid>http://localhost:1313/en/posts/tech/advancer/</guid>
       <description>介绍一下《R语言高级程序设计》中的一些容易忽略的点</description>
     </item>
     <item>
       <title>typeof class mode storage.mode 的区别</title>
-      <link>https://jeason.netlify.app/en/posts/tech/typeof/</link>
+      <link>http://localhost:1313/en/posts/tech/typeof/</link>
       <pubDate>Tue, 21 May 2019 15:49:16 +0800</pubDate>
-      <guid>https://jeason.netlify.app/en/posts/tech/typeof/</guid>
+      <guid>http://localhost:1313/en/posts/tech/typeof/</guid>
       <description>介绍了R语言中class相关函数的使用及其区别</description>
+    </item>
+    <item>
+      <title>R并行运算</title>
+      <link>http://localhost:1313/en/posts/tech/r_parallel/</link>
+      <pubDate>Tue, 14 May 2019 20:55:34 +0800</pubDate>
+      <guid>http://localhost:1313/en/posts/tech/r_parallel/</guid>
+      <description>本文介绍了在R语言中如何实现并行运算的方法</description>
+    </item>
+    <item>
+      <title>linux screen 命令使用</title>
+      <link>http://localhost:1313/en/posts/tech/screen/</link>
+      <pubDate>Thu, 04 Apr 2019 20:14:50 +0800</pubDate>
+      <guid>http://localhost:1313/en/posts/tech/screen/</guid>
+      <description>screen 是一个非常有用的命令，提供从单个 SSH 会话中使用多个 shell 窗口（会话）的能力。当会话被分离或网络中断时，screen 会话中启动的进程仍将运行，你可以随时重新连接到 screen 会话。如果你想运行一个持久的进程或者从多个位置连接到 shell 会话，这也很方便。 安装screen screen 在一些流行的发行版上已经预安装了</description>
+    </item>
+    <item>
+      <title>R的文件操作</title>
+      <link>http://localhost:1313/en/posts/tech/file_r/</link>
+      <pubDate>Mon, 01 Apr 2019 19:56:06 +0800</pubDate>
+      <guid>http://localhost:1313/en/posts/tech/file_r/</guid>
+      <description>这里介绍了在R语言中与文件和文件夹操作相关的函数及其使用的实例</description>
+    </item>
+    <item>
+      <title>tryCatch抓取错误</title>
+      <link>http://localhost:1313/en/posts/tech/trycatch/</link>
+      <pubDate>Wed, 06 Mar 2019 19:48:49 +0800</pubDate>
+      <guid>http://localhost:1313/en/posts/tech/trycatch/</guid>
+      <description>这里介绍了在R语言中如何使用tryCatch函数抓取错误，并根据场景返回结果</description>
+    </item>
+    <item>
+      <title>超几何分布和二项分布</title>
+      <link>http://localhost:1313/en/posts/tech/hypergeometric/</link>
+      <pubDate>Thu, 21 Feb 2019 14:21:53 +0800</pubDate>
+      <guid>http://localhost:1313/en/posts/tech/hypergeometric/</guid>
+      <description>本文介绍了超几何分布和二项分布的原理和具体解释</description>
+    </item>
+    <item>
+      <title>Fisher精确检验</title>
+      <link>http://localhost:1313/en/posts/tech/fisher/</link>
+      <pubDate>Tue, 19 Feb 2019 15:04:55 +0800</pubDate>
+      <guid>http://localhost:1313/en/posts/tech/fisher/</guid>
+      <description>本文主要介绍了Fisher精确检验的原理</description>
+    </item>
+    <item>
+      <title>绘图配色</title>
+      <link>http://localhost:1313/en/posts/tech/color/</link>
+      <pubDate>Mon, 07 Jan 2019 19:47:12 +0800</pubDate>
+      <guid>http://localhost:1313/en/posts/tech/color/</guid>
+      <description>这里介绍了一些在绘图配色中常用的配色网站</description>
+    </item>
+    <item>
+      <title>卡方检验的原理及应用</title>
+      <link>http://localhost:1313/en/posts/tech/chisq/</link>
+      <pubDate>Mon, 12 Nov 2018 15:10:27 +0800</pubDate>
+      <guid>http://localhost:1313/en/posts/tech/chisq/</guid>
+      <description>卡方检验 卡方检验(Chi-square test/Chi-Square Goodness-of-Fit Test) 基本概念 卡方检验是一种非参数假设检验，主要用于比较两个分类变量的关联性分析，其根本思想就是在于比较理论频数和实际频数的吻合程度或拟合优度问题。 它在分类资料统计推断中的应用，包括：两个率或两个构成比比较的卡方检验；多个率或多个构成比比较的</description>
+    </item>
+    <item>
+      <title>ROC曲线和AUC</title>
+      <link>http://localhost:1313/en/posts/tech/roc_auc/</link>
+      <pubDate>Wed, 10 Oct 2018 16:39:08 +0800</pubDate>
+      <guid>http://localhost:1313/en/posts/tech/roc_auc/</guid>
+      <description>ROC和AUC简介 ROC（Receiver Operating Characteristic）曲线和AUC常被用来评价一个二值分类器（binary classifier）的优劣，对两者的简单介绍见wiki百科这篇博文主要简单介绍ROC和AUC的特点，以及如何通过R语言绘制ROC曲线和计算AUC值。 RO</description>
+    </item>
+    <item>
+      <title>git | 基本用法</title>
+      <link>http://localhost:1313/en/posts/tech/git/</link>
+      <pubDate>Wed, 23 May 2018 16:15:39 +0800</pubDate>
+      <guid>http://localhost:1313/en/posts/tech/git/</guid>
+      <description>Git的基本使用方法 Git简介 Git是一个功能强大的分布是版本控制系统，由linux系统的创始人Linus创建，用于优化管理linux源码。Git具有强大的分支管理能力，对于代码集成管理具有超越其他集中式版本控制系统的优势。 Git安装 在windows上安装Git，只需要从Git官</description>
+    </item>
+    <item>
+      <title>Cox模型的R实现</title>
+      <link>http://localhost:1313/en/posts/tech/cox_r/</link>
+      <pubDate>Tue, 08 May 2018 15:57:22 +0800</pubDate>
+      <guid>http://localhost:1313/en/posts/tech/cox_r/</guid>
+      <description>本文介绍了在R语言如何实现Cox比例风险回归模型以及结果的解释</description>
     </item>
   </channel>
 </rss>

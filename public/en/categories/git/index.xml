@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Git on Jeason&#39;s Blog</title>
+    <link>http://localhost:1313/en/categories/git/</link>
+    <description>Recent content in Git on Jeason&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Thu, 29 Feb 2024 16:15:39 +0800</lastBuildDate>
+    <atom:link href="http://localhost:1313/en/categories/git/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>git | 基本用法</title>
+      <link>http://localhost:1313/en/posts/tech/git/</link>
+      <pubDate>Wed, 23 May 2018 16:15:39 +0800</pubDate>
+      <guid>http://localhost:1313/en/posts/tech/git/</guid>
+      <description>Git的基本使用方法 Git简介 Git是一个功能强大的分布是版本控制系统，由linux系统的创始人Linus创建，用于优化管理linux源码。Git具有强大的分支管理能力，对于代码集成管理具有超越其他集中式版本控制系统的优势。 Git安装 在windows上安装Git，只需要从Git官</description>
+    </item>
+  </channel>
+</rss>

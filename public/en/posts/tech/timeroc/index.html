@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Time-dependent ROC 曲线 | Jeason&#39;s Blog</title>
+<meta name="keywords" content="Stats">
+<meta name="description" content="基本概念 在对biomarker进行分析时，我们通常会对预测模型的预测性能通过ROC曲线来进行评估，但是对于一些生存资料相关数据的预测模型需要考虑到生存信息与时间因素进去，于是就有了时间依赖的ROC曲线。 传统的ROC曲线分析方法认为个体的事件（疾病）状态和markers是随着时间的">
+<meta name="author" content="作者:Jeason">
+<link rel="canonical" href="http://localhost:1313/en/posts/tech/timeroc/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.e029fa55ed0a02bb684da89d2a53a4e1ba9e26e3719fa48460be52776460b523.css" integrity="sha256-4Cn6Ve0KArtoTaidKlOk4bqeJuNxn6SEYL5Sd2RgtSM=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:1313/img/avatar.jpeg">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/img/avatar.jpeg">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/img/avatar.jpeg">
+<link rel="apple-touch-icon" href="http://localhost:1313/img/avatar.jpeg">
+<link rel="mask-icon" href="http://localhost:1313/img/avatar.jpeg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="http://localhost:1313/en/posts/tech/timeroc/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><script type="text/javascript"
+        async
+        src="https://cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\[\[','\]\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+});
+
+MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<style>
+code.has-jax {
+    font: inherit;
+    font-size: 100%;
+    background: inherit;
+    border: inherit;
+    color: #515151;
+}
+</style>
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = ""; 
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<meta property="og:title" content="Time-dependent ROC 曲线" />
+<meta property="og:description" content="基本概念 在对biomarker进行分析时，我们通常会对预测模型的预测性能通过ROC曲线来进行评估，但是对于一些生存资料相关数据的预测模型需要考虑到生存信息与时间因素进去，于是就有了时间依赖的ROC曲线。 传统的ROC曲线分析方法认为个体的事件（疾病）状态和markers是随着时间的" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://localhost:1313/en/posts/tech/timeroc/" />
+<meta property="og:image" content="https://source.unsplash.com/random/400x200?code" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2020-11-13T16:34:51+08:00" />
+<meta property="article:modified_time" content="2024-02-29T16:34:51+08:00" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://source.unsplash.com/random/400x200?code" />
+<meta name="twitter:title" content="Time-dependent ROC 曲线"/>
+<meta name="twitter:description" content="基本概念 在对biomarker进行分析时，我们通常会对预测模型的预测性能通过ROC曲线来进行评估，但是对于一些生存资料相关数据的预测模型需要考虑到生存信息与时间因素进去，于是就有了时间依赖的ROC曲线。 传统的ROC曲线分析方法认为个体的事件（疾病）状态和markers是随着时间的"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "📚 文章",
+      "item": "http://localhost:1313/en/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "👨🏻‍💻 技术",
+      "item": "http://localhost:1313/en/posts/tech/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "Time-dependent ROC 曲线",
+      "item": "http://localhost:1313/en/posts/tech/timeroc/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Time-dependent ROC 曲线",
+  "name": "Time-dependent ROC 曲线",
+  "description": "基本概念 在对biomarker进行分析时，我们通常会对预测模型的预测性能通过ROC曲线来进行评估，但是对于一些生存资料相关数据的预测模型需要考虑到生存信息与时间因素进去，于是就有了时间依赖的ROC曲线。 传统的ROC曲线分析方法认为个体的事件（疾病）状态和markers是随着时间的",
+  "keywords": [
+    "Stats"
+  ],
+  "articleBody": "基本概念 在对biomarker进行分析时，我们通常会对预测模型的预测性能通过ROC曲线来进行评估，但是对于一些生存资料相关数据的预测模型需要考虑到生存信息与时间因素进去，于是就有了时间依赖的ROC曲线。\n传统的ROC曲线分析方法认为个体的事件（疾病）状态和markers是随着时间的推移而固定的，但在临床流行病学研究中，疾病状态和markers都是随着时间的推移而变化的（即time-to-event outcomes）。早期无病的个体由于研究随访时间较长，可能较晚发病，而且其markers可能在随访期间较基线发生变化。如果使用传统的ROC会忽略疾病状态或markers的时间依赖性，此时用随时间变化的time-dependent ROC（时间相依ROC）比较合适。\n原理 时间依赖性ROC曲线有(1) cumulative/dynamic(C/D)、(2) incident/dynamic(I/D)和(3) incident/static(I/S)三种定义，其中cumulative/dynamic(C/D)是比较适合用于生存分析的定义，也是当前大多数研究使用的方法。cumulative/dynamic(C/D)中cumulative是指Cumulative sensitivity，dynamic是指dynamic specificity。\n对于任意时间t，每一个个体会按照其在时间t的状态被划分到病例组或对照组。在cumulative/dynamic中，如果一个个体在时间0和时间t之间发病，那么其会被划分到病例组（图中A、B和E）;如果一个个体在时间0和时间t之间没有发病，那么其会被划分到病例组（图中C、D和F）。\n在阈值为c的情况下，相应的敏感性和特异性计算公式如下：\n$$ \\begin{align*} \\text{sensitivity}^{\\mathbb{C}}(c,t) \u0026= P(M_{i} \u003e c | T_{i} \\le t)\\ \\text{specificity}^{\\mathbb{D}}(c,t) \u0026= P(M_{i} \\le c | T_{i} \u003e t)\\ \\end{align*} $$\n通过上述公式计算不同阈值下的敏感性和特异性我们即可得到时间t下的ROC曲线。结合上图可以轻易的看出，个体被划分到病例组还是对照组会随着时间t取值的变化而发生变化。假设图中的t增大，那么划分到病例组的个体就会变成A、B、C和E，对照组则会变成D和F。在此情形下，相应的ROC曲线也会发生变化。\n意义解析 数据准备 我们使用survival包中提供的ovarian数据集作为例子，可以简单看一下这些样本的生存曲线\nlibrary(tidyverse) ## Used for the dataset. library(survival) ## Used for visualizaiton. library(survminer) ## Load the Ovarian Cancer Survival Data data(ovarian) ## Plot ggsurvplot(survfit(Surv(futime, fustat) ~ 1, data = ovarian), risk.table = TRUE, break.time.by = 180) 可以看到再该数据集中，大约在720天之后，就没有患者发生死亡\n我们使用所有的协变量(age, resid.ds, rx, ecog.ps)拟合Cox回归模型，并基于线性预测变量构建风险评分。\n## Fit a Cox model coxph1 \u003c- coxph(formula = Surv(futime, fustat) ~ pspline(age, df = 4) + factor(resid.ds) + factor(rx) + factor(ecog.ps), data = ovarian) ## Obtain the linear predictor ovarian$lp \u003c- predict(coxph1, type = \"lp\") ovarian ## futime fustat age resid.ds rx ecog.ps lp ## 1 59 1 72.3315 2 1 1 3.48363231 ## 2 115 1 74.4932 2 1 1 3.34783240 ## 3 156 1 66.4658 2 1 2 2.88061142 ## 4 421 0 53.3644 2 2 1 -0.29905598 ## 5 431 1 50.3397 2 1 1 0.30051742 ## 6 448 0 56.4301 1 1 2 -0.30406562 ## 7 464 1 56.9370 2 2 2 0.08752617 ## 8 475 1 59.8548 2 2 2 0.12126622 ## 9 477 0 64.1753 2 1 1 1.17098395 ## 10 563 1 55.1781 1 2 2 -0.66639213 ## 11 638 1 56.7562 1 1 2 -0.32969630 ## 12 744 0 50.1096 1 2 1 -1.09642040 ## 13 769 0 59.6301 2 2 2 0.09654704 ## 14 770 0 57.0521 2 2 1 -0.64257241 ## 15 803 0 39.2712 1 1 1 -3.22587014 ## 16 855 0 43.1233 1 1 2 -1.09198364 ## 17 1040 0 38.8932 2 1 2 -1.74841767 ## 18 1106 0 44.6000 1 1 1 -1.40907007 ## 19 1129 0 53.9068 1 2 1 -1.25981421 ## 20 1206 0 44.2055 2 2 1 -1.07935701 ## 21 1227 0 59.5890 1 2 2 -0.81842855 ## 22 268 1 74.5041 2 1 2 4.06915563 ## 23 329 1 43.1370 2 1 1 -0.89939270 ## 24 353 1 63.2192 1 2 2 0.11416973 ## 25 365 1 64.4247 2 2 1 0.79623290 ## 26 377 0 58.3096 1 2 1 -1.59793837 计算时间依赖的ROC 使用survivalROC包进行计算 library(survivalROC) ## Define a helper functio nto evaluate at various t survivalROC_helper \u003c- function(t) { survivalROC(Stime = ovarian$futime, status = ovarian$fustat, marker = ovarian$lp, predict.time = t, method = \"NNE\", span = 0.25 * nrow(ovarian)^(-0.20)) } ## Evaluate every 180 days survivalROC_data \u003c- data_frame(t = 180 * c(1,2,3,4,5,6)) %\u003e% mutate(survivalROC = map(t, survivalROC_helper), ## Extract scalar AUC auc = map_dbl(survivalROC, magrittr::extract2, \"AUC\"), ## Put cut off dependent values in a data_frame df_survivalROC = map(survivalROC, function(obj) { as_tibble(obj[c(\"cut.values\",\"TP\",\"FP\")]) })) %\u003e% dplyr::select(-survivalROC) %\u003e% unnest(cols = c(df_survivalROC)) %\u003e% arrange(t, FP, TP) ## Plot survivalROC_data %\u003e% ggplot(mapping = aes(x = FP, y = TP)) + geom_point() + geom_line() + geom_label(data = survivalROC_data %\u003e% dplyr::select(t,auc) %\u003e% unique, mapping = aes(label = sprintf(\"%.3f\", auc)), x = 0.5, y = 0.5) + facet_wrap( ~ t) + theme_bw() + theme(axis.text.x = element_text(angle = 90, vjust = 0.5), legend.key = element_blank(), plot.title = element_text(hjust = 0.5), strip.background = element_blank()) 从图中大概可以看出，在180天时ROC曲线的效果最好，但是出现这种情况的主要原因是在180天的时候死亡的患者很少，所以几乎不影响。然后，在时间超过720天后AUC稳定在0.856，说明在此之后一直未死亡的患者贡献了风险得分的预测能力。\n案例实现 对于R中time-dependent ROC的实现方式，一般会用timeROC和survivalROC包， 也有一些其他的包如：tdROC, timereg, risksetROC和survAUC可以实现。timeROC相比于survivalROC会多计算个AUC的置信区间\ntimeROC的具体实现如下：\nlibrary(timeROC) data(mayo) time_roc_res \u003c- timeROC( T = mayo$time, delta = mayo$censor, marker = mayo$mayoscore5, cause = 1, weighting=\"marginal\", times = c(3 * 365, 5 * 365, 10 * 365), ROC = TRUE, iid = TRUE ) 查看计算的AUC值及其置信区间：\ntime_roc_res$AUC ## t=1095 t=1825 t=3650 ## 0.8982790 0.9153621 0.8576153 confint(time_roc_res, level = 0.95)$CI_AUC ## 2.5% 97.5% ## t=1095 85.01 94.64 ## t=1825 87.42 95.65 ## t=3650 79.38 92.14 绘制time-dependent ROC曲线：\nplot(time_roc_res, time=3 * 365, col = \"red\", title = FALSE) plot(time_roc_res, time=5 * 365, add=TRUE, col=\"blue\") plot(time_roc_res, time=10 * 365, add=TRUE, col=\"green\") legend(\"bottomright\",c(\"3 Years\" ,\"5 Years\", \"10 Years\"), col=c(\"red\", \"blue\", \"green\"), lty=1, lwd=2) 使用ggplot2绘制美化版本的ROC曲线：\nROC_data \u003c- data.frame( TP_3year = time_roc_res$TP[, 1], FP_3year = time_roc_res$FP[, 1], TP_5year = time_roc_res$TP[, 2], FP_5year = time_roc_res$FP[, 2], TP_10year = time_roc_res$TP[, 3], FP_10year = time_roc_res$FP[, 3] ) library(ggplot2) ggplot(data = ROC_data) + geom_line(aes(x = FP_3year, y = TP_3year), size = 1, color = \"#BC3C29FF\") + geom_line(aes(x = FP_5year, y = TP_5year), size = 1, color = \"#0072B5FF\") + geom_line(aes(x = FP_10year, y = TP_10year), size = 1, color = \"#E18727FF\") + geom_abline(slope = 1, intercept = 0, color = \"grey\", size = 1, linetype = 2) + theme_bw() + annotate(\"text\", x = 0.75, y = 0.25, size = 4.5, label = paste0(\"AUC at 3 years = \", sprintf(\"%.3f\", time_roc_res$AUC[[1]])), color = \"#BC3C29FF\") + annotate(\"text\", x = 0.75, y = 0.15, size = 4.5, label = paste0(\"AUC at 5 years = \", sprintf(\"%.3f\", time_roc_res$AUC[[2]])), color = \"#0072B5FF\") + annotate(\"text\", x = 0.75, y = 0.05, size = 4.5, label = paste0(\"AUC at 10 years = \", sprintf(\"%.3f\", time_roc_res$AUC[[3]])), color = \"#E18727FF\") + labs(x = \"False positive rate\", y = \"True positive rate\") + theme( axis.text = element_text(face = \"bold\", size = 11, color = \"black\"), axis.title.x = element_text(face = \"bold\", size = 14, color = \"black\", margin = margin(c(15, 0, 0, 0))), axis.title.y = element_text(face = \"bold\", size = 14, color = \"black\", margin = margin(c(0, 15, 0, 0))) ) Reference Time-dependent ROC for Survival Prediction Models in R\n",
+  "wordCount" : "2175",
+  "inLanguage": "en",
+  "image":"https://source.unsplash.com/random/400x200?code","datePublished": "2020-11-13T16:34:51+08:00",
+  "dateModified": "2024-02-29T16:34:51+08:00",
+  "author":{
+    "@type": "Person",
+    "name": "Jeason"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "http://localhost:1313/en/posts/tech/timeroc/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Jeason's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "http://localhost:1313/img/avatar.jpeg"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="http://localhost:1313/en/" accesskey="h" title="Jeason&#39;s Blog (Alt + H)">
+                <img src="http://localhost:1313/img/avatar.jpeg" alt="" aria-label="logo"
+                    height="35">Jeason&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+                
+            </div>
+        </div>
+        <ul id="menu">
+            <li class="menu-item">
+                <a href="http://localhost:1313/en/search" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
+                    <span>🔍 搜索</span>
+                    
+                </a>
+            
+            </li>
+            <li class="menu-item">
+                <a href="http://localhost:1313/en/" title="🏡 主页">
+                    <span>🏡 主页</span>
+                    
+                </a>
+            
+            </li>
+            <li class="menu-item">
+                <a href="http://localhost:1313/en/posts" title="📚 文章">
+                    <span>📚 文章</span>
+                    
+                </a>
+            
+            </li>
+            <li class="menu-item">
+                <a href="http://localhost:1313/en/archives" title="📈 归档">
+                    <span>📈 归档</span>
+                    
+                </a>
+            
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main page">
+<article class="post-single">
+    <div id="single-content">
+        <header class="post-header">
+            <div class="breadcrumbs"><a href="http://localhost:1313/en/">主页</a>&nbsp;»&nbsp;<a href="http://localhost:1313/en/posts/">📚 文章</a>&nbsp;»&nbsp;<a href="http://localhost:1313/en/posts/tech/">👨🏻‍💻 技术</a></div>
+            <h1 class="post-title">
+                Time-dependent ROC 曲线
+            </h1>
+            <div class="post-meta">创建: 2020-11-13 | 更新: 2024-02-29 | 作者:Jeason
+
+
+
+
+                
+                <span id="busuanzi_container_page_pv">
+                    &nbsp;|&nbsp;访问:&nbsp;<span id="busuanzi_value_page_pv"></span>
+                </span>
+
+</div>
+        </header> <aside id="toc-container" class="toc-container wide">
+    <div class="toc">
+        <details  open>
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">文章目录</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#%e5%9f%ba%e6%9c%ac%e6%a6%82%e5%bf%b5" aria-label="基本概念">基本概念</a></li>
+                <li>
+                    <a href="#%e5%8e%9f%e7%90%86" aria-label="原理">原理</a></li>
+                <li>
+                    <a href="#%e6%84%8f%e4%b9%89%e8%a7%a3%e6%9e%90" aria-label="意义解析">意义解析</a><ul>
+                        
+                <li>
+                    <a href="#%e6%95%b0%e6%8d%ae%e5%87%86%e5%a4%87" aria-label="数据准备">数据准备</a></li>
+                <li>
+                    <a href="#%e8%ae%a1%e7%ae%97%e6%97%b6%e9%97%b4%e4%be%9d%e8%b5%96%e7%9a%84roc" aria-label="计算时间依赖的ROC">计算时间依赖的ROC</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e6%a1%88%e4%be%8b%e5%ae%9e%e7%8e%b0" aria-label="案例实现">案例实现</a></li>
+                <li>
+                    <a href="#reference" aria-label="Reference">Reference</a>
+                </li>
+            </ul>
+        </div>
+        </details>
+    </div>
+</aside>
+<script>
+    let activeElement;
+    let elements;
+    window.addEventListener('DOMContentLoaded', function (event) {
+        checkTocPosition();
+
+        elements = document.querySelectorAll('h1[id],h2[id],h3[id],h4[id],h5[id],h6[id]');
+        
+        activeElement = elements[0];
+        const id = encodeURI(activeElement.getAttribute('id')).toLowerCase();
+        document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+    }, false);
+
+    window.addEventListener('resize', function(event) {
+        checkTocPosition();
+    }, false);
+
+    window.addEventListener('scroll', () => {
+        
+        activeElement = Array.from(elements).find((element) => {
+            if ((getOffsetTop(element) - window.pageYOffset) > 0 &&
+                (getOffsetTop(element) - window.pageYOffset) < window.innerHeight/2) {
+                return element;
+            }
+        }) || activeElement
+
+        elements.forEach(element => {
+            const id = encodeURI(element.getAttribute('id')).toLowerCase();
+            if (element === activeElement){
+                document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+            } else {
+                document.querySelector(`.inner ul li a[href="#${id}"]`).classList.remove('active');
+            }
+        })
+    }, false);
+
+    const main = parseInt(getComputedStyle(document.body).getPropertyValue('--article-width'), 10);
+    const toc = parseInt(getComputedStyle(document.body).getPropertyValue('--toc-width'), 10);
+    const gap = parseInt(getComputedStyle(document.body).getPropertyValue('--gap'), 10);
+
+    function checkTocPosition() {
+        const width = document.body.scrollWidth;
+        if (width - main - (toc * 2) - (gap * 4) > 0) {
+            document.getElementById("toc-container").classList.add("wide");
+        } else {
+            document.getElementById("toc-container").classList.remove("wide");
+        }
+    }
+
+    function getOffsetTop(element) {
+        if (!element.getClientRects().length) {
+            return 0;
+        }
+        let rect = element.getBoundingClientRect();
+        let win = element.ownerDocument.defaultView;
+        return rect.top + win.pageYOffset;
+    }
+</script>
+        <div class="post-content"><h2 id="基本概念">基本概念<a hidden class="anchor" aria-hidden="true" href="#基本概念">#</a></h2>
+<p>在对biomarker进行分析时，我们通常会对预测模型的预测性能通过ROC曲线来进行评估，但是对于一些生存资料相关数据的预测模型需要考虑到生存信息与时间因素进去，于是就有了时间依赖的ROC曲线。</p>
+<blockquote>
+<p>传统的ROC曲线分析方法认为个体的事件（疾病）状态和markers是随着时间的推移而固定的，但在临床流行病学研究中，疾病状态和markers都是随着时间的推移而变化的（即time-to-event outcomes）。早期无病的个体由于研究随访时间较长，可能较晚发病，而且其markers可能在随访期间较基线发生变化。如果使用传统的ROC会忽略疾病状态或markers的时间依赖性，此时用随时间变化的time-dependent ROC（时间相依ROC）比较合适。</p>
+</blockquote>
+<h2 id="原理">原理<a hidden class="anchor" aria-hidden="true" href="#原理">#</a></h2>
+<p>时间依赖性ROC曲线有(1) cumulative/dynamic(C/D)、(2) incident/dynamic(I/D)和(3) incident/static(I/S)三种定义，其中cumulative/dynamic(C/D)是比较适合用于生存分析的定义，也是当前大多数研究使用的方法。cumulative/dynamic(C/D)中cumulative是指Cumulative sensitivity，dynamic是指dynamic specificity。</p>
+<p>对于任意时间t，每一个个体会按照其在时间t的状态被划分到病例组或对照组。在cumulative/dynamic中，如果一个个体在时间0和时间t之间发病，那么其会被划分到病例组（图中A、B和E）;如果一个个体在时间0和时间t之间没有发病，那么其会被划分到病例组（图中C、D和F）。</p>
+<p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/timeROC/timeROC.png" alt=""  />
+</p>
+<p>在阈值为c的情况下，相应的敏感性和特异性计算公式如下：</p>
+<p>$$
+\begin{align*}  \text{sensitivity}^{\mathbb{C}}(c,t) &amp;= P(M_{i} &gt; c | T_{i} \le t)\  \text{specificity}^{\mathbb{D}}(c,t) &amp;= P(M_{i} \le c | T_{i} &gt; t)\  \end{align*}
+$$</p>
+<p>通过上述公式计算不同阈值下的敏感性和特异性我们即可得到时间t下的ROC曲线。结合上图可以轻易的看出，个体被划分到病例组还是对照组会随着时间t取值的变化而发生变化。假设图中的t增大，那么划分到病例组的个体就会变成A、B、C和E，对照组则会变成D和F。在此情形下，相应的ROC曲线也会发生变化。</p>
+<h2 id="意义解析">意义解析<a hidden class="anchor" aria-hidden="true" href="#意义解析">#</a></h2>
+<h3 id="数据准备">数据准备<a hidden class="anchor" aria-hidden="true" href="#数据准备">#</a></h3>
+<p>我们使用<code>survival</code>包中提供的<code>ovarian</code>数据集作为例子，可以简单看一下这些样本的生存曲线</p>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#06b6ef">library</span>(tidyverse)
+</span></span><span style="display:flex;"><span><span style="color:#776e71">## Used for the dataset.</span>
+</span></span><span style="display:flex;"><span><span style="color:#06b6ef">library</span>(survival)
+</span></span><span style="display:flex;"><span><span style="color:#776e71">## Used for visualizaiton.</span>
+</span></span><span style="display:flex;"><span><span style="color:#06b6ef">library</span>(survminer)
+</span></span><span style="display:flex;"><span><span style="color:#776e71">## Load the Ovarian Cancer Survival Data</span>
+</span></span><span style="display:flex;"><span><span style="color:#06b6ef">data</span>(ovarian)
+</span></span><span style="display:flex;"><span><span style="color:#776e71">## Plot</span>
+</span></span><span style="display:flex;"><span><span style="color:#06b6ef">ggsurvplot</span>(<span style="color:#06b6ef">survfit</span>(<span style="color:#06b6ef">Surv</span>(futime, fustat) <span style="color:#5bc4bf">~</span> <span style="color:#f99b15">1</span>, data <span style="color:#5bc4bf">=</span> ovarian),
+</span></span><span style="display:flex;"><span>           risk.table <span style="color:#5bc4bf">=</span> <span style="color:#815ba4">TRUE</span>,
+</span></span><span style="display:flex;"><span>           break.time.by <span style="color:#5bc4bf">=</span> <span style="color:#f99b15">180</span>)
+</span></span></code></pre></div><p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/timeROC/unnamed-chunk-2-1.png" alt=""  />
+</p>
+<p>可以看到再该数据集中，大约在720天之后，就没有患者发生死亡</p>
+<p>我们使用所有的协变量(age, resid.ds, rx, ecog.ps)拟合Cox回归模型，并基于线性预测变量构建风险评分。</p>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#776e71">## Fit a Cox model</span>
+</span></span><span style="display:flex;"><span>coxph1 <span style="color:#5bc4bf">&lt;-</span> <span style="color:#06b6ef">coxph</span>(formula <span style="color:#5bc4bf">=</span> <span style="color:#06b6ef">Surv</span>(futime, fustat) <span style="color:#5bc4bf">~</span> <span style="color:#06b6ef">pspline</span>(age, df <span style="color:#5bc4bf">=</span> <span style="color:#f99b15">4</span>) <span style="color:#5bc4bf">+</span>
+</span></span><span style="display:flex;"><span>                  <span style="color:#06b6ef">factor</span>(resid.ds) <span style="color:#5bc4bf">+</span> <span style="color:#06b6ef">factor</span>(rx) <span style="color:#5bc4bf">+</span> <span style="color:#06b6ef">factor</span>(ecog.ps),
+</span></span><span style="display:flex;"><span>                data <span style="color:#5bc4bf">=</span> ovarian)
+</span></span><span style="display:flex;"><span><span style="color:#776e71">## Obtain the linear predictor</span>
+</span></span><span style="display:flex;"><span>ovarian<span style="color:#5bc4bf">$</span>lp <span style="color:#5bc4bf">&lt;-</span> <span style="color:#06b6ef">predict</span>(coxph1, type <span style="color:#5bc4bf">=</span> <span style="color:#48b685">&#34;lp&#34;</span>)
+</span></span><span style="display:flex;"><span>ovarian
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>##    futime fustat     age resid.ds rx ecog.ps          lp
+</span></span><span style="display:flex;"><span>## 1      59      1 72.3315        2  1       1  3.48363231
+</span></span><span style="display:flex;"><span>## 2     115      1 74.4932        2  1       1  3.34783240
+</span></span><span style="display:flex;"><span>## 3     156      1 66.4658        2  1       2  2.88061142
+</span></span><span style="display:flex;"><span>## 4     421      0 53.3644        2  2       1 -0.29905598
+</span></span><span style="display:flex;"><span>## 5     431      1 50.3397        2  1       1  0.30051742
+</span></span><span style="display:flex;"><span>## 6     448      0 56.4301        1  1       2 -0.30406562
+</span></span><span style="display:flex;"><span>## 7     464      1 56.9370        2  2       2  0.08752617
+</span></span><span style="display:flex;"><span>## 8     475      1 59.8548        2  2       2  0.12126622
+</span></span><span style="display:flex;"><span>## 9     477      0 64.1753        2  1       1  1.17098395
+</span></span><span style="display:flex;"><span>## 10    563      1 55.1781        1  2       2 -0.66639213
+</span></span><span style="display:flex;"><span>## 11    638      1 56.7562        1  1       2 -0.32969630
+</span></span><span style="display:flex;"><span>## 12    744      0 50.1096        1  2       1 -1.09642040
+</span></span><span style="display:flex;"><span>## 13    769      0 59.6301        2  2       2  0.09654704
+</span></span><span style="display:flex;"><span>## 14    770      0 57.0521        2  2       1 -0.64257241
+</span></span><span style="display:flex;"><span>## 15    803      0 39.2712        1  1       1 -3.22587014
+</span></span><span style="display:flex;"><span>## 16    855      0 43.1233        1  1       2 -1.09198364
+</span></span><span style="display:flex;"><span>## 17   1040      0 38.8932        2  1       2 -1.74841767
+</span></span><span style="display:flex;"><span>## 18   1106      0 44.6000        1  1       1 -1.40907007
+</span></span><span style="display:flex;"><span>## 19   1129      0 53.9068        1  2       1 -1.25981421
+</span></span><span style="display:flex;"><span>## 20   1206      0 44.2055        2  2       1 -1.07935701
+</span></span><span style="display:flex;"><span>## 21   1227      0 59.5890        1  2       2 -0.81842855
+</span></span><span style="display:flex;"><span>## 22    268      1 74.5041        2  1       2  4.06915563
+</span></span><span style="display:flex;"><span>## 23    329      1 43.1370        2  1       1 -0.89939270
+</span></span><span style="display:flex;"><span>## 24    353      1 63.2192        1  2       2  0.11416973
+</span></span><span style="display:flex;"><span>## 25    365      1 64.4247        2  2       1  0.79623290
+</span></span><span style="display:flex;"><span>## 26    377      0 58.3096        1  2       1 -1.59793837
+</span></span></code></pre></div><h3 id="计算时间依赖的roc">计算时间依赖的ROC<a hidden class="anchor" aria-hidden="true" href="#计算时间依赖的roc">#</a></h3>
+<ul>
+<li>使用<code>survivalROC</code>包进行计算</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#06b6ef">library</span>(survivalROC)
+</span></span><span style="display:flex;"><span><span style="color:#776e71">## Define a helper functio nto evaluate at various t</span>
+</span></span><span style="display:flex;"><span>survivalROC_helper <span style="color:#5bc4bf">&lt;-</span> <span style="color:#815ba4">function</span>(t) {
+</span></span><span style="display:flex;"><span>    <span style="color:#06b6ef">survivalROC</span>(Stime        <span style="color:#5bc4bf">=</span> ovarian<span style="color:#5bc4bf">$</span>futime,
+</span></span><span style="display:flex;"><span>                status       <span style="color:#5bc4bf">=</span> ovarian<span style="color:#5bc4bf">$</span>fustat,
+</span></span><span style="display:flex;"><span>                marker       <span style="color:#5bc4bf">=</span> ovarian<span style="color:#5bc4bf">$</span>lp,
+</span></span><span style="display:flex;"><span>                predict.time <span style="color:#5bc4bf">=</span> t,
+</span></span><span style="display:flex;"><span>                method       <span style="color:#5bc4bf">=</span> <span style="color:#48b685">&#34;NNE&#34;</span>,
+</span></span><span style="display:flex;"><span>                span <span style="color:#5bc4bf">=</span> <span style="color:#f99b15">0.25</span> <span style="color:#5bc4bf">*</span> <span style="color:#06b6ef">nrow</span>(ovarian)<span style="color:#06b6ef">^</span>(<span style="color:#f99b15">-0.20</span>))
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#776e71">## Evaluate every 180 days</span>
+</span></span><span style="display:flex;"><span>survivalROC_data <span style="color:#5bc4bf">&lt;-</span> <span style="color:#06b6ef">data_frame</span>(t <span style="color:#5bc4bf">=</span> <span style="color:#f99b15">180</span> <span style="color:#5bc4bf">*</span> <span style="color:#06b6ef">c</span>(<span style="color:#f99b15">1</span>,<span style="color:#f99b15">2</span>,<span style="color:#f99b15">3</span>,<span style="color:#f99b15">4</span>,<span style="color:#f99b15">5</span>,<span style="color:#f99b15">6</span>)) <span style="color:#5bc4bf">%&gt;%</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#06b6ef">mutate</span>(survivalROC <span style="color:#5bc4bf">=</span> <span style="color:#06b6ef">map</span>(t, survivalROC_helper),
+</span></span><span style="display:flex;"><span>           <span style="color:#776e71">## Extract scalar AUC</span>
+</span></span><span style="display:flex;"><span>           auc <span style="color:#5bc4bf">=</span> <span style="color:#06b6ef">map_dbl</span>(survivalROC, magrittr<span style="color:#5bc4bf">::</span>extract2, <span style="color:#48b685">&#34;AUC&#34;</span>),
+</span></span><span style="display:flex;"><span>           <span style="color:#776e71">## Put cut off dependent values in a data_frame</span>
+</span></span><span style="display:flex;"><span>           df_survivalROC <span style="color:#5bc4bf">=</span> <span style="color:#06b6ef">map</span>(survivalROC, <span style="color:#815ba4">function</span>(obj) {
+</span></span><span style="display:flex;"><span>               <span style="color:#06b6ef">as_tibble</span>(obj<span style="color:#06b6ef">[c</span>(<span style="color:#48b685">&#34;cut.values&#34;</span>,<span style="color:#48b685">&#34;TP&#34;</span>,<span style="color:#48b685">&#34;FP&#34;</span>)])
+</span></span><span style="display:flex;"><span>           })) <span style="color:#5bc4bf">%&gt;%</span>
+</span></span><span style="display:flex;"><span>    dplyr<span style="color:#5bc4bf">::</span><span style="color:#06b6ef">select</span>(<span style="color:#5bc4bf">-</span>survivalROC) <span style="color:#5bc4bf">%&gt;%</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#06b6ef">unnest</span>(cols <span style="color:#5bc4bf">=</span> <span style="color:#06b6ef">c</span>(df_survivalROC)) <span style="color:#5bc4bf">%&gt;%</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#06b6ef">arrange</span>(t, FP, TP)
+</span></span><span style="display:flex;"><span><span style="color:#776e71">## Plot</span>
+</span></span><span style="display:flex;"><span>survivalROC_data <span style="color:#5bc4bf">%&gt;%</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#06b6ef">ggplot</span>(mapping <span style="color:#5bc4bf">=</span> <span style="color:#06b6ef">aes</span>(x <span style="color:#5bc4bf">=</span> FP, y <span style="color:#5bc4bf">=</span> TP)) <span style="color:#5bc4bf">+</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#06b6ef">geom_point</span>() <span style="color:#5bc4bf">+</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#06b6ef">geom_line</span>() <span style="color:#5bc4bf">+</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#06b6ef">geom_label</span>(data <span style="color:#5bc4bf">=</span> survivalROC_data <span style="color:#5bc4bf">%&gt;%</span> dplyr<span style="color:#5bc4bf">::</span><span style="color:#06b6ef">select</span>(t,auc) <span style="color:#5bc4bf">%&gt;%</span> unique,
+</span></span><span style="display:flex;"><span>               mapping <span style="color:#5bc4bf">=</span> <span style="color:#06b6ef">aes</span>(label <span style="color:#5bc4bf">=</span> <span style="color:#06b6ef">sprintf</span>(<span style="color:#48b685">&#34;%.3f&#34;</span>, auc)), x <span style="color:#5bc4bf">=</span> <span style="color:#f99b15">0.5</span>, y <span style="color:#5bc4bf">=</span> <span style="color:#f99b15">0.5</span>) <span style="color:#5bc4bf">+</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#06b6ef">facet_wrap</span>( <span style="color:#5bc4bf">~</span> t) <span style="color:#5bc4bf">+</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#06b6ef">theme_bw</span>() <span style="color:#5bc4bf">+</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#06b6ef">theme</span>(axis.text.x <span style="color:#5bc4bf">=</span> <span style="color:#06b6ef">element_text</span>(angle <span style="color:#5bc4bf">=</span> <span style="color:#f99b15">90</span>, vjust <span style="color:#5bc4bf">=</span> <span style="color:#f99b15">0.5</span>),
+</span></span><span style="display:flex;"><span>          legend.key <span style="color:#5bc4bf">=</span> <span style="color:#06b6ef">element_blank</span>(),
+</span></span><span style="display:flex;"><span>          plot.title <span style="color:#5bc4bf">=</span> <span style="color:#06b6ef">element_text</span>(hjust <span style="color:#5bc4bf">=</span> <span style="color:#f99b15">0.5</span>),
+</span></span><span style="display:flex;"><span>          strip.background <span style="color:#5bc4bf">=</span> <span style="color:#06b6ef">element_blank</span>())
+</span></span></code></pre></div><p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/timeROC/unnamed-chunk-4-1.png" alt=""  />
+</p>
+<p>从图中大概可以看出，在180天时ROC曲线的效果最好，但是出现这种情况的主要原因是在180天的时候死亡的患者很少，所以几乎不影响。然后，在时间超过720天后AUC稳定在0.856，说明在此之后一直未死亡的患者贡献了风险得分的预测能力。</p>
+<h2 id="案例实现">案例实现<a hidden class="anchor" aria-hidden="true" href="#案例实现">#</a></h2>
+<p>对于R中<code>time-dependent ROC</code>的实现方式，一般会用<code>timeROC</code>和<code>survivalROC</code>包， 也有一些其他的包如：<code>tdROC</code>, <code>timereg</code>, <code>risksetROC</code>和<code>survAUC</code>可以实现。<code>timeROC</code>相比于<code>survivalROC</code>会多计算个AUC的置信区间</p>
+<p><code>timeROC</code>的具体实现如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#06b6ef">library</span>(timeROC)
+</span></span><span style="display:flex;"><span><span style="color:#06b6ef">data</span>(mayo)
+</span></span><span style="display:flex;"><span>time_roc_res <span style="color:#5bc4bf">&lt;-</span> <span style="color:#06b6ef">timeROC</span>(
+</span></span><span style="display:flex;"><span>  T <span style="color:#5bc4bf">=</span> mayo<span style="color:#5bc4bf">$</span>time,
+</span></span><span style="display:flex;"><span>  delta <span style="color:#5bc4bf">=</span> mayo<span style="color:#5bc4bf">$</span>censor,
+</span></span><span style="display:flex;"><span>  marker <span style="color:#5bc4bf">=</span> mayo<span style="color:#5bc4bf">$</span>mayoscore5,
+</span></span><span style="display:flex;"><span>  cause <span style="color:#5bc4bf">=</span> <span style="color:#f99b15">1</span>,
+</span></span><span style="display:flex;"><span>  weighting<span style="color:#5bc4bf">=</span><span style="color:#48b685">&#34;marginal&#34;</span>,
+</span></span><span style="display:flex;"><span>  times <span style="color:#5bc4bf">=</span> <span style="color:#06b6ef">c</span>(<span style="color:#f99b15">3</span> <span style="color:#5bc4bf">*</span> <span style="color:#f99b15">365</span>, <span style="color:#f99b15">5</span> <span style="color:#5bc4bf">*</span> <span style="color:#f99b15">365</span>, <span style="color:#f99b15">10</span> <span style="color:#5bc4bf">*</span> <span style="color:#f99b15">365</span>),
+</span></span><span style="display:flex;"><span>  ROC <span style="color:#5bc4bf">=</span> <span style="color:#815ba4">TRUE</span>,
+</span></span><span style="display:flex;"><span>  iid <span style="color:#5bc4bf">=</span> <span style="color:#815ba4">TRUE</span>
+</span></span><span style="display:flex;"><span>)
+</span></span></code></pre></div><p>查看计算的AUC值及其置信区间：</p>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>time_roc_res<span style="color:#5bc4bf">$</span>AUC
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>##    t=1095    t=1825    t=3650 
+</span></span><span style="display:flex;"><span>## 0.8982790 0.9153621 0.8576153
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#06b6ef">confint</span>(time_roc_res, level <span style="color:#5bc4bf">=</span> <span style="color:#f99b15">0.95</span>)<span style="color:#5bc4bf">$</span>CI_AUC
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>##         2.5% 97.5%
+</span></span><span style="display:flex;"><span>## t=1095 85.01 94.64
+</span></span><span style="display:flex;"><span>## t=1825 87.42 95.65
+</span></span><span style="display:flex;"><span>## t=3650 79.38 92.14
+</span></span></code></pre></div><p>绘制time-dependent ROC曲线：</p>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#06b6ef">plot</span>(time_roc_res, time<span style="color:#5bc4bf">=</span><span style="color:#f99b15">3</span> <span style="color:#5bc4bf">*</span> <span style="color:#f99b15">365</span>, col <span style="color:#5bc4bf">=</span> <span style="color:#48b685">&#34;red&#34;</span>, title <span style="color:#5bc4bf">=</span> <span style="color:#815ba4">FALSE</span>)  
+</span></span><span style="display:flex;"><span><span style="color:#06b6ef">plot</span>(time_roc_res, time<span style="color:#5bc4bf">=</span><span style="color:#f99b15">5</span> <span style="color:#5bc4bf">*</span> <span style="color:#f99b15">365</span>, add<span style="color:#5bc4bf">=</span><span style="color:#815ba4">TRUE</span>, col<span style="color:#5bc4bf">=</span><span style="color:#48b685">&#34;blue&#34;</span>) 
+</span></span><span style="display:flex;"><span><span style="color:#06b6ef">plot</span>(time_roc_res, time<span style="color:#5bc4bf">=</span><span style="color:#f99b15">10</span> <span style="color:#5bc4bf">*</span> <span style="color:#f99b15">365</span>, add<span style="color:#5bc4bf">=</span><span style="color:#815ba4">TRUE</span>, col<span style="color:#5bc4bf">=</span><span style="color:#48b685">&#34;green&#34;</span>) 
+</span></span><span style="display:flex;"><span><span style="color:#06b6ef">legend</span>(<span style="color:#48b685">&#34;bottomright&#34;</span>,<span style="color:#06b6ef">c</span>(<span style="color:#48b685">&#34;3 Years&#34;</span> ,<span style="color:#48b685">&#34;5 Years&#34;</span>, <span style="color:#48b685">&#34;10 Years&#34;</span>),
+</span></span><span style="display:flex;"><span>       col<span style="color:#5bc4bf">=</span><span style="color:#06b6ef">c</span>(<span style="color:#48b685">&#34;red&#34;</span>, <span style="color:#48b685">&#34;blue&#34;</span>, <span style="color:#48b685">&#34;green&#34;</span>), lty<span style="color:#5bc4bf">=</span><span style="color:#f99b15">1</span>, lwd<span style="color:#5bc4bf">=</span><span style="color:#f99b15">2</span>)
+</span></span></code></pre></div><p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/timeROC/unnamed-chunk-7-1.png" alt=""  />
+</p>
+<p>使用<code>ggplot2</code>绘制美化版本的ROC曲线：</p>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>ROC_data <span style="color:#5bc4bf">&lt;-</span> <span style="color:#06b6ef">data.frame</span>(
+</span></span><span style="display:flex;"><span>  TP_3year <span style="color:#5bc4bf">=</span> time_roc_res<span style="color:#5bc4bf">$</span>TP[, <span style="color:#f99b15">1</span>],
+</span></span><span style="display:flex;"><span>  FP_3year <span style="color:#5bc4bf">=</span> time_roc_res<span style="color:#5bc4bf">$</span>FP[, <span style="color:#f99b15">1</span>],
+</span></span><span style="display:flex;"><span>  TP_5year <span style="color:#5bc4bf">=</span> time_roc_res<span style="color:#5bc4bf">$</span>TP[, <span style="color:#f99b15">2</span>],
+</span></span><span style="display:flex;"><span>  FP_5year <span style="color:#5bc4bf">=</span> time_roc_res<span style="color:#5bc4bf">$</span>FP[, <span style="color:#f99b15">2</span>],
+</span></span><span style="display:flex;"><span>  TP_10year <span style="color:#5bc4bf">=</span> time_roc_res<span style="color:#5bc4bf">$</span>TP[, <span style="color:#f99b15">3</span>],
+</span></span><span style="display:flex;"><span>  FP_10year <span style="color:#5bc4bf">=</span> time_roc_res<span style="color:#5bc4bf">$</span>FP[, <span style="color:#f99b15">3</span>]
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#06b6ef">library</span>(ggplot2)
+</span></span><span style="display:flex;"><span><span style="color:#06b6ef">ggplot</span>(data <span style="color:#5bc4bf">=</span> ROC_data) <span style="color:#5bc4bf">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06b6ef">geom_line</span>(<span style="color:#06b6ef">aes</span>(x <span style="color:#5bc4bf">=</span> FP_3year, y <span style="color:#5bc4bf">=</span> TP_3year), size <span style="color:#5bc4bf">=</span> <span style="color:#f99b15">1</span>, color <span style="color:#5bc4bf">=</span> <span style="color:#48b685">&#34;#BC3C29FF&#34;</span>) <span style="color:#5bc4bf">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06b6ef">geom_line</span>(<span style="color:#06b6ef">aes</span>(x <span style="color:#5bc4bf">=</span> FP_5year, y <span style="color:#5bc4bf">=</span> TP_5year), size <span style="color:#5bc4bf">=</span> <span style="color:#f99b15">1</span>, color <span style="color:#5bc4bf">=</span> <span style="color:#48b685">&#34;#0072B5FF&#34;</span>) <span style="color:#5bc4bf">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06b6ef">geom_line</span>(<span style="color:#06b6ef">aes</span>(x <span style="color:#5bc4bf">=</span> FP_10year, y <span style="color:#5bc4bf">=</span> TP_10year), size <span style="color:#5bc4bf">=</span> <span style="color:#f99b15">1</span>, color <span style="color:#5bc4bf">=</span> <span style="color:#48b685">&#34;#E18727FF&#34;</span>) <span style="color:#5bc4bf">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06b6ef">geom_abline</span>(slope <span style="color:#5bc4bf">=</span> <span style="color:#f99b15">1</span>, intercept <span style="color:#5bc4bf">=</span> <span style="color:#f99b15">0</span>, color <span style="color:#5bc4bf">=</span> <span style="color:#48b685">&#34;grey&#34;</span>, size <span style="color:#5bc4bf">=</span> <span style="color:#f99b15">1</span>, linetype <span style="color:#5bc4bf">=</span> <span style="color:#f99b15">2</span>) <span style="color:#5bc4bf">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06b6ef">theme_bw</span>() <span style="color:#5bc4bf">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06b6ef">annotate</span>(<span style="color:#48b685">&#34;text&#34;</span>, x <span style="color:#5bc4bf">=</span> <span style="color:#f99b15">0.75</span>, y <span style="color:#5bc4bf">=</span> <span style="color:#f99b15">0.25</span>, size <span style="color:#5bc4bf">=</span> <span style="color:#f99b15">4.5</span>,
+</span></span><span style="display:flex;"><span>           label <span style="color:#5bc4bf">=</span> <span style="color:#06b6ef">paste0</span>(<span style="color:#48b685">&#34;AUC at 3 years = &#34;</span>, <span style="color:#06b6ef">sprintf</span>(<span style="color:#48b685">&#34;%.3f&#34;</span>, time_roc_res<span style="color:#5bc4bf">$</span>AUC[[1]])), color <span style="color:#5bc4bf">=</span> <span style="color:#48b685">&#34;#BC3C29FF&#34;</span>) <span style="color:#5bc4bf">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06b6ef">annotate</span>(<span style="color:#48b685">&#34;text&#34;</span>, x <span style="color:#5bc4bf">=</span> <span style="color:#f99b15">0.75</span>, y <span style="color:#5bc4bf">=</span> <span style="color:#f99b15">0.15</span>, size <span style="color:#5bc4bf">=</span> <span style="color:#f99b15">4.5</span>,
+</span></span><span style="display:flex;"><span>           label <span style="color:#5bc4bf">=</span> <span style="color:#06b6ef">paste0</span>(<span style="color:#48b685">&#34;AUC at 5 years = &#34;</span>, <span style="color:#06b6ef">sprintf</span>(<span style="color:#48b685">&#34;%.3f&#34;</span>, time_roc_res<span style="color:#5bc4bf">$</span>AUC[[2]])), color <span style="color:#5bc4bf">=</span> <span style="color:#48b685">&#34;#0072B5FF&#34;</span>) <span style="color:#5bc4bf">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06b6ef">annotate</span>(<span style="color:#48b685">&#34;text&#34;</span>, x <span style="color:#5bc4bf">=</span> <span style="color:#f99b15">0.75</span>, y <span style="color:#5bc4bf">=</span> <span style="color:#f99b15">0.05</span>, size <span style="color:#5bc4bf">=</span> <span style="color:#f99b15">4.5</span>,
+</span></span><span style="display:flex;"><span>           label <span style="color:#5bc4bf">=</span> <span style="color:#06b6ef">paste0</span>(<span style="color:#48b685">&#34;AUC at 10 years = &#34;</span>, <span style="color:#06b6ef">sprintf</span>(<span style="color:#48b685">&#34;%.3f&#34;</span>, time_roc_res<span style="color:#5bc4bf">$</span>AUC[[3]])), color <span style="color:#5bc4bf">=</span> <span style="color:#48b685">&#34;#E18727FF&#34;</span>) <span style="color:#5bc4bf">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06b6ef">labs</span>(x <span style="color:#5bc4bf">=</span> <span style="color:#48b685">&#34;False positive rate&#34;</span>, y <span style="color:#5bc4bf">=</span> <span style="color:#48b685">&#34;True positive rate&#34;</span>) <span style="color:#5bc4bf">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06b6ef">theme</span>(
+</span></span><span style="display:flex;"><span>    axis.text <span style="color:#5bc4bf">=</span> <span style="color:#06b6ef">element_text</span>(face <span style="color:#5bc4bf">=</span> <span style="color:#48b685">&#34;bold&#34;</span>, size <span style="color:#5bc4bf">=</span> <span style="color:#f99b15">11</span>, color <span style="color:#5bc4bf">=</span> <span style="color:#48b685">&#34;black&#34;</span>),
+</span></span><span style="display:flex;"><span>    axis.title.x <span style="color:#5bc4bf">=</span> <span style="color:#06b6ef">element_text</span>(face <span style="color:#5bc4bf">=</span> <span style="color:#48b685">&#34;bold&#34;</span>, size <span style="color:#5bc4bf">=</span> <span style="color:#f99b15">14</span>, color <span style="color:#5bc4bf">=</span> <span style="color:#48b685">&#34;black&#34;</span>, margin <span style="color:#5bc4bf">=</span> <span style="color:#06b6ef">margin</span>(<span style="color:#06b6ef">c</span>(<span style="color:#f99b15">15</span>, <span style="color:#f99b15">0</span>, <span style="color:#f99b15">0</span>, <span style="color:#f99b15">0</span>))),
+</span></span><span style="display:flex;"><span>    axis.title.y <span style="color:#5bc4bf">=</span> <span style="color:#06b6ef">element_text</span>(face <span style="color:#5bc4bf">=</span> <span style="color:#48b685">&#34;bold&#34;</span>, size <span style="color:#5bc4bf">=</span> <span style="color:#f99b15">14</span>, color <span style="color:#5bc4bf">=</span> <span style="color:#48b685">&#34;black&#34;</span>, margin <span style="color:#5bc4bf">=</span> <span style="color:#06b6ef">margin</span>(<span style="color:#06b6ef">c</span>(<span style="color:#f99b15">0</span>, <span style="color:#f99b15">15</span>, <span style="color:#f99b15">0</span>, <span style="color:#f99b15">0</span>)))
+</span></span><span style="display:flex;"><span>  )
+</span></span></code></pre></div><p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/timeROC/unnamed-chunk-8-1.png" alt=""  />
+</p>
+<hr>
+<h2 id="reference">Reference<a hidden class="anchor" aria-hidden="true" href="#reference">#</a></h2>
+<p><a href="https://datascienceplus.com/time-dependent-roc-for-survival-prediction-models-in-r/" target="_blank" rel="noopener" style="color:#42b983";>Time-dependent ROC for Survival Prediction Models in R</a></p>
+
+
+        </div>
+
+        
+
+        <footer class="post-footer">
+            
+<nav class="paginav">
+  <a class="prev" href="http://localhost:1313/en/posts/tech/ssh/">
+    <span class="title">« 上一页</span>
+    <br>
+    <span>SSH连接自动断开问题</span>
+  </a>
+  <a class="next" href="http://localhost:1313/en/posts/tech/conda/">
+    <span class="title">下一页 »</span>
+    <br>
+    <span>Conda使用指南（安装部署篇）</span>
+  </a>
+</nav>
+
+        </footer>
+    </div>
+
+
+
+<div>
+    <div class="pagination__title">
+        <span class="pagination__title-h" style="font-size: 20px;">💬评论</span>
+        <hr />
+    </div>
+
+    <div id="tcomment"></div>
+
+    <script src="https://cdn.staticfile.org/twikoo/1.6.15/twikoo.all.min.js">
+    </script>
+    
+
+    
+
+    <script>
+        twikoo.init({
+            envId: "https://twikoo.lvbibir.cn/", 
+            el: "#tcomment",
+            lang: 'zh-CN',
+            
+            path: window.TWIKOO_MAGIC_PATH||window.location.pathname,
+            
+            
+            
+            
+            
+            
+            
+        });
+    </script>
+
+</div>
+</article>
+</main>
+
+
+<footer class="footer">
+
+    <a href="https://gohugo.io/" target="_blank">
+        
+        <img style="display: unset;" src="https://image.lvbibir.cn/blog/frame-hugo-blue.svg">
+    </a>
+    <a href="https://github.com/adityatelange/hugo-PaperMod" target="_blank">
+        
+        <img style="display: unset;" src="https://image.lvbibir.cn/blog/theme-papermod-lightgrey.svg">
+    </a>
+
+    <br>
+
+    <span id="runtime_span"></span>
+    <script
+        type="text/javascript">function show_runtime() { window.setTimeout("show_runtime()", 1000); X = new Date("7/13/2021 1:00:00"); Y = new Date(); T = (Y.getTime() - X.getTime()); M = 24 * 60 * 60 * 1000; a = T / M; A = Math.floor(a); b = (a - A) * 24; B = Math.floor(b); c = (b - B) * 60; C = Math.floor((b - B) * 60); D = Math.floor((c - C) * 60); runtime_span.innerHTML = "网站已运行" + A + "天" + B + "小时"} show_runtime();</script>
+    |
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span id="busuanzi_container">
+        
+        总访客数:  <span id="busuanzi_value_site_uv"></span>
+        |
+        总访问量:  <span id="busuanzi_value_site_pv"></span>
+    </span>
+
+    <br>
+    <span>
+        Copyright
+        &copy;
+        2021-2024
+        <a href="http://localhost:1313/en/" style="border-bottom:1px solid">Jeason&#39;s Blog</a>
+    </span>
+
+    
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <span class="topInner">
+        <svg class="topSvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+            <path d="M12 6H0l6-6z" />
+        </svg>
+        <span id="read_progress"></span>
+    </span>
+</a>
+
+<script>
+    document.addEventListener('scroll', function (e) {
+        const readProgress = document.getElementById("read_progress");
+        const scrollHeight = document.documentElement.scrollHeight;
+        const clientHeight = document.documentElement.clientHeight;
+        const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        
+        readProgress.innerText = ((scrollTop / (scrollHeight - clientHeight)).toFixed(2) * 100).toFixed(0);
+    })
+</script>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    let mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 400 || document.documentElement.scrollTop > 400) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+
+
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerText = '📄复制';
+
+        function copyingDone() {
+            copybutton.innerText = '👌🏻已复制!';
+            setTimeout(() => {
+                copybutton.innerText = '📄复制';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) {
+            }
+            ;
+            selection.removeRange(range);
+        });
+
+        let language = codeblock.className.replaceAll("language-", "")
+        let macTool = document.createElement("div")
+        let macTool1 = document.createElement("div")
+        let macTool2 = document.createElement("div")
+        let macTool3 = document.createElement("div")
+        let languageType = document.createElement("div")
+        languageType.innerText = language
+        macTool.setAttribute('class', 'mac-tool')
+        macTool1.setAttribute('class', 'mac bb1')
+        macTool2.setAttribute('class', 'mac bb2')
+        macTool3.setAttribute('class', 'mac bb3')
+        languageType.setAttribute('class', 'language-type')
+        macTool.appendChild(macTool1)
+        macTool.appendChild(macTool2)
+        macTool.appendChild(macTool3)
+        macTool.appendChild(languageType)
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+            container.appendChild(macTool)
+        } else if (container.parentNode.firstChild === container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName === "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+            container.appendChild(macTool)
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+            container.appendChild(macTool)
+        }
+    });
+</script>
+
+</body>
+
+</html>

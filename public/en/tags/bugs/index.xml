@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Bugs on Jeason&#39;s Blog</title>
+    <link>http://localhost:1313/en/tags/bugs/</link>
+    <description>Recent content in Bugs on Jeason&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Wed, 28 Feb 2024 20:39:47 +0800</lastBuildDate>
+    <atom:link href="http://localhost:1313/en/tags/bugs/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Ubuntu 系统下Rstudio不能输入中文的解决办法</title>
+      <link>http://localhost:1313/en/posts/tech/rstudio_ubuntu/</link>
+      <pubDate>Thu, 05 Sep 2019 20:39:47 +0800</pubDate>
+      <guid>http://localhost:1313/en/posts/tech/rstudio_ubuntu/</guid>
+      <description>本文介绍了在Ubuntu系统下安装Rstudio软件不能输入中文内容的解决方法</description>
+    </item>
+  </channel>
+</rss>

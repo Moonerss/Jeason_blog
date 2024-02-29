@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>SingleCell on Jeason&#39;s Blog</title>
+    <link>http://localhost:1313/en/tags/singlecell/</link>
+    <description>Recent content in SingleCell on Jeason&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Thu, 29 Feb 2024 16:50:44 +0800</lastBuildDate>
+    <atom:link href="http://localhost:1313/en/tags/singlecell/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>SCENT包Debug</title>
+      <link>http://localhost:1313/en/posts/tech/scent/</link>
+      <pubDate>Fri, 20 Nov 2020 20:53:51 +0800</pubDate>
+      <guid>http://localhost:1313/en/posts/tech/scent/</guid>
+      <description>本文记录了在使用`SCENT`包进行分析时出现的错误，以及解决方法。</description>
+    </item>
+    <item>
+      <title>scRNA的细胞质控</title>
+      <link>http://localhost:1313/en/posts/tech/sc_qc/</link>
+      <pubDate>Wed, 12 Aug 2020 16:50:44 +0800</pubDate>
+      <guid>http://localhost:1313/en/posts/tech/sc_qc/</guid>
+      <description>动机 scRNA-seq数据的低质量文库可能来自于：细胞分选环节的破坏、文库制备失误（没有足够的反转录或PCR次数）… 表现在：细胞总表达量低、基本没有表达的基因、高线粒体或spike-in占比。 这些低质量的库是有问题的，因为它们可能在下游分析中导致误导的结果 。 聚类问题： 低质量的细胞</description>
+    </item>
+  </channel>
+</rss>

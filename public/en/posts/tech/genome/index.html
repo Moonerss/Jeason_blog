@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>人类基因组知识汇总 | Jeason&#39;s Blog</title>
+<meta name="keywords" content="NGS">
+<meta name="description" content="基因组大小 人类基因组主要由细胞核的23对染色体组成(核基因组)，还包括线粒体中的小DNA分子(线粒体基因组)。 单倍体基因组大概有30亿个碱基对组成，具体到每个染色体的碱基对长度与基因数量可见下图: 在这30亿个碱基中，仅有1.5%的区域是2~3w个可编码蛋白质的基因。 平均基因长度有">
+<meta name="author" content="作者:Jeason">
+<link rel="canonical" href="http://localhost:1313/en/posts/tech/genome/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.e029fa55ed0a02bb684da89d2a53a4e1ba9e26e3719fa48460be52776460b523.css" integrity="sha256-4Cn6Ve0KArtoTaidKlOk4bqeJuNxn6SEYL5Sd2RgtSM=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:1313/img/avatar.jpeg">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/img/avatar.jpeg">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/img/avatar.jpeg">
+<link rel="apple-touch-icon" href="http://localhost:1313/img/avatar.jpeg">
+<link rel="mask-icon" href="http://localhost:1313/img/avatar.jpeg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="http://localhost:1313/en/posts/tech/genome/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><script type="text/javascript"
+        async
+        src="https://cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\[\[','\]\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+});
+
+MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<style>
+code.has-jax {
+    font: inherit;
+    font-size: 100%;
+    background: inherit;
+    border: inherit;
+    color: #515151;
+}
+</style>
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = ""; 
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<meta property="og:title" content="人类基因组知识汇总" />
+<meta property="og:description" content="基因组大小 人类基因组主要由细胞核的23对染色体组成(核基因组)，还包括线粒体中的小DNA分子(线粒体基因组)。 单倍体基因组大概有30亿个碱基对组成，具体到每个染色体的碱基对长度与基因数量可见下图: 在这30亿个碱基中，仅有1.5%的区域是2~3w个可编码蛋白质的基因。 平均基因长度有" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://localhost:1313/en/posts/tech/genome/" />
+<meta property="og:image" content="https://source.unsplash.com/random/400x200?code" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-11-14T16:31:58+08:00" />
+<meta property="article:modified_time" content="2024-02-29T16:31:58+08:00" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://source.unsplash.com/random/400x200?code" />
+<meta name="twitter:title" content="人类基因组知识汇总"/>
+<meta name="twitter:description" content="基因组大小 人类基因组主要由细胞核的23对染色体组成(核基因组)，还包括线粒体中的小DNA分子(线粒体基因组)。 单倍体基因组大概有30亿个碱基对组成，具体到每个染色体的碱基对长度与基因数量可见下图: 在这30亿个碱基中，仅有1.5%的区域是2~3w个可编码蛋白质的基因。 平均基因长度有"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "📚 文章",
+      "item": "http://localhost:1313/en/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "👨🏻‍💻 技术",
+      "item": "http://localhost:1313/en/posts/tech/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "人类基因组知识汇总",
+      "item": "http://localhost:1313/en/posts/tech/genome/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "人类基因组知识汇总",
+  "name": "人类基因组知识汇总",
+  "description": "基因组大小 人类基因组主要由细胞核的23对染色体组成(核基因组)，还包括线粒体中的小DNA分子(线粒体基因组)。 单倍体基因组大概有30亿个碱基对组成，具体到每个染色体的碱基对长度与基因数量可见下图: 在这30亿个碱基中，仅有1.5%的区域是2~3w个可编码蛋白质的基因。 平均基因长度有",
+  "keywords": [
+    "NGS"
+  ],
+  "articleBody": "基因组大小 人类基因组主要由细胞核的23对染色体组成(核基因组)，还包括线粒体中的小DNA分子(线粒体基因组)。 单倍体基因组大概有30亿个碱基对组成，具体到每个染色体的碱基对长度与基因数量可见下图: 在这30亿个碱基中，仅有1.5%的区域是2~3w个可编码蛋白质的基因。 平均基因长度有10Kbp左右，但是不同基因的长度区别很大 其余98.5%的区域为非编码区，包括各种调控基因表达的DNA原件，同时也可以转录为non-coding RNA，发挥潜在作用。 参考基因组和基因组注释 参考基因组与基因组注释的关系 自从 1990 启动的家喻户晓的人类基因组计划开始，全世界的科学家竭尽全力破译了第一个完整的人类基因组，从那时开始人类拿到了一本只有 ATCG 四个碱基书写的天书。后续人们逐步完善了基因组序列信息，并写在 Fasta 格式的文本文件“天书”中，这本天书就叫做参考基因组。\n科学家利用实验手段解析大量的基因和非编码序列，这些序列被标记在参考基因组的位置上，同时加入了大量的注释信息，最终写成了 BED，GTF等不同格式的注释文件。因此，基因组注释文件就把基因序列和基因功能联系起来。\n随着时间的推移，在更先进技术的加持下，在已经构建好的基因组和注释信息上不断增加，删减，修改，就有了不同的版本。每个版本的参考基因组都对应相应的基因组注释文件。\n基因组版本命名 为了更加准确的构建标准参考基因组，NCBI，EBI，桑格研究所等机构共同组建了参考基因组联盟(Genome Reference Consortium)。GRC 利用最佳的技术装配，纠正，增加基因组序列，以此作为在生信分析领域作为参考的基因组。目前，该机构构建了人，小鼠，大鼠，斑马鱼，鸡的参考基因组。\n人的参考基因组官名叫 GRCh38 （Genome Reference Consortium Human Build 38），GRCh38 在UCSC基因组浏览器中还有个小名 hg38，这个小名对于大多数人来说是更亲切熟悉的。GRCh38 在 GenBank 中叫 GCA_000001405.15，在 RefSeq 中叫 GCF_000001405.26，虽然 GRC 组织建议在所有出版物和工具中使用该编号，但事实是前两种 GRCh38 和 hg38 对生信分析更常见。在不更改染色体坐标的情况下，向参考基因组添加或替换新序列，这种打补丁的方式，会在基因组版本后加 .p （patch）来命名。如果有大的基因组位置变动，则是大版本的更新，我们一般体到的hg19和hg38就是这种情况。\n常用的人和小鼠参考基因组对应列表如下：\n发布时间 2013 2009 2006 GRC 官名 GRCh38 GRCh37 GRCh36 UCSC hg38 hg19 hg18 Ensemble GRCh38 GRCh37 GRCh36 GENCODE 38 19 3c NCBI GRCh38 GRCh37 GRCh36 GenBank GCA_000001405 RefSeq GCF_000001405 发布时间 2020 2011 2007 GRC 官名 GRCm39 GRCm38 UCSC m39 mm10 mm9 Ensemble GRCm39 GRCm38 GENCODE M27 M25 M1 NCBI GRCm39 GRCm38 NCBIM37 参考基因组文件 人类基因组序列信息通常以染色体为单位保存为fasta文件中。\n参考基因组一般保存为纯文本格式，即直接记录“A”、“T”、“C”、“G”这样的 ASCII 码字符。而1个 ASCII 字符，大小是 1B，所以，如果按纯文本保存 30亿个字母(单链)，就是30亿字母 = 3,000,000,000 B = 3 GB。 理论上应该只有25条序列信息(Chr1:22,X,Y,ChrM)。但是在实际下载的文件中，序列数量远远不止这些。 这是由于参考序列一般是通过二代测序产生的，测得的短Read片段拼接、组装成基因组的染色体序列，需要经历contigs与scaffolds两个过程。在拼接过程中会产生额外的scaffolds信息。\n这些scaffolds序列主要可以分为三类：\nUnlocalized scaffolds(xxxx_random):知道这些scaffolds在哪条染色体上，但不知道其在染色体的具体位置及方向，其命名规则为chr{chromosome number orname}_{sequence_accession}v{sequence_version}_random, 如：chr11_KI270721v1_random Unplaced scaffolds(chrUn_xxxxxx):不知道这条scaffolds的所属染色体信息，命名规则为chrUn_{sequence_accession}v{sequence_version}, 如：chrUn_KI270302v1 Alternate loci scaffolds(xxx_alt):这一部分主要是人群特异的一些序列，正常参考序列要求在99.9%的人群中一致，但存在部分序列是某个人群特异的(如50%是A序列，50%是B序列)，这部分序列的确存在但又不是参考序列，标记为Alternate loci scaffolds，其命名规则为chr{chromosome number or name}_{sequence_accession}v{sequence_version}_alt, 如：chr1_KI270762v1_alt Alternate loci scaffolds为hg38版本基因组新添类型Sequence，此前hg19版本还没有。\n基因组结构 基因 DNA可分为编码区和非编码区：编码区可转录为 mRNA 并最终翻译成蛋白质；非编码区上具有基因表达的调控元件。\n编码区：在转录的过程，从DNA编码区的5’端开始转录生成preRNA，然后进一步加工修饰剪切得到成熟mRNA，进行后续的翻译。 外显子：在preRNA 经过剪切或修饰后、被保留的DNA部分。 起始密码子(Start Codon)：是mRNA上开始合成蛋白质的密码子，也是第一个被核糖体翻译的mRNA密码子。通常为AUG。 终止密码子(Stop Codon)：代表核糖体翻译的终止。通常为UAG、UAA、UGA。 UTR(untranslated region)：属于外显子部分。即外显子也包含非编码区域。 位于5’端的UTR称为5’UTR, 从mRNA起点的甲基化鸟嘌呤核苷酸帽延伸至AUG起始密码子。 与5’UTR上游的第一个碱基相对应DNA链上的碱基称为TSS(Transcription start sites) 位于3’端的UTR称为3’UTR，为mRNA的结束部分，从编码区末端的终止密码子延伸至多聚A尾巴（Poly-A）。 与3’UTR下游的最后一个碱基相对应DNA链上的碱基称为TTS(Transcription termination sites) CDS(Coding sequence)：包括mRNA中从5’UTR后的起始密码子开始到3’UTR前的终止密码子的实际编码蛋白序列 ORF(Open reading frame)：从一个起始密码子开始到一个终止密码子结束的一段序列 CDS一定是ORF，ORF不一定是CDS\nTranscript转录本：一条基因通过可变剪切机制可转录形成的一种或多种可供编码蛋白质的成熟的mRNA。 在最终成熟mRNA的上下游两端修饰有特殊的结构，分别是5’ cap帽子与 3’ Poly-A尾巴。 Poly-A尾是mRNA’区别于其它non-coding RNA的主要标志\n非编码区：位于DNA序列上下游的non-coding区域含有调控基因表达原件 启动子Promoter：DNA分子上能与RNA聚合酶结合并形成转录起始复合体的区域，位于TSS位点上游的100~1000碱基序列。 终止子Terminator：给RNA聚合酶提供转录终止信号的DNA序列 增强子Enhancer：可以蛋白质结合的小段DNA，从而加强所调控基因的转录作用。可以位于靶基因的上游/下游，距离也可以很远。 参考基因组下载 参考基因组可以从NCBI、ENSEMBL、UCSC等网站下载，此外gencode网站提供了最新最全的人类和小鼠的基因组序列和注释信息。iGenomes网站提供了较为全面的各版本参考序列构建好的注释文件和各类比对软件的索引文件，可直接下载使用。\n",
+  "wordCount" : "2855",
+  "inLanguage": "en",
+  "image":"https://source.unsplash.com/random/400x200?code","datePublished": "2023-11-14T16:31:58+08:00",
+  "dateModified": "2024-02-29T16:31:58+08:00",
+  "author":{
+    "@type": "Person",
+    "name": "Jeason"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "http://localhost:1313/en/posts/tech/genome/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Jeason's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "http://localhost:1313/img/avatar.jpeg"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="http://localhost:1313/en/" accesskey="h" title="Jeason&#39;s Blog (Alt + H)">
+                <img src="http://localhost:1313/img/avatar.jpeg" alt="" aria-label="logo"
+                    height="35">Jeason&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+                
+            </div>
+        </div>
+        <ul id="menu">
+            <li class="menu-item">
+                <a href="http://localhost:1313/en/search" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
+                    <span>🔍 搜索</span>
+                    
+                </a>
+            
+            </li>
+            <li class="menu-item">
+                <a href="http://localhost:1313/en/" title="🏡 主页">
+                    <span>🏡 主页</span>
+                    
+                </a>
+            
+            </li>
+            <li class="menu-item">
+                <a href="http://localhost:1313/en/posts" title="📚 文章">
+                    <span>📚 文章</span>
+                    
+                </a>
+            
+            </li>
+            <li class="menu-item">
+                <a href="http://localhost:1313/en/archives" title="📈 归档">
+                    <span>📈 归档</span>
+                    
+                </a>
+            
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main page">
+<article class="post-single">
+    <div id="single-content">
+        <header class="post-header">
+            <div class="breadcrumbs"><a href="http://localhost:1313/en/">主页</a>&nbsp;»&nbsp;<a href="http://localhost:1313/en/posts/">📚 文章</a>&nbsp;»&nbsp;<a href="http://localhost:1313/en/posts/tech/">👨🏻‍💻 技术</a></div>
+            <h1 class="post-title">
+                人类基因组知识汇总
+            </h1>
+            <div class="post-meta">创建: 2023-11-14 | 更新: 2024-02-29 | 作者:Jeason
+
+
+
+
+                
+                <span id="busuanzi_container_page_pv">
+                    &nbsp;|&nbsp;访问:&nbsp;<span id="busuanzi_value_page_pv"></span>
+                </span>
+
+</div>
+        </header> <aside id="toc-container" class="toc-container wide">
+    <div class="toc">
+        <details  open>
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">文章目录</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#%e5%9f%ba%e5%9b%a0%e7%bb%84%e5%a4%a7%e5%b0%8f" aria-label="基因组大小">基因组大小</a></li>
+                <li>
+                    <a href="#%e5%8f%82%e8%80%83%e5%9f%ba%e5%9b%a0%e7%bb%84%e5%92%8c%e5%9f%ba%e5%9b%a0%e7%bb%84%e6%b3%a8%e9%87%8a" aria-label="参考基因组和基因组注释">参考基因组和基因组注释</a><ul>
+                        
+                <li>
+                    <a href="#%e5%8f%82%e8%80%83%e5%9f%ba%e5%9b%a0%e7%bb%84%e4%b8%8e%e5%9f%ba%e5%9b%a0%e7%bb%84%e6%b3%a8%e9%87%8a%e7%9a%84%e5%85%b3%e7%b3%bb" aria-label="参考基因组与基因组注释的关系">参考基因组与基因组注释的关系</a></li>
+                <li>
+                    <a href="#%e5%9f%ba%e5%9b%a0%e7%bb%84%e7%89%88%e6%9c%ac%e5%91%bd%e5%90%8d" aria-label="基因组版本命名">基因组版本命名</a></li>
+                <li>
+                    <a href="#%e5%8f%82%e8%80%83%e5%9f%ba%e5%9b%a0%e7%bb%84%e6%96%87%e4%bb%b6" aria-label="参考基因组文件">参考基因组文件</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e5%9f%ba%e5%9b%a0%e7%bb%84%e7%bb%93%e6%9e%84" aria-label="基因组结构">基因组结构</a></li>
+                <li>
+                    <a href="#%e5%8f%82%e8%80%83%e5%9f%ba%e5%9b%a0%e7%bb%84%e4%b8%8b%e8%bd%bd" aria-label="参考基因组下载">参考基因组下载</a>
+                </li>
+            </ul>
+        </div>
+        </details>
+    </div>
+</aside>
+<script>
+    let activeElement;
+    let elements;
+    window.addEventListener('DOMContentLoaded', function (event) {
+        checkTocPosition();
+
+        elements = document.querySelectorAll('h1[id],h2[id],h3[id],h4[id],h5[id],h6[id]');
+        
+        activeElement = elements[0];
+        const id = encodeURI(activeElement.getAttribute('id')).toLowerCase();
+        document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+    }, false);
+
+    window.addEventListener('resize', function(event) {
+        checkTocPosition();
+    }, false);
+
+    window.addEventListener('scroll', () => {
+        
+        activeElement = Array.from(elements).find((element) => {
+            if ((getOffsetTop(element) - window.pageYOffset) > 0 &&
+                (getOffsetTop(element) - window.pageYOffset) < window.innerHeight/2) {
+                return element;
+            }
+        }) || activeElement
+
+        elements.forEach(element => {
+            const id = encodeURI(element.getAttribute('id')).toLowerCase();
+            if (element === activeElement){
+                document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+            } else {
+                document.querySelector(`.inner ul li a[href="#${id}"]`).classList.remove('active');
+            }
+        })
+    }, false);
+
+    const main = parseInt(getComputedStyle(document.body).getPropertyValue('--article-width'), 10);
+    const toc = parseInt(getComputedStyle(document.body).getPropertyValue('--toc-width'), 10);
+    const gap = parseInt(getComputedStyle(document.body).getPropertyValue('--gap'), 10);
+
+    function checkTocPosition() {
+        const width = document.body.scrollWidth;
+        if (width - main - (toc * 2) - (gap * 4) > 0) {
+            document.getElementById("toc-container").classList.add("wide");
+        } else {
+            document.getElementById("toc-container").classList.remove("wide");
+        }
+    }
+
+    function getOffsetTop(element) {
+        if (!element.getClientRects().length) {
+            return 0;
+        }
+        let rect = element.getBoundingClientRect();
+        let win = element.ownerDocument.defaultView;
+        return rect.top + win.pageYOffset;
+    }
+</script>
+        <div class="post-content"><h2 id="基因组大小">基因组大小<a hidden class="anchor" aria-hidden="true" href="#基因组大小">#</a></h2>
+<ol>
+<li>人类基因组主要由细胞核的23对染色体组成(核基因组)，还包括线粒体中的小DNA分子(线粒体基因组)。</li>
+<li>单倍体基因组大概有30亿个碱基对组成，具体到每个染色体的碱基对长度与基因数量可见下图:</li>
+<li>在这30亿个碱基中，仅有1.5%的区域是2~3w个可编码蛋白质的基因。</li>
+</ol>
+<blockquote>
+<ol>
+<li>平均基因长度有10Kbp左右，但是不同基因的长度区别很大</li>
+<li>其余98.5%的区域为非编码区，包括各种调控基因表达的DNA原件，同时也可以转录为non-coding RNA，发挥潜在作用。</li>
+</ol>
+</blockquote>
+<p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/genome/bar.png" alt=""  />
+</p>
+<h2 id="参考基因组和基因组注释">参考基因组和基因组注释<a hidden class="anchor" aria-hidden="true" href="#参考基因组和基因组注释">#</a></h2>
+<h3 id="参考基因组与基因组注释的关系">参考基因组与基因组注释的关系<a hidden class="anchor" aria-hidden="true" href="#参考基因组与基因组注释的关系">#</a></h3>
+<p>自从 1990 启动的家喻户晓的人类基因组计划开始，全世界的科学家竭尽全力破译了第一个完整的人类基因组，从那时开始人类拿到了一本只有 ATCG 四个碱基书写的天书。后续人们逐步完善了基因组序列信息，并写在 Fasta 格式的文本文件“天书”中，这本<strong>天书</strong>就叫做<strong>参考基因组</strong>。</p>
+<p>科学家利用实验手段解析大量的基因和非编码序列，这些序列被标记在参考基因组的位置上，同时加入了大量的注释信息，最终写成了 BED，GTF等不同格式的注释文件。因此，基因组注释文件就把基因序列和基因功能联系起来。</p>
+<p>随着时间的推移，在更先进技术的加持下，在已经构建好的基因组和注释信息上不断增加，删减，修改，就有了不同的版本。每个版本的参考基因组都对应相应的基因组注释文件。</p>
+<h3 id="基因组版本命名">基因组版本命名<a hidden class="anchor" aria-hidden="true" href="#基因组版本命名">#</a></h3>
+<p>为了更加准确的构建标准参考基因组，NCBI，EBI，桑格研究所等机构共同组建了参考基因组联盟(Genome Reference Consortium)。GRC 利用最佳的技术装配，纠正，增加基因组序列，以此作为在生信分析领域作为参考的基因组。目前，该机构构建了人，小鼠，大鼠，斑马鱼，鸡的参考基因组。</p>
+<p>人的参考基因组官名叫 GRCh38 （Genome Reference Consortium Human Build 38），GRCh38 在UCSC基因组浏览器中还有个小名 hg38，这个小名对于大多数人来说是更亲切熟悉的。GRCh38 在 GenBank 中叫 GCA_000001405.15，在 RefSeq 中叫 GCF_000001405.26，虽然 GRC 组织建议在所有出版物和工具中使用该编号，但事实是前两种 GRCh38 和 hg38 对生信分析更常见。在不更改染色体坐标的情况下，向参考基因组添加或替换新序列，这种打补丁的方式，会在基因组版本后加 <code>.p</code> （patch）来命名。如果有大的基因组位置变动，则是大版本的更新，我们一般体到的hg19和hg38就是这种情况。</p>
+<p>常用的人和小鼠参考基因组对应列表如下：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">发布时间</th>
+<th style="text-align:left">2013</th>
+<th style="text-align:left">2009</th>
+<th style="text-align:left">2006</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">GRC 官名</td>
+<td style="text-align:left">GRCh38</td>
+<td style="text-align:left">GRCh37</td>
+<td style="text-align:left">GRCh36</td>
+</tr>
+<tr>
+<td style="text-align:left">UCSC</td>
+<td style="text-align:left">hg38</td>
+<td style="text-align:left">hg19</td>
+<td style="text-align:left">hg18</td>
+</tr>
+<tr>
+<td style="text-align:left">Ensemble</td>
+<td style="text-align:left">GRCh38</td>
+<td style="text-align:left">GRCh37</td>
+<td style="text-align:left">GRCh36</td>
+</tr>
+<tr>
+<td style="text-align:left">GENCODE</td>
+<td style="text-align:left">38</td>
+<td style="text-align:left">19</td>
+<td style="text-align:left">3c</td>
+</tr>
+<tr>
+<td style="text-align:left">NCBI</td>
+<td style="text-align:left">GRCh38</td>
+<td style="text-align:left">GRCh37</td>
+<td style="text-align:left">GRCh36</td>
+</tr>
+<tr>
+<td style="text-align:left">GenBank</td>
+<td style="text-align:left">GCA_000001405</td>
+<td style="text-align:left"></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left">RefSeq</td>
+<td style="text-align:left">GCF_000001405</td>
+<td style="text-align:left"></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">发布时间</th>
+<th style="text-align:left">2020</th>
+<th style="text-align:left">2011</th>
+<th style="text-align:left">2007</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">GRC 官名</td>
+<td style="text-align:left">GRCm39</td>
+<td style="text-align:left">GRCm38</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left">UCSC</td>
+<td style="text-align:left">m39</td>
+<td style="text-align:left">mm10</td>
+<td style="text-align:left">mm9</td>
+</tr>
+<tr>
+<td style="text-align:left">Ensemble</td>
+<td style="text-align:left">GRCm39</td>
+<td style="text-align:left">GRCm38</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left">GENCODE</td>
+<td style="text-align:left">M27</td>
+<td style="text-align:left">M25</td>
+<td style="text-align:left">M1</td>
+</tr>
+<tr>
+<td style="text-align:left">NCBI</td>
+<td style="text-align:left">GRCm39</td>
+<td style="text-align:left">GRCm38</td>
+<td style="text-align:left">NCBIM37</td>
+</tr>
+</tbody>
+</table>
+<h3 id="参考基因组文件">参考基因组文件<a hidden class="anchor" aria-hidden="true" href="#参考基因组文件">#</a></h3>
+<p>人类基因组序列信息通常以染色体为单位保存为fasta文件中。</p>
+<ol>
+<li>参考基因组一般保存为纯文本格式，即直接记录“A”、“T”、“C”、“G”这样的 ASCII 码字符。而1个 ASCII 字符，大小是 1B，所以，如果按纯文本保存 30亿个字母(单链)，就是30亿字母 = 3,000,000,000 B = 3 GB。</li>
+<li>理论上应该只有25条序列信息(Chr1:22,X,Y,ChrM)。但是在实际下载的文件中，序列数量远远不止这些。</li>
+</ol>
+<blockquote>
+<p>这是由于参考序列一般是通过二代测序产生的，测得的短Read片段拼接、组装成基因组的染色体序列，需要经历contigs与scaffolds两个过程。在拼接过程中会产生额外的scaffolds信息。</p>
+</blockquote>
+<p>这些scaffolds序列主要可以分为三类：</p>
+<ol>
+<li><strong>Unlocalized scaffolds(xxxx_random)</strong>:知道这些scaffolds在哪条染色体上，但不知道其在染色体的具体位置及方向，其命名规则为<code>chr{chromosome number orname}_{sequence_accession}v{sequence_version}_random</code>, 如：<code>chr11_KI270721v1_random</code></li>
+<li><strong>Unplaced scaffolds(chrUn_xxxxxx)</strong>:不知道这条scaffolds的所属染色体信息，命名规则为<code>chrUn_{sequence_accession}v{sequence_version}</code>, 如：<code>chrUn_KI270302v1</code></li>
+<li><strong>Alternate loci scaffolds(xxx_alt)</strong>:这一部分主要是人群特异的一些序列，正常参考序列要求在99.9%的人群中一致，但存在部分序列是某个人群特异的(如50%是A序列，50%是B序列)，这部分序列的确存在但又不是参考序列，标记为<strong>Alternate loci scaffolds</strong>，其命名规则为<code>chr{chromosome number or name}_{sequence_accession}v{sequence_version}_alt</code>, 如：<code>chr1_KI270762v1_alt</code></li>
+</ol>
+<blockquote>
+<p>Alternate loci scaffolds为hg38版本基因组新添类型Sequence，此前hg19版本还没有。</p>
+</blockquote>
+<h2 id="基因组结构">基因组结构<a hidden class="anchor" aria-hidden="true" href="#基因组结构">#</a></h2>
+<p>基因 DNA可分为编码区和非编码区：编码区可转录为 mRNA 并最终翻译成蛋白质；非编码区上具有基因表达的调控元件。</p>
+<ol>
+<li>编码区：在转录的过程，从DNA编码区的5’端开始转录生成preRNA，然后进一步加工修饰剪切得到成熟mRNA，进行后续的翻译。
+<ul>
+<li>外显子：在preRNA 经过剪切或修饰后、被保留的DNA部分。</li>
+<li>起始密码子(Start Codon)：是mRNA上开始合成蛋白质的密码子，也是第一个被核糖体翻译的mRNA密码子。通常为AUG。</li>
+<li>终止密码子(Stop Codon)：代表核糖体翻译的终止。通常为UAG、UAA、UGA。</li>
+<li>UTR(untranslated region)：属于外显子部分。即外显子也包含非编码区域。
+<ul>
+<li>位于5’端的UTR称为5’UTR, 从mRNA起点的甲基化鸟嘌呤核苷酸帽延伸至AUG起始密码子。
+<ul>
+<li>与5’UTR上游的第一个碱基相对应DNA链上的碱基称为TSS(Transcription start sites)</li>
+</ul>
+</li>
+<li>位于3’端的UTR称为3’UTR，为mRNA的结束部分，从编码区末端的终止密码子延伸至多聚A尾巴（Poly-A）。
+<ul>
+<li>与3’UTR下游的最后一个碱基相对应DNA链上的碱基称为TTS(Transcription termination sites)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>CDS(Coding sequence)：包括mRNA中从5’UTR后的起始密码子开始到3’UTR前的终止密码子的实际编码蛋白序列
+<ul>
+<li>ORF(Open reading frame)：从一个起始密码子开始到一个终止密码子结束的一段序列
+<blockquote>
+<p>CDS一定是ORF，ORF不一定是CDS</p>
+</blockquote>
+</li>
+<li>Transcript转录本：一条基因通过可变剪切机制可转录形成的一种或多种可供编码蛋白质的成熟的mRNA。</li>
+</ul>
+</li>
+<li>在最终成熟mRNA的上下游两端修饰有特殊的结构，分别是5’ cap帽子与 3’ Poly-A尾巴。
+<blockquote>
+<p>Poly-A尾是mRNA’区别于其它non-coding RNA的主要标志</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li>非编码区：位于DNA序列上下游的non-coding区域含有调控基因表达原件
+<ul>
+<li>启动子Promoter：DNA分子上能与RNA聚合酶结合并形成转录起始复合体的区域，位于TSS位点上游的100~1000碱基序列。</li>
+<li>终止子Terminator：给RNA聚合酶提供转录终止信号的DNA序列</li>
+<li>增强子Enhancer：可以蛋白质结合的小段DNA，从而加强所调控基因的转录作用。可以位于靶基因的上游/下游，距离也可以很远。</li>
+</ul>
+</li>
+</ol>
+<p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/genome/sequence.jpg" alt=""  />
+</p>
+<h2 id="参考基因组下载">参考基因组下载<a hidden class="anchor" aria-hidden="true" href="#参考基因组下载">#</a></h2>
+<p>参考基因组可以从NCBI、ENSEMBL、UCSC等网站下载，此外gencode网站提供了最新最全的人类和小鼠的基因组序列和注释信息。iGenomes网站提供了较为全面的各版本参考序列构建好的注释文件和各类比对软件的索引文件，可直接下载使用。</p>
+
+
+        </div>
+
+        
+
+        <footer class="post-footer">
+            
+<nav class="paginav">
+  <a class="prev" href="http://localhost:1313/en/posts/read/bioinfo_resource/">
+    <span class="title">« 上一页</span>
+    <br>
+    <span>生物信息学学习资源</span>
+  </a>
+  <a class="next" href="http://localhost:1313/en/posts/tech/nohup/">
+    <span class="title">下一页 »</span>
+    <br>
+    <span>nohup用法</span>
+  </a>
+</nav>
+
+        </footer>
+    </div>
+
+
+
+<div>
+    <div class="pagination__title">
+        <span class="pagination__title-h" style="font-size: 20px;">💬评论</span>
+        <hr />
+    </div>
+
+    <div id="tcomment"></div>
+
+    <script src="https://cdn.staticfile.org/twikoo/1.6.15/twikoo.all.min.js">
+    </script>
+    
+
+    
+
+    <script>
+        twikoo.init({
+            envId: "https://twikoo.lvbibir.cn/", 
+            el: "#tcomment",
+            lang: 'zh-CN',
+            
+            path: window.TWIKOO_MAGIC_PATH||window.location.pathname,
+            
+            
+            
+            
+            
+            
+            
+        });
+    </script>
+
+</div>
+</article>
+</main>
+
+
+<footer class="footer">
+
+    <a href="https://gohugo.io/" target="_blank">
+        
+        <img style="display: unset;" src="https://image.lvbibir.cn/blog/frame-hugo-blue.svg">
+    </a>
+    <a href="https://github.com/adityatelange/hugo-PaperMod" target="_blank">
+        
+        <img style="display: unset;" src="https://image.lvbibir.cn/blog/theme-papermod-lightgrey.svg">
+    </a>
+
+    <br>
+
+    <span id="runtime_span"></span>
+    <script
+        type="text/javascript">function show_runtime() { window.setTimeout("show_runtime()", 1000); X = new Date("7/13/2021 1:00:00"); Y = new Date(); T = (Y.getTime() - X.getTime()); M = 24 * 60 * 60 * 1000; a = T / M; A = Math.floor(a); b = (a - A) * 24; B = Math.floor(b); c = (b - B) * 60; C = Math.floor((b - B) * 60); D = Math.floor((c - C) * 60); runtime_span.innerHTML = "网站已运行" + A + "天" + B + "小时"} show_runtime();</script>
+    |
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span id="busuanzi_container">
+        
+        总访客数:  <span id="busuanzi_value_site_uv"></span>
+        |
+        总访问量:  <span id="busuanzi_value_site_pv"></span>
+    </span>
+
+    <br>
+    <span>
+        Copyright
+        &copy;
+        2021-2024
+        <a href="http://localhost:1313/en/" style="border-bottom:1px solid">Jeason&#39;s Blog</a>
+    </span>
+
+    
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <span class="topInner">
+        <svg class="topSvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+            <path d="M12 6H0l6-6z" />
+        </svg>
+        <span id="read_progress"></span>
+    </span>
+</a>
+
+<script>
+    document.addEventListener('scroll', function (e) {
+        const readProgress = document.getElementById("read_progress");
+        const scrollHeight = document.documentElement.scrollHeight;
+        const clientHeight = document.documentElement.clientHeight;
+        const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        
+        readProgress.innerText = ((scrollTop / (scrollHeight - clientHeight)).toFixed(2) * 100).toFixed(0);
+    })
+</script>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    let mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 400 || document.documentElement.scrollTop > 400) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+
+
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerText = '📄复制';
+
+        function copyingDone() {
+            copybutton.innerText = '👌🏻已复制!';
+            setTimeout(() => {
+                copybutton.innerText = '📄复制';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) {
+            }
+            ;
+            selection.removeRange(range);
+        });
+
+        let language = codeblock.className.replaceAll("language-", "")
+        let macTool = document.createElement("div")
+        let macTool1 = document.createElement("div")
+        let macTool2 = document.createElement("div")
+        let macTool3 = document.createElement("div")
+        let languageType = document.createElement("div")
+        languageType.innerText = language
+        macTool.setAttribute('class', 'mac-tool')
+        macTool1.setAttribute('class', 'mac bb1')
+        macTool2.setAttribute('class', 'mac bb2')
+        macTool3.setAttribute('class', 'mac bb3')
+        languageType.setAttribute('class', 'language-type')
+        macTool.appendChild(macTool1)
+        macTool.appendChild(macTool2)
+        macTool.appendChild(macTool3)
+        macTool.appendChild(languageType)
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+            container.appendChild(macTool)
+        } else if (container.parentNode.firstChild === container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName === "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+            container.appendChild(macTool)
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+            container.appendChild(macTool)
+        }
+    });
+</script>
+
+</body>
+
+</html>

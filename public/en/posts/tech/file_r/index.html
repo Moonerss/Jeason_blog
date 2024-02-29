@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>R的文件操作 | Jeason&#39;s Blog</title>
+<meta name="keywords" content="R">
+<meta name="description" content="这里介绍了在R语言中与文件和文件夹操作相关的函数及其使用的实例">
+<meta name="author" content="作者:Jeason">
+<link rel="canonical" href="http://localhost:1313/en/posts/tech/file_r/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.e029fa55ed0a02bb684da89d2a53a4e1ba9e26e3719fa48460be52776460b523.css" integrity="sha256-4Cn6Ve0KArtoTaidKlOk4bqeJuNxn6SEYL5Sd2RgtSM=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:1313/img/avatar.jpeg">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/img/avatar.jpeg">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/img/avatar.jpeg">
+<link rel="apple-touch-icon" href="http://localhost:1313/img/avatar.jpeg">
+<link rel="mask-icon" href="http://localhost:1313/img/avatar.jpeg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="http://localhost:1313/en/posts/tech/file_r/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><script type="text/javascript"
+        async
+        src="https://cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\[\[','\]\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+});
+
+MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<style>
+code.has-jax {
+    font: inherit;
+    font-size: 100%;
+    background: inherit;
+    border: inherit;
+    color: #515151;
+}
+</style>
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = ""; 
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<meta property="og:title" content="R的文件操作" />
+<meta property="og:description" content="这里介绍了在R语言中与文件和文件夹操作相关的函数及其使用的实例" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://localhost:1313/en/posts/tech/file_r/" />
+<meta property="og:image" content="https://source.unsplash.com/random/400x200?code" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2019-04-01T19:56:06+08:00" />
+<meta property="article:modified_time" content="2024-02-28T19:56:06+08:00" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://source.unsplash.com/random/400x200?code" />
+<meta name="twitter:title" content="R的文件操作"/>
+<meta name="twitter:description" content="这里介绍了在R语言中与文件和文件夹操作相关的函数及其使用的实例"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "📚 文章",
+      "item": "http://localhost:1313/en/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "👨🏻‍💻 技术",
+      "item": "http://localhost:1313/en/posts/tech/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "R的文件操作",
+      "item": "http://localhost:1313/en/posts/tech/file_r/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "R的文件操作",
+  "name": "R的文件操作",
+  "description": "这里介绍了在R语言中与文件和文件夹操作相关的函数及其使用的实例",
+  "keywords": [
+    "R"
+  ],
+  "articleBody": "目录操作 查看目录 getwd() 列出当前工作路径\nsetwd() 设置工作路径\nlist.files()和dir()的用法相同，可以列出路径下的文件和目录\nlist.files(path =\".\", pattern = NULL, all.files = FALSE, full.names = FALSE, recursive =FALSE, ignore.case = FALSE, include.dirs =FALSE, no.. = FALSE) dir(path =\".\", pattern = NULL, all.files = FALSE, full.names = FALSE, recursive = FALSE, ignore.case = FALSE, include.dirs = FALSE,no.. = FALSE) 函数list.dirs()只列出路径下所有目录,默认是递归进行的\nlist.dirs(path = \".\", full.names = TRUE, recursive = TRUE) 参数介绍：\npath 路径，如不填则默认为当前工作路径，即getwd()得到的路径； pattern 正则表达式，若pattern不为NULL，返回文件（目录）名满足该正则表达式的文件（目录）； all.files 若为FALSE则不显示隐藏文件（目录），若为TRUE则返回所有文件（目录）； full.names 若为FALSE则只返回文件（目录）名，若为TRUE则返回文件（目录）路径； recursive 若为FALSE则只返回该路径的子级文件（目录），若为TRUE则递归返回所有子、孙文件（目录）； ignore.case 若为TRUE则在匹配pattern时不区分大小写； include.dirs 在recursive为TURE，即显示所有子、孙文件时，若include.dirs为FALSE则只列出最终端的文件名，而不列出中间层级的目录名； no.. 若为TRUE，则不显示“.”和“..”。\n查看目录的权限 \u003e file.info(\".\") size isdir mode mtime ctime atime exe . 0 TRUE 555 2019-03-13 08:10:19 2018-10-13 17:14:40 2019-04-01 18:54:24 no 创建目录 创建单个目录 \u003e dir.create(\"create\") \u003e list.dirs() [1] \".\" \"./create\" \"./tmp\" 递归创建目录 \u003e dir.create(path=\"a1/b2/c3\",recursive = TRUE) \u003e list.dirs() [1] \".\" \"./a1\" \"./a1/b2\" \"./a1/b2/c3\" \"./create\" \"./tmp\" 检测目录是否存在 \u003e file.exists(\"a\") [1] FALSE 检查目录的权限 \u003e df \u003c- dir(file.path(R.home(), \"bin\"), full.names = T) \u003e file.access(df, mode = 0) == 0 D:/Rcore/bin/config.sh D:/Rcore/bin/R.exe D:/Rcore/bin/Rscript.exe TRUE TRUE TRUE D:/Rcore/bin/x64 TRUE mode = 0, 检查文件或目录是否存在 mode = 1, 检查文件或目录是否可执行 mode = 2, 检查文件或目录是否可写 mode = 4, 检查文件或目录是否可读\nfile.access()返回的是逻辑值，file.info()返回的是详细的权限信息\n修改目录权限 Sys.chmod(list.dirs(\".\"), \"777\") f \u003c- list.files(\".\", all.files = TRUE, full.names = TRUE, recursive = TRUE) Sys.chmod(f, (file.info(f)$mode | \"664\")) 对目录重名 # 对tmp目录重命名 \u003e file.rename(\"tmp\", \"tmp2\") [1] TRUE 删除目录 # 删除tmp2目录 \u003e unlink(\"tmp2\", recursive = TRUE) 其他功能 # 拼接目录字符串 \u003e file.path(\"p1\",\"p2\",\"p3\") [1] \"p1/p2/p3\" # 最底层子目录或文件名 \u003e filename\u003c-'C:/test/lalala.txt' \u003e basename(filename) [1] \"lalala.txt\" # 最底层子目录 \u003e dirname(filename)r [1] \"C:/test\" # 转换扩展路径 \u003e path.expand(\"~/foo\") [1] \"/home/conan/foo\" 常规文件操作 cat(“file A\\n”, file=”A”) #创建一个文件A，文件内容是’file A’,’\\n’表示换行，这是一个很好的习惯\ncat(“file B\\n”, file=”B”) #创建一个文件B\nfile.append(“A”, “B”) #将文件B的内容附到A内容的后面，注意没有空行\nfile.create(“A”) #创建一个文件A, 注意会覆盖原来的文件\nfile.append(“A”, rep(“B”, 10)) #将文件B的内容复制10便，并先后附到文件A内容后\nfile.show(“A”) #新开工作窗口显示文件A的内容\nfile.copy(“A”, “C”) #复制文件A保存为C文件，同一个文件夹\ndir.create(“tmp”) #创建名为tmp的文件夹\nfile.copy(c(“A”, “B”), “tmp”) #将文件夹拷贝到tmp文件夹中\nlist.files(“tmp”) #查看文件夹tmp中的文件名\nunlink(“tmp”, recursive=F) #如果文件夹tmp为空，删除文件夹tmp\nunlink(“tmp”, recursive=TRUE) #删除文件夹tmp，如果其中有文件一并删除\nfile.remove(“A”, “B”, “C”) #移除三个文件\n特殊目录 R.home() 查看R软件的相关目录 .Library 查看R核心包的目录 .Library.site 查看R核心包的目录和root用户安装包目录 .libPaths() 查看R所有包的存放目录 system.file() 查看指定包所在的目录 ",
+  "wordCount" : "1363",
+  "inLanguage": "en",
+  "image":"https://source.unsplash.com/random/400x200?code","datePublished": "2019-04-01T19:56:06+08:00",
+  "dateModified": "2024-02-28T19:56:06+08:00",
+  "author":{
+    "@type": "Person",
+    "name": "Jeason"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "http://localhost:1313/en/posts/tech/file_r/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Jeason's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "http://localhost:1313/img/avatar.jpeg"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="http://localhost:1313/en/" accesskey="h" title="Jeason&#39;s Blog (Alt + H)">
+                <img src="http://localhost:1313/img/avatar.jpeg" alt="" aria-label="logo"
+                    height="35">Jeason&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+                
+            </div>
+        </div>
+        <ul id="menu">
+            <li class="menu-item">
+                <a href="http://localhost:1313/en/search" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
+                    <span>🔍 搜索</span>
+                    
+                </a>
+            
+            </li>
+            <li class="menu-item">
+                <a href="http://localhost:1313/en/" title="🏡 主页">
+                    <span>🏡 主页</span>
+                    
+                </a>
+            
+            </li>
+            <li class="menu-item">
+                <a href="http://localhost:1313/en/posts" title="📚 文章">
+                    <span>📚 文章</span>
+                    
+                </a>
+            
+            </li>
+            <li class="menu-item">
+                <a href="http://localhost:1313/en/archives" title="📈 归档">
+                    <span>📈 归档</span>
+                    
+                </a>
+            
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main page">
+<article class="post-single">
+    <div id="single-content">
+        <header class="post-header">
+            <div class="breadcrumbs"><a href="http://localhost:1313/en/">主页</a>&nbsp;»&nbsp;<a href="http://localhost:1313/en/posts/">📚 文章</a>&nbsp;»&nbsp;<a href="http://localhost:1313/en/posts/tech/">👨🏻‍💻 技术</a></div>
+            <h1 class="post-title">
+                R的文件操作
+            </h1>
+            <div class="post-description">
+                这里介绍了在R语言中与文件和文件夹操作相关的函数及其使用的实例
+            </div>
+            <div class="post-meta">创建: 2019-04-01 | 更新: 2024-02-28 | 作者:Jeason
+
+
+
+
+                
+                <span id="busuanzi_container_page_pv">
+                    &nbsp;|&nbsp;访问:&nbsp;<span id="busuanzi_value_page_pv"></span>
+                </span>
+
+</div>
+        </header> <aside id="toc-container" class="toc-container wide">
+    <div class="toc">
+        <details  open>
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">文章目录</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#%e7%9b%ae%e5%bd%95%e6%93%8d%e4%bd%9c" aria-label="目录操作">目录操作</a><ul>
+                        
+                <li>
+                    <a href="#%e6%9f%a5%e7%9c%8b%e7%9b%ae%e5%bd%95" aria-label="查看目录">查看目录</a></li>
+                <li>
+                    <a href="#%e6%9f%a5%e7%9c%8b%e7%9b%ae%e5%bd%95%e7%9a%84%e6%9d%83%e9%99%90" aria-label="查看目录的权限">查看目录的权限</a></li>
+                <li>
+                    <a href="#%e5%88%9b%e5%bb%ba%e7%9b%ae%e5%bd%95" aria-label="创建目录">创建目录</a><ul>
+                        
+                <li>
+                    <a href="#%e5%88%9b%e5%bb%ba%e5%8d%95%e4%b8%aa%e7%9b%ae%e5%bd%95" aria-label="创建单个目录">创建单个目录</a></li>
+                <li>
+                    <a href="#%e9%80%92%e5%bd%92%e5%88%9b%e5%bb%ba%e7%9b%ae%e5%bd%95" aria-label="递归创建目录">递归创建目录</a></li>
+                <li>
+                    <a href="#%e6%a3%80%e6%b5%8b%e7%9b%ae%e5%bd%95%e6%98%af%e5%90%a6%e5%ad%98%e5%9c%a8" aria-label="检测目录是否存在">检测目录是否存在</a></li>
+                <li>
+                    <a href="#%e6%a3%80%e6%9f%a5%e7%9b%ae%e5%bd%95%e7%9a%84%e6%9d%83%e9%99%90" aria-label="检查目录的权限">检查目录的权限</a></li>
+                <li>
+                    <a href="#%e4%bf%ae%e6%94%b9%e7%9b%ae%e5%bd%95%e6%9d%83%e9%99%90" aria-label="修改目录权限">修改目录权限</a></li>
+                <li>
+                    <a href="#%e5%af%b9%e7%9b%ae%e5%bd%95%e9%87%8d%e5%90%8d" aria-label="对目录重名">对目录重名</a></li>
+                <li>
+                    <a href="#%e5%88%a0%e9%99%a4%e7%9b%ae%e5%bd%95" aria-label="删除目录">删除目录</a></li>
+                <li>
+                    <a href="#%e5%85%b6%e4%bb%96%e5%8a%9f%e8%83%bd" aria-label="其他功能">其他功能</a></li></ul>
+                </li></ul>
+                </li>
+                <li>
+                    <a href="#%e5%b8%b8%e8%a7%84%e6%96%87%e4%bb%b6%e6%93%8d%e4%bd%9c" aria-label="常规文件操作">常规文件操作</a></li>
+                <li>
+                    <a href="#%e7%89%b9%e6%ae%8a%e7%9b%ae%e5%bd%95" aria-label="特殊目录">特殊目录</a>
+                </li>
+            </ul>
+        </div>
+        </details>
+    </div>
+</aside>
+<script>
+    let activeElement;
+    let elements;
+    window.addEventListener('DOMContentLoaded', function (event) {
+        checkTocPosition();
+
+        elements = document.querySelectorAll('h1[id],h2[id],h3[id],h4[id],h5[id],h6[id]');
+        
+        activeElement = elements[0];
+        const id = encodeURI(activeElement.getAttribute('id')).toLowerCase();
+        document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+    }, false);
+
+    window.addEventListener('resize', function(event) {
+        checkTocPosition();
+    }, false);
+
+    window.addEventListener('scroll', () => {
+        
+        activeElement = Array.from(elements).find((element) => {
+            if ((getOffsetTop(element) - window.pageYOffset) > 0 &&
+                (getOffsetTop(element) - window.pageYOffset) < window.innerHeight/2) {
+                return element;
+            }
+        }) || activeElement
+
+        elements.forEach(element => {
+            const id = encodeURI(element.getAttribute('id')).toLowerCase();
+            if (element === activeElement){
+                document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+            } else {
+                document.querySelector(`.inner ul li a[href="#${id}"]`).classList.remove('active');
+            }
+        })
+    }, false);
+
+    const main = parseInt(getComputedStyle(document.body).getPropertyValue('--article-width'), 10);
+    const toc = parseInt(getComputedStyle(document.body).getPropertyValue('--toc-width'), 10);
+    const gap = parseInt(getComputedStyle(document.body).getPropertyValue('--gap'), 10);
+
+    function checkTocPosition() {
+        const width = document.body.scrollWidth;
+        if (width - main - (toc * 2) - (gap * 4) > 0) {
+            document.getElementById("toc-container").classList.add("wide");
+        } else {
+            document.getElementById("toc-container").classList.remove("wide");
+        }
+    }
+
+    function getOffsetTop(element) {
+        if (!element.getClientRects().length) {
+            return 0;
+        }
+        let rect = element.getBoundingClientRect();
+        let win = element.ownerDocument.defaultView;
+        return rect.top + win.pageYOffset;
+    }
+</script>
+        <div class="post-content"><h2 id="目录操作">目录操作<a hidden class="anchor" aria-hidden="true" href="#目录操作">#</a></h2>
+<h3 id="查看目录">查看目录<a hidden class="anchor" aria-hidden="true" href="#查看目录">#</a></h3>
+<p><code>getwd()</code> 列出当前工作路径</p>
+<p><code>setwd()</code> 设置工作路径</p>
+<p><code>list.files()</code>和<code>dir()</code>的用法相同，可以列出路径下的文件和目录</p>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-R" data-lang="R"><span style="display:flex;"><span><span style="color:#06b6ef">list.files</span>(path <span style="color:#5bc4bf">=</span><span style="color:#48b685">&#34;.&#34;</span>, pattern <span style="color:#5bc4bf">=</span> <span style="color:#815ba4">NULL</span>, all.files <span style="color:#5bc4bf">=</span> <span style="color:#815ba4">FALSE</span>,
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>           full.names <span style="color:#5bc4bf">=</span> <span style="color:#815ba4">FALSE</span>, recursive <span style="color:#5bc4bf">=</span><span style="color:#815ba4">FALSE</span>,
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>           ignore.case <span style="color:#5bc4bf">=</span> <span style="color:#815ba4">FALSE</span>, include.dirs <span style="color:#5bc4bf">=</span><span style="color:#815ba4">FALSE</span>, no.. <span style="color:#5bc4bf">=</span> <span style="color:#815ba4">FALSE</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#06b6ef">dir</span>(path <span style="color:#5bc4bf">=</span><span style="color:#48b685">&#34;.&#34;</span>, pattern <span style="color:#5bc4bf">=</span> <span style="color:#815ba4">NULL</span>, all.files <span style="color:#5bc4bf">=</span> <span style="color:#815ba4">FALSE</span>,
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    full.names <span style="color:#5bc4bf">=</span> <span style="color:#815ba4">FALSE</span>, recursive <span style="color:#5bc4bf">=</span> <span style="color:#815ba4">FALSE</span>,
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    ignore.case <span style="color:#5bc4bf">=</span> <span style="color:#815ba4">FALSE</span>, include.dirs <span style="color:#5bc4bf">=</span> <span style="color:#815ba4">FALSE</span>,no.. <span style="color:#5bc4bf">=</span> <span style="color:#815ba4">FALSE</span>)
+</span></span></code></pre></div><p>函数<code>list.dirs()</code>只列出路径下所有目录,默认是递归进行的</p>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-R" data-lang="R"><span style="display:flex;"><span><span style="color:#06b6ef">list.dirs</span>(path <span style="color:#5bc4bf">=</span> <span style="color:#48b685">&#34;.&#34;</span>, full.names <span style="color:#5bc4bf">=</span> <span style="color:#815ba4">TRUE</span>, recursive <span style="color:#5bc4bf">=</span> <span style="color:#815ba4">TRUE</span>)
+</span></span></code></pre></div><p>参数介绍：</p>
+<p><code>path</code> 路径，如不填则默认为当前工作路径，即<code>getwd()</code>得到的路径；
+<code>pattern</code> 正则表达式，若<code>pattern</code>不为<code>NULL</code>，返回文件（目录）名满足该正则表达式的文件（目录）；
+<code>all.files </code>若为<code>FALSE</code>则不显示隐藏文件（目录），若为<code>TRUE</code>则返回所有文件（目录）；
+<code>full.names</code> 若为<code>FALSE</code>则只返回文件（目录）名，若为<code>TRUE</code>则返回文件（目录）路径；
+<code>recursive</code> 若为<code>FALSE</code>则只返回该路径的子级文件（目录），若为<code>TRUE</code>则递归返回所有子、孙文件（目录）；
+<code>ignore.case</code> 若为<code>TRUE</code>则在匹配pattern时不区分大小写；
+<code>include.dirs</code> 在recursive为TURE，即显示所有子、孙文件时，若<code>include.dirs</code>为FALSE则只列出最终端的文件名，而不列出中间层级的目录名；
+<code>no.. </code>若为TRUE，则不显示“.”和“..”。</p>
+<h3 id="查看目录的权限">查看目录的权限<a hidden class="anchor" aria-hidden="true" href="#查看目录的权限">#</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-R" data-lang="R"><span style="display:flex;"><span><span style="color:#5bc4bf">&gt;</span> <span style="color:#06b6ef">file.info</span>(<span style="color:#48b685">&#34;.&#34;</span>)
+</span></span><span style="display:flex;"><span>  size isdir mode               mtime               ctime               atime exe
+</span></span><span style="display:flex;"><span>.    <span style="color:#f99b15">0</span>  <span style="color:#815ba4">TRUE</span>  <span style="color:#f99b15">555</span> <span style="color:#f99b15">2019-03-13</span> <span style="color:#f99b15">08</span><span style="color:#5bc4bf">:</span><span style="color:#f99b15">10</span><span style="color:#5bc4bf">:</span><span style="color:#f99b15">19</span> <span style="color:#f99b15">2018-10-13</span> <span style="color:#f99b15">17</span><span style="color:#5bc4bf">:</span><span style="color:#f99b15">14</span><span style="color:#5bc4bf">:</span><span style="color:#f99b15">40</span> <span style="color:#f99b15">2019-04-01</span> <span style="color:#f99b15">18</span><span style="color:#5bc4bf">:</span><span style="color:#f99b15">54</span><span style="color:#5bc4bf">:</span><span style="color:#f99b15">24</span>  no
+</span></span></code></pre></div><h3 id="创建目录">创建目录<a hidden class="anchor" aria-hidden="true" href="#创建目录">#</a></h3>
+<h4 id="创建单个目录">创建单个目录<a hidden class="anchor" aria-hidden="true" href="#创建单个目录">#</a></h4>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-R" data-lang="R"><span style="display:flex;"><span><span style="color:#5bc4bf">&gt;</span> <span style="color:#06b6ef">dir.create</span>(<span style="color:#48b685">&#34;create&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#5bc4bf">&gt;</span> <span style="color:#06b6ef">list.dirs</span>()
+</span></span><span style="display:flex;"><span>[1] <span style="color:#48b685">&#34;.&#34;</span>        <span style="color:#48b685">&#34;./create&#34;</span> <span style="color:#48b685">&#34;./tmp&#34;</span>
+</span></span></code></pre></div><h4 id="递归创建目录">递归创建目录<a hidden class="anchor" aria-hidden="true" href="#递归创建目录">#</a></h4>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-R" data-lang="R"><span style="display:flex;"><span><span style="color:#5bc4bf">&gt;</span> <span style="color:#06b6ef">dir.create</span>(path<span style="color:#5bc4bf">=</span><span style="color:#48b685">&#34;a1/b2/c3&#34;</span>,recursive <span style="color:#5bc4bf">=</span> <span style="color:#815ba4">TRUE</span>)
+</span></span><span style="display:flex;"><span><span style="color:#5bc4bf">&gt;</span> <span style="color:#06b6ef">list.dirs</span>()
+</span></span><span style="display:flex;"><span>[1] <span style="color:#48b685">&#34;.&#34;</span>          <span style="color:#48b685">&#34;./a1&#34;</span>       <span style="color:#48b685">&#34;./a1/b2&#34;</span>    <span style="color:#48b685">&#34;./a1/b2/c3&#34;</span> <span style="color:#48b685">&#34;./create&#34;</span>  <span style="color:#48b685">&#34;./tmp&#34;</span>
+</span></span></code></pre></div><h4 id="检测目录是否存在">检测目录是否存在<a hidden class="anchor" aria-hidden="true" href="#检测目录是否存在">#</a></h4>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-R" data-lang="R"><span style="display:flex;"><span><span style="color:#5bc4bf">&gt;</span> <span style="color:#06b6ef">file.exists</span>(<span style="color:#48b685">&#34;a&#34;</span>)
+</span></span><span style="display:flex;"><span>[1] <span style="color:#815ba4">FALSE</span>
+</span></span></code></pre></div><h4 id="检查目录的权限">检查目录的权限<a hidden class="anchor" aria-hidden="true" href="#检查目录的权限">#</a></h4>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-R" data-lang="R"><span style="display:flex;"><span><span style="color:#5bc4bf">&gt;</span> df <span style="color:#5bc4bf">&lt;-</span> <span style="color:#06b6ef">dir</span>(<span style="color:#06b6ef">file.path</span>(<span style="color:#06b6ef">R.home</span>(), <span style="color:#48b685">&#34;bin&#34;</span>), full.names <span style="color:#5bc4bf">=</span> T)
+</span></span><span style="display:flex;"><span><span style="color:#5bc4bf">&gt;</span> <span style="color:#06b6ef">file.access</span>(df, mode <span style="color:#5bc4bf">=</span> <span style="color:#f99b15">0</span>) <span style="color:#5bc4bf">==</span> <span style="color:#f99b15">0</span>
+</span></span><span style="display:flex;"><span>  D<span style="color:#5bc4bf">:/</span>Rcore<span style="color:#5bc4bf">/</span>bin<span style="color:#5bc4bf">/</span>config.sh       D<span style="color:#5bc4bf">:/</span>Rcore<span style="color:#5bc4bf">/</span>bin<span style="color:#5bc4bf">/</span>R.exe D<span style="color:#5bc4bf">:/</span>Rcore<span style="color:#5bc4bf">/</span>bin<span style="color:#5bc4bf">/</span>Rscript.exe 
+</span></span><span style="display:flex;"><span>                    <span style="color:#815ba4">TRUE</span>                     <span style="color:#815ba4">TRUE</span>                     <span style="color:#815ba4">TRUE</span> 
+</span></span><span style="display:flex;"><span>        D<span style="color:#5bc4bf">:/</span>Rcore<span style="color:#5bc4bf">/</span>bin<span style="color:#5bc4bf">/</span>x64 
+</span></span><span style="display:flex;"><span>                    <span style="color:#815ba4">TRUE</span>
+</span></span></code></pre></div><p>mode = 0, 检查文件或目录是否存在
+mode = 1, 检查文件或目录是否可执行
+mode = 2, 检查文件或目录是否可写
+mode = 4, 检查文件或目录是否可读</p>
+<blockquote>
+<p>file.access()返回的是逻辑值，file.info()返回的是详细的权限信息</p>
+</blockquote>
+<h4 id="修改目录权限">修改目录权限<a hidden class="anchor" aria-hidden="true" href="#修改目录权限">#</a></h4>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-R" data-lang="R"><span style="display:flex;"><span><span style="color:#06b6ef">Sys.chmod</span>(<span style="color:#06b6ef">list.dirs</span>(<span style="color:#48b685">&#34;.&#34;</span>), <span style="color:#48b685">&#34;777&#34;</span>)
+</span></span><span style="display:flex;"><span>f <span style="color:#5bc4bf">&lt;-</span> <span style="color:#06b6ef">list.files</span>(<span style="color:#48b685">&#34;.&#34;</span>, all.files <span style="color:#5bc4bf">=</span> <span style="color:#815ba4">TRUE</span>, full.names <span style="color:#5bc4bf">=</span> <span style="color:#815ba4">TRUE</span>, recursive <span style="color:#5bc4bf">=</span> <span style="color:#815ba4">TRUE</span>)
+</span></span><span style="display:flex;"><span><span style="color:#06b6ef">Sys.chmod</span>(f, (<span style="color:#06b6ef">file.info</span>(f)<span style="color:#5bc4bf">$</span>mode <span style="color:#5bc4bf">|</span> <span style="color:#48b685">&#34;664&#34;</span>))
+</span></span></code></pre></div><h4 id="对目录重名">对目录重名<a hidden class="anchor" aria-hidden="true" href="#对目录重名">#</a></h4>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-R" data-lang="R"><span style="display:flex;"><span><span style="color:#776e71"># 对tmp目录重命名</span>
+</span></span><span style="display:flex;"><span><span style="color:#5bc4bf">&gt;</span> <span style="color:#06b6ef">file.rename</span>(<span style="color:#48b685">&#34;tmp&#34;</span>, <span style="color:#48b685">&#34;tmp2&#34;</span>)
+</span></span><span style="display:flex;"><span>[1] <span style="color:#815ba4">TRUE</span>
+</span></span></code></pre></div><h4 id="删除目录">删除目录<a hidden class="anchor" aria-hidden="true" href="#删除目录">#</a></h4>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-R" data-lang="R"><span style="display:flex;"><span><span style="color:#776e71"># 删除tmp2目录</span>
+</span></span><span style="display:flex;"><span><span style="color:#5bc4bf">&gt;</span> <span style="color:#06b6ef">unlink</span>(<span style="color:#48b685">&#34;tmp2&#34;</span>, recursive <span style="color:#5bc4bf">=</span> <span style="color:#815ba4">TRUE</span>)
+</span></span></code></pre></div><h4 id="其他功能">其他功能<a hidden class="anchor" aria-hidden="true" href="#其他功能">#</a></h4>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-R" data-lang="R"><span style="display:flex;"><span><span style="color:#776e71"># 拼接目录字符串</span>
+</span></span><span style="display:flex;"><span><span style="color:#5bc4bf">&gt;</span> <span style="color:#06b6ef">file.path</span>(<span style="color:#48b685">&#34;p1&#34;</span>,<span style="color:#48b685">&#34;p2&#34;</span>,<span style="color:#48b685">&#34;p3&#34;</span>)
+</span></span><span style="display:flex;"><span>[1] <span style="color:#48b685">&#34;p1/p2/p3&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#776e71"># 最底层子目录或文件名</span>
+</span></span><span style="display:flex;"><span><span style="color:#5bc4bf">&gt;</span> filename<span style="color:#5bc4bf">&lt;-</span><span style="color:#48b685">&#39;C:/test/lalala.txt&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#5bc4bf">&gt;</span> <span style="color:#06b6ef">basename</span>(filename)
+</span></span><span style="display:flex;"><span>[1] <span style="color:#48b685">&#34;lalala.txt&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#776e71"># 最底层子目录</span>
+</span></span><span style="display:flex;"><span><span style="color:#5bc4bf">&gt;</span> <span style="color:#06b6ef">dirname</span>(filename)r
+</span></span><span style="display:flex;"><span>[1] <span style="color:#48b685">&#34;C:/test&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#776e71"># 转换扩展路径</span>
+</span></span><span style="display:flex;"><span><span style="color:#5bc4bf">&gt;</span> <span style="color:#06b6ef">path.expand</span>(<span style="color:#48b685">&#34;~/foo&#34;</span>)
+</span></span><span style="display:flex;"><span>[1] <span style="color:#48b685">&#34;/home/conan/foo&#34;</span>
+</span></span></code></pre></div><h2 id="常规文件操作">常规文件操作<a hidden class="anchor" aria-hidden="true" href="#常规文件操作">#</a></h2>
+<p>cat(“file A\n”, file=”A”) #创建一个文件A，文件内容是’file A’,’\n’表示换行，这是一个很好的习惯</p>
+<p>cat(“file B\n”, file=”B”) #创建一个文件B</p>
+<p>file.append(“A”, “B”) #将文件B的内容附到A内容的后面，注意没有空行</p>
+<p>file.create(“A”) #创建一个文件A, 注意会覆盖原来的文件</p>
+<p>file.append(“A”, rep(“B”, 10)) #将文件B的内容复制10便，并先后附到文件A内容后</p>
+<p>file.show(“A”) #新开工作窗口显示文件A的内容</p>
+<p>file.copy(“A”, “C”) #复制文件A保存为C文件，同一个文件夹</p>
+<p>dir.create(“tmp”) #创建名为tmp的文件夹</p>
+<p>file.copy(c(“A”, “B”), “tmp”) #将文件夹拷贝到tmp文件夹中</p>
+<p>list.files(“tmp”) #查看文件夹tmp中的文件名</p>
+<p>unlink(“tmp”, recursive=F) #如果文件夹tmp为空，删除文件夹tmp</p>
+<p>unlink(“tmp”, recursive=TRUE) #删除文件夹tmp，如果其中有文件一并删除</p>
+<p>file.remove(“A”, “B”, “C”) #移除三个文件</p>
+<h2 id="特殊目录">特殊目录<a hidden class="anchor" aria-hidden="true" href="#特殊目录">#</a></h2>
+<ul>
+<li>R.home() 查看R软件的相关目录</li>
+<li>.Library 查看R核心包的目录</li>
+<li>.Library.site 查看R核心包的目录和root用户安装包目录</li>
+<li>.libPaths() 查看R所有包的存放目录</li>
+<li>system.file() 查看指定包所在的目录</li>
+</ul>
+
+
+        </div>
+
+        
+
+        <footer class="post-footer">
+            
+<nav class="paginav">
+  <a class="prev" href="http://localhost:1313/en/posts/tech/screen/">
+    <span class="title">« 上一页</span>
+    <br>
+    <span>linux screen 命令使用</span>
+  </a>
+  <a class="next" href="http://localhost:1313/en/posts/blog/emoji/">
+    <span class="title">下一页 »</span>
+    <br>
+    <span>emoji表情收集</span>
+  </a>
+</nav>
+
+        </footer>
+    </div>
+
+
+
+<div>
+    <div class="pagination__title">
+        <span class="pagination__title-h" style="font-size: 20px;">💬评论</span>
+        <hr />
+    </div>
+
+    <div id="tcomment"></div>
+
+    <script src="https://cdn.staticfile.org/twikoo/1.6.15/twikoo.all.min.js">
+    </script>
+    
+
+    
+
+    <script>
+        twikoo.init({
+            envId: "https://twikoo.lvbibir.cn/", 
+            el: "#tcomment",
+            lang: 'zh-CN',
+            
+            path: window.TWIKOO_MAGIC_PATH||window.location.pathname,
+            
+            
+            
+            
+            
+            
+            
+        });
+    </script>
+
+</div>
+</article>
+</main>
+
+
+<footer class="footer">
+
+    <a href="https://gohugo.io/" target="_blank">
+        
+        <img style="display: unset;" src="https://image.lvbibir.cn/blog/frame-hugo-blue.svg">
+    </a>
+    <a href="https://github.com/adityatelange/hugo-PaperMod" target="_blank">
+        
+        <img style="display: unset;" src="https://image.lvbibir.cn/blog/theme-papermod-lightgrey.svg">
+    </a>
+
+    <br>
+
+    <span id="runtime_span"></span>
+    <script
+        type="text/javascript">function show_runtime() { window.setTimeout("show_runtime()", 1000); X = new Date("7/13/2021 1:00:00"); Y = new Date(); T = (Y.getTime() - X.getTime()); M = 24 * 60 * 60 * 1000; a = T / M; A = Math.floor(a); b = (a - A) * 24; B = Math.floor(b); c = (b - B) * 60; C = Math.floor((b - B) * 60); D = Math.floor((c - C) * 60); runtime_span.innerHTML = "网站已运行" + A + "天" + B + "小时"} show_runtime();</script>
+    |
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span id="busuanzi_container">
+        
+        总访客数:  <span id="busuanzi_value_site_uv"></span>
+        |
+        总访问量:  <span id="busuanzi_value_site_pv"></span>
+    </span>
+
+    <br>
+    <span>
+        Copyright
+        &copy;
+        2021-2024
+        <a href="http://localhost:1313/en/" style="border-bottom:1px solid">Jeason&#39;s Blog</a>
+    </span>
+
+    
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <span class="topInner">
+        <svg class="topSvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+            <path d="M12 6H0l6-6z" />
+        </svg>
+        <span id="read_progress"></span>
+    </span>
+</a>
+
+<script>
+    document.addEventListener('scroll', function (e) {
+        const readProgress = document.getElementById("read_progress");
+        const scrollHeight = document.documentElement.scrollHeight;
+        const clientHeight = document.documentElement.clientHeight;
+        const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        
+        readProgress.innerText = ((scrollTop / (scrollHeight - clientHeight)).toFixed(2) * 100).toFixed(0);
+    })
+</script>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    let mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 400 || document.documentElement.scrollTop > 400) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+
+
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerText = '📄复制';
+
+        function copyingDone() {
+            copybutton.innerText = '👌🏻已复制!';
+            setTimeout(() => {
+                copybutton.innerText = '📄复制';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) {
+            }
+            ;
+            selection.removeRange(range);
+        });
+
+        let language = codeblock.className.replaceAll("language-", "")
+        let macTool = document.createElement("div")
+        let macTool1 = document.createElement("div")
+        let macTool2 = document.createElement("div")
+        let macTool3 = document.createElement("div")
+        let languageType = document.createElement("div")
+        languageType.innerText = language
+        macTool.setAttribute('class', 'mac-tool')
+        macTool1.setAttribute('class', 'mac bb1')
+        macTool2.setAttribute('class', 'mac bb2')
+        macTool3.setAttribute('class', 'mac bb3')
+        languageType.setAttribute('class', 'language-type')
+        macTool.appendChild(macTool1)
+        macTool.appendChild(macTool2)
+        macTool.appendChild(macTool3)
+        macTool.appendChild(languageType)
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+            container.appendChild(macTool)
+        } else if (container.parentNode.firstChild === container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName === "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+            container.appendChild(macTool)
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+            container.appendChild(macTool)
+        }
+    });
+</script>
+
+</body>
+
+</html>

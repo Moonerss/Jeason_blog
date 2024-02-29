@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>git | 基本用法 | Jeason&#39;s Blog</title>
+<meta name="keywords" content="git">
+<meta name="description" content="Git的基本使用方法 Git简介 Git是一个功能强大的分布是版本控制系统，由linux系统的创始人Linus创建，用于优化管理linux源码。Git具有强大的分支管理能力，对于代码集成管理具有超越其他集中式版本控制系统的优势。 Git安装 在windows上安装Git，只需要从Git官">
+<meta name="author" content="作者:Jeason">
+<link rel="canonical" href="http://localhost:1313/en/posts/tech/git/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.e029fa55ed0a02bb684da89d2a53a4e1ba9e26e3719fa48460be52776460b523.css" integrity="sha256-4Cn6Ve0KArtoTaidKlOk4bqeJuNxn6SEYL5Sd2RgtSM=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:1313/img/avatar.jpeg">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/img/avatar.jpeg">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/img/avatar.jpeg">
+<link rel="apple-touch-icon" href="http://localhost:1313/img/avatar.jpeg">
+<link rel="mask-icon" href="http://localhost:1313/img/avatar.jpeg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="http://localhost:1313/en/posts/tech/git/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><script type="text/javascript"
+        async
+        src="https://cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\[\[','\]\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+});
+
+MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<style>
+code.has-jax {
+    font: inherit;
+    font-size: 100%;
+    background: inherit;
+    border: inherit;
+    color: #515151;
+}
+</style>
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = ""; 
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<meta property="og:title" content="git | 基本用法" />
+<meta property="og:description" content="Git的基本使用方法 Git简介 Git是一个功能强大的分布是版本控制系统，由linux系统的创始人Linus创建，用于优化管理linux源码。Git具有强大的分支管理能力，对于代码集成管理具有超越其他集中式版本控制系统的优势。 Git安装 在windows上安装Git，只需要从Git官" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://localhost:1313/en/posts/tech/git/" />
+<meta property="og:image" content="https://source.unsplash.com/random/400x200?code" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2018-05-23T16:15:39+08:00" />
+<meta property="article:modified_time" content="2024-02-29T16:15:39+08:00" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://source.unsplash.com/random/400x200?code" />
+<meta name="twitter:title" content="git | 基本用法"/>
+<meta name="twitter:description" content="Git的基本使用方法 Git简介 Git是一个功能强大的分布是版本控制系统，由linux系统的创始人Linus创建，用于优化管理linux源码。Git具有强大的分支管理能力，对于代码集成管理具有超越其他集中式版本控制系统的优势。 Git安装 在windows上安装Git，只需要从Git官"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "📚 文章",
+      "item": "http://localhost:1313/en/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "👨🏻‍💻 技术",
+      "item": "http://localhost:1313/en/posts/tech/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "git | 基本用法",
+      "item": "http://localhost:1313/en/posts/tech/git/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "git | 基本用法",
+  "name": "git | 基本用法",
+  "description": "Git的基本使用方法 Git简介 Git是一个功能强大的分布是版本控制系统，由linux系统的创始人Linus创建，用于优化管理linux源码。Git具有强大的分支管理能力，对于代码集成管理具有超越其他集中式版本控制系统的优势。 Git安装 在windows上安装Git，只需要从Git官",
+  "keywords": [
+    "git"
+  ],
+  "articleBody": "Git的基本使用方法 Git简介 Git是一个功能强大的分布是版本控制系统，由linux系统的创始人Linus创建，用于优化管理linux源码。Git具有强大的分支管理能力，对于代码集成管理具有超越其他集中式版本控制系统的优势。\nGit安装 在windows上安装Git，只需要从Git官网下载安装程序，按照默认选项安装即可。\n最终，安装完成后，在开始菜单里找到“Git”-\u003e“Git Bash”，蹦出一个类似命令行窗口的东西，就说明Git安装成功！\n安装完成后需要进行一步设置，在Git Bash中输入命令行\ngit config --global user.name \"Your Name\" git config --global user.email \"email@example.com\" 因为Git是分布式版本控制系统，所以，每个电脑必须有自己的ID：你的名字和Email地址。\n注意git config命令的--global参数，用了这个参数，表示你这台机器上所有的Git仓库都会使用这个配置，当然也可以对某个仓库指定不同的用户名和Email地址。\nGit的基本原理 在Git中,主要有两部分组成：工作区和版本库，而版本库又分为暂存区和分支。\n当你创建编辑一个文件后，首先需要将文件从工作区添加到版本库的暂存区，然后再从暂存区提交的Git的分支系统上。\n个人认为，从工作区到暂存区的过程相当于将文件的所有更改日志依次保存在暂存区，而从暂存区提交到Git分支的过程则是一次性提交所有的更改\n本地仓库的使用 版本库又名仓库，英文名repository，可以理解成一个文件夹,这个文件夹下的所有文件都可以被Git管理起来，每个文件的修改、删除，Git都能跟踪，以便任何时刻都可以追踪历史，或者在将来某个时刻可以“还原”。\n创建仓库 找合适的地方，创建一个空目录，创建并进入，一般不要用中文的目录名，容易出现问题.\nmakdir learngit cd learngit 初始化仓库 git init 命令将这个目录变成可以管理的版本仓库（git repository）\ngit init Initialized empty Git repository in /home/deepin/learngit/.git/ 此时你已经创建了一个空的版本库，可以发现当前目录下多了一个.git目录，这个目录就是git用来跟踪管理版本仓库的，不要去手动修改。\ndeepin@deepin-PC:~/learngit$ ls -a . .. .git 添加文件到仓库 把文件添加到版本库，如果没有任何提示信息则为成功添加\ngit add README.md 把文件提交到版本库\ngit commit -m \"this is a README.md file\" 双引号中输入的是文件描述信息，是对此次文件提交的说明\n同样，你也可以一次提交多个文件\ngit add file1.txt git add file2.txt git add file3.txt git commit -m \"add 3 files.\" 添加远程仓库 当你已经在本地创建了一个Git仓库后，又想在GitHub创建一个Git仓库，使两个仓库能够远程同步，以下操作可以帮你实现\n首先需要在远端github账户中创建自己的仓库 在本地使用git命令添加远程仓库 git remote add origin #最后是远程仓库地址 添加后，远程库的名字就是origin，这是Git默认的叫法，也可以改成别的，但是origin这个名字一看就知道是远程库\n然后就可以向远端仓库push文件 git push -u origin master 这条命令实际上是把本地master分支推送到远程仓库上，使用-u参数Git不但会把本地的master分支内容推送的远程新的master分支，还会把本地的master分支和远程的master分支关联起来，在以后的推送或者拉取时就可以简化命令。\nGit的基本命令 添加文件 使用命令git add ，注意，可反复多次使用，添加多个文件； 使用命令git commit -m 提交文件到仓库，添加提交注释信息 状态查看 git status查看repository的状态，git diff查看修改了哪些内容\n文件修改 git status可以查看当前版本库中文件的提交状态 git rm可以删除某一文件 版本退回 git reset命令可以使文件退回之前的版本或者从之前的版本回到修改后的版本\n在Git中，用HEAD表示当前版本，上一个版本就是HEAD^，上上一个版本就是HEAD^^，当然往上100个版本写100个^比较容易数不过来，所以写成HEAD~100。\ngit log命令可以查看提交历史，以便确定要回退到哪个版本。 git reflog可以查看命令历史，以便确定要回到未来的哪个版本。 回退到以前的版本A之后，用git log命令就找不到A之后的版本了，如果想回到之后的版本，需要git reset --hard commitID，但是如果不记得commitID,可以用git reflog，它记录了每一个命令\n常用的git命令 git init #使当前目录变成可以管理的版本仓库（git repository) git add filename #将文件添加到版本仓库 git commit -m \"description\" #把文件提交到仓库 git status #查看repository的状态 git diff #查看修改了哪些内容 git log #查看提交日志 git log --pretty=oneline #简洁地显示提交日志 git reset --hard HEAD~\u003c3\u003e #回退到某个版本，比如这里回退到第前3个版本 git reset --hard #回退到特定ID的版本 git reflog #记录了每个命令，可以用来查看每个操作的编号 git checkout -b #创建并切换分支 git branch #查看当前分支 Git 配置多个账户 这里分两种情况：\n一个账户已经进行了配置，添加另外一个账户 同时配置两个git账户 假如之前你已经有账户进行了git的全局设置，那么首先需要解除git全局用户名/邮箱的设置\ngit config --global --unset \"user.name\" git config --global --unset \"user.email\" ``` 如果之前并未进行全局设置，则直接开始设置每个仓库独立的用户和邮箱 ```shell #设置第一个用户/邮箱 git config user.email \"A@gmail.com\" git config user.name \"A\" #设置第二个用户/邮箱 git config user.email \"B@163.com\" git config user.name \"B\" 在进行单用户操作时我们只需要通过：\nssh-keygen -t rsa -f -C \"yourmail@xxx.com\" 命令直接产生相应的密钥/公钥，但是在多用户的情况下,直接产生两次密钥/公钥会将第一次产生的密钥/公钥覆盖掉。因此，进行多用户操作时，需要指定产生的密钥名称，避免覆盖。\n#创建A账户的密钥、公钥 ssh-keygen -t rsa -f ~/.ssh/id_rsa_A -C \"A@gmail.com\" ssh-keygen -t rsa -f ~/.ssh/id_rsa_B -C \"B@163.com\" 此时会在用户的.ssh文件夹下产生id_rsa_A、id_rsa_A.pub和id_rsa_B、id_rsa_B.pub两对密钥/公钥。\n3. 设置config文件 在.ssh文件夹下创建config文件,配置不同的仓库指向不同的密钥文件。\n# A账号 Host A #host别名 HostName github.com #服务器域名 User git #A账号用户名 IdentityFile ~/.ssh/id_rsa # B账号 Host B #host别名 HostName github.com #服务器域名 User git #B账号用户名 IdentityFile ~/.ssh/id_rsa_x 原理解析 1.ssh 客户端是通过类似 git@github.com:githubUserName/repoName.git ** 的地址来识别使用本地的哪个私钥的，地址中的 User 是@前面的git， Host 是@后面的github.com。 2.如果所有账号的 User 和 Host 都为 git 和 github.com，那么就只能使用一个私钥。所以要对User 和 Host 进行配置，让每个账号使用自己的 Host，即使用上面的别名来代替域名。 3.配置了别名之后，新的地址就是git@A:githubUserName/repName.git**（在添加远程仓库时使用）。这样 ssh 在连接时就可以区别不同的账号了。\n把相应的公钥添加到账户的SSH设置当中，这样git就可以识别不同的账户了。\n",
+  "wordCount" : "2650",
+  "inLanguage": "en",
+  "image":"https://source.unsplash.com/random/400x200?code","datePublished": "2018-05-23T16:15:39+08:00",
+  "dateModified": "2024-02-29T16:15:39+08:00",
+  "author":{
+    "@type": "Person",
+    "name": "Jeason"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "http://localhost:1313/en/posts/tech/git/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Jeason's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "http://localhost:1313/img/avatar.jpeg"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="http://localhost:1313/en/" accesskey="h" title="Jeason&#39;s Blog (Alt + H)">
+                <img src="http://localhost:1313/img/avatar.jpeg" alt="" aria-label="logo"
+                    height="35">Jeason&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+                
+            </div>
+        </div>
+        <ul id="menu">
+            <li class="menu-item">
+                <a href="http://localhost:1313/en/search" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
+                    <span>🔍 搜索</span>
+                    
+                </a>
+            
+            </li>
+            <li class="menu-item">
+                <a href="http://localhost:1313/en/" title="🏡 主页">
+                    <span>🏡 主页</span>
+                    
+                </a>
+            
+            </li>
+            <li class="menu-item">
+                <a href="http://localhost:1313/en/posts" title="📚 文章">
+                    <span>📚 文章</span>
+                    
+                </a>
+            
+            </li>
+            <li class="menu-item">
+                <a href="http://localhost:1313/en/archives" title="📈 归档">
+                    <span>📈 归档</span>
+                    
+                </a>
+            
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main page">
+<article class="post-single">
+    <div id="single-content">
+        <header class="post-header">
+            <div class="breadcrumbs"><a href="http://localhost:1313/en/">主页</a>&nbsp;»&nbsp;<a href="http://localhost:1313/en/posts/">📚 文章</a>&nbsp;»&nbsp;<a href="http://localhost:1313/en/posts/tech/">👨🏻‍💻 技术</a></div>
+            <h1 class="post-title">
+                git | 基本用法
+            </h1>
+            <div class="post-meta">创建: 2018-05-23 | 更新: 2024-02-29 | 作者:Jeason
+
+
+
+
+                
+                <span id="busuanzi_container_page_pv">
+                    &nbsp;|&nbsp;访问:&nbsp;<span id="busuanzi_value_page_pv"></span>
+                </span>
+
+</div>
+        </header> <aside id="toc-container" class="toc-container wide">
+    <div class="toc">
+        <details  open>
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">文章目录</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#git%e7%9a%84%e5%9f%ba%e6%9c%ac%e4%bd%bf%e7%94%a8%e6%96%b9%e6%b3%95" aria-label="Git的基本使用方法">Git的基本使用方法</a></li>
+                <li>
+                    <a href="#git%e7%ae%80%e4%bb%8b" aria-label="Git简介">Git简介</a></li>
+                <li>
+                    <a href="#git%e5%ae%89%e8%a3%85" aria-label="Git安装">Git安装</a><ul>
+                        
+                <li>
+                    <a href="#git%e7%9a%84%e5%9f%ba%e6%9c%ac%e5%8e%9f%e7%90%86" aria-label="Git的基本原理">Git的基本原理</a></li>
+                <li>
+                    <a href="#%e6%9c%ac%e5%9c%b0%e4%bb%93%e5%ba%93%e7%9a%84%e4%bd%bf%e7%94%a8" aria-label="本地仓库的使用">本地仓库的使用</a><ul>
+                        
+                <li>
+                    <a href="#%e5%88%9b%e5%bb%ba%e4%bb%93%e5%ba%93" aria-label="创建仓库">创建仓库</a></li>
+                <li>
+                    <a href="#%e5%88%9d%e5%a7%8b%e5%8c%96%e4%bb%93%e5%ba%93" aria-label="初始化仓库">初始化仓库</a></li>
+                <li>
+                    <a href="#%e6%b7%bb%e5%8a%a0%e6%96%87%e4%bb%b6%e5%88%b0%e4%bb%93%e5%ba%93" aria-label="添加文件到仓库">添加文件到仓库</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e6%b7%bb%e5%8a%a0%e8%bf%9c%e7%a8%8b%e4%bb%93%e5%ba%93" aria-label="添加远程仓库">添加远程仓库</a></li>
+                <li>
+                    <a href="#git%e7%9a%84%e5%9f%ba%e6%9c%ac%e5%91%bd%e4%bb%a4" aria-label="Git的基本命令">Git的基本命令</a><ul>
+                        
+                <li>
+                    <a href="#%e6%b7%bb%e5%8a%a0%e6%96%87%e4%bb%b6" aria-label="添加文件">添加文件</a></li>
+                <li>
+                    <a href="#%e7%8a%b6%e6%80%81%e6%9f%a5%e7%9c%8b" aria-label="状态查看">状态查看</a></li>
+                <li>
+                    <a href="#%e6%96%87%e4%bb%b6%e4%bf%ae%e6%94%b9" aria-label="文件修改">文件修改</a></li>
+                <li>
+                    <a href="#%e7%89%88%e6%9c%ac%e9%80%80%e5%9b%9e" aria-label="版本退回">版本退回</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e5%b8%b8%e7%94%a8%e7%9a%84git%e5%91%bd%e4%bb%a4" aria-label="常用的git命令">常用的git命令</a></li></ul>
+                </li>
+                <li>
+                    <a href="#git-%e9%85%8d%e7%bd%ae%e5%a4%9a%e4%b8%aa%e8%b4%a6%e6%88%b7" aria-label="Git 配置多个账户">Git 配置多个账户</a><ul>
+                        <ul>
+                        <ul>
+                        
+                <li>
+                    <a href="#3-%e8%ae%be%e7%bd%aeconfig%e6%96%87%e4%bb%b6" aria-label="3. 设置config文件">3. 设置config文件</a>
+                </li>
+            </ul>
+            </ul>
+            </ul>
+            </li>
+            </ul>
+        </div>
+        </details>
+    </div>
+</aside>
+<script>
+    let activeElement;
+    let elements;
+    window.addEventListener('DOMContentLoaded', function (event) {
+        checkTocPosition();
+
+        elements = document.querySelectorAll('h1[id],h2[id],h3[id],h4[id],h5[id],h6[id]');
+        
+        activeElement = elements[0];
+        const id = encodeURI(activeElement.getAttribute('id')).toLowerCase();
+        document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+    }, false);
+
+    window.addEventListener('resize', function(event) {
+        checkTocPosition();
+    }, false);
+
+    window.addEventListener('scroll', () => {
+        
+        activeElement = Array.from(elements).find((element) => {
+            if ((getOffsetTop(element) - window.pageYOffset) > 0 &&
+                (getOffsetTop(element) - window.pageYOffset) < window.innerHeight/2) {
+                return element;
+            }
+        }) || activeElement
+
+        elements.forEach(element => {
+            const id = encodeURI(element.getAttribute('id')).toLowerCase();
+            if (element === activeElement){
+                document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+            } else {
+                document.querySelector(`.inner ul li a[href="#${id}"]`).classList.remove('active');
+            }
+        })
+    }, false);
+
+    const main = parseInt(getComputedStyle(document.body).getPropertyValue('--article-width'), 10);
+    const toc = parseInt(getComputedStyle(document.body).getPropertyValue('--toc-width'), 10);
+    const gap = parseInt(getComputedStyle(document.body).getPropertyValue('--gap'), 10);
+
+    function checkTocPosition() {
+        const width = document.body.scrollWidth;
+        if (width - main - (toc * 2) - (gap * 4) > 0) {
+            document.getElementById("toc-container").classList.add("wide");
+        } else {
+            document.getElementById("toc-container").classList.remove("wide");
+        }
+    }
+
+    function getOffsetTop(element) {
+        if (!element.getClientRects().length) {
+            return 0;
+        }
+        let rect = element.getBoundingClientRect();
+        let win = element.ownerDocument.defaultView;
+        return rect.top + win.pageYOffset;
+    }
+</script>
+        <div class="post-content"><h2 id="git的基本使用方法">Git的基本使用方法<a hidden class="anchor" aria-hidden="true" href="#git的基本使用方法">#</a></h2>
+<h2 id="git简介">Git简介<a hidden class="anchor" aria-hidden="true" href="#git简介">#</a></h2>
+<p>Git是一个功能强大的分布是版本控制系统，由linux系统的创始人Linus创建，用于优化管理linux源码。Git具有强大的分支管理能力，对于代码集成管理具有超越其他集中式版本控制系统的优势。</p>
+<h2 id="git安装">Git安装<a hidden class="anchor" aria-hidden="true" href="#git安装">#</a></h2>
+<p>在windows上安装Git，只需要从Git官网下载<a href="https://git-scm.com/" target="_blank" rel="noopener" style="color:#42b983";>安装程序</a>，按照默认选项安装即可。</p>
+<p>最终，安装完成后，在开始菜单里找到“Git”-&gt;“Git Bash”，蹦出一个类似命令行窗口的东西，就说明Git安装成功！</p>
+<p>安装完成后需要进行一步设置，在Git Bash中输入命令行</p>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git config --global user.name <span style="color:#48b685">&#34;Your Name&#34;</span>
+</span></span><span style="display:flex;"><span>git config --global user.email <span style="color:#48b685">&#34;email@example.com&#34;</span>
+</span></span></code></pre></div><p>因为Git是分布式版本控制系统，所以，每个电脑必须有自己的ID：你的名字和Email地址。</p>
+<p>注意<code>git config</code>命令的<code>--global</code>参数，用了这个参数，表示你这台机器上所有的Git仓库都会使用这个配置，当然也可以对某个仓库指定不同的用户名和Email地址。</p>
+<h3 id="git的基本原理">Git的基本原理<a hidden class="anchor" aria-hidden="true" href="#git的基本原理">#</a></h3>
+<p>在Git中,主要有两部分组成：工作区和版本库，而版本库又分为暂存区和分支。</p>
+<p>当你创建编辑一个文件后，首先需要将文件从工作区添加到版本库的暂存区，然后再从暂存区提交的Git的分支系统上。</p>
+<blockquote>
+<p>个人认为，从工作区到暂存区的过程相当于将文件的所有更改日志依次保存在暂存区，而从暂存区提交到Git分支的过程则是一次性提交所有的更改</p>
+</blockquote>
+<h3 id="本地仓库的使用">本地仓库的使用<a hidden class="anchor" aria-hidden="true" href="#本地仓库的使用">#</a></h3>
+<blockquote>
+<p>版本库又名仓库，英文名repository，可以理解成一个文件夹,这个文件夹下的所有文件都可以被Git管理起来，每个文件的修改、删除，Git都能跟踪，以便任何时刻都可以追踪历史，或者在将来某个时刻可以“还原”。</p>
+</blockquote>
+<h4 id="创建仓库">创建仓库<a hidden class="anchor" aria-hidden="true" href="#创建仓库">#</a></h4>
+<p>找合适的地方，创建一个空目录，创建并进入，一般不要用中文的目录名，容易出现问题.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>makdir learngit
+</span></span><span style="display:flex;"><span>cd learngit
+</span></span></code></pre></div><h4 id="初始化仓库">初始化仓库<a hidden class="anchor" aria-hidden="true" href="#初始化仓库">#</a></h4>
+<p><code>git init</code> 命令将这个目录变成可以管理的版本仓库（git repository）</p>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git init
+</span></span><span style="display:flex;"><span>Initialized empty Git repository in /home/deepin/learngit/.git/
+</span></span></code></pre></div><p>此时你已经创建了一个空的版本库，可以发现当前目录下多了一个.git目录，这个目录就是git用来跟踪管理版本仓库的，不要去手动修改。</p>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>deepin@deepin-PC:~/learngit$ ls -a
+</span></span><span style="display:flex;"><span>.  ..  .git
+</span></span></code></pre></div><h4 id="添加文件到仓库">添加文件到仓库<a hidden class="anchor" aria-hidden="true" href="#添加文件到仓库">#</a></h4>
+<p>把文件添加到版本库，如果没有任何提示信息则为成功添加</p>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git add README.md
+</span></span></code></pre></div><p>把文件提交到版本库</p>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git commit -m <span style="color:#48b685">&#34;this is a README.md file&#34;</span>
+</span></span></code></pre></div><p>双引号中输入的是文件描述信息，是对此次文件提交的说明</p>
+<p>同样，你也可以一次提交多个文件</p>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git add file1.txt
+</span></span><span style="display:flex;"><span>git add file2.txt
+</span></span><span style="display:flex;"><span>git add file3.txt
+</span></span><span style="display:flex;"><span>git commit -m <span style="color:#48b685">&#34;add 3 files.&#34;</span>
+</span></span></code></pre></div><h3 id="添加远程仓库">添加远程仓库<a hidden class="anchor" aria-hidden="true" href="#添加远程仓库">#</a></h3>
+<p>当你已经在本地创建了一个Git仓库后，又想在GitHub创建一个Git仓库，使两个仓库能够远程同步，以下操作可以帮你实现</p>
+<ol>
+<li>首先需要在远端github账户中创建自己的仓库</li>
+<li>在本地使用git命令添加远程仓库</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git remote add origin &lt;adress&gt; <span style="color:#776e71">#最后是远程仓库地址</span>
+</span></span></code></pre></div><p>添加后，远程库的名字就是<code>origin</code>，这是Git默认的叫法，也可以改成别的，但是<code>origin</code>这个名字一看就知道是远程库</p>
+<ol start="3">
+<li>然后就可以向远端仓库<code>push</code>文件</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git push -u origin master
+</span></span></code></pre></div><p>这条命令实际上是把本地<code>master</code>分支推送到远程仓库上，使用<code>-u</code>参数Git不但会把本地的<code>master</code>分支内容推送的远程新的<code>master</code>分支，还会把本地的<code>maste</code>r分支和远程的<code>master</code>分支关联起来，在以后的推送或者拉取时就可以简化命令。</p>
+<h3 id="git的基本命令">Git的基本命令<a hidden class="anchor" aria-hidden="true" href="#git的基本命令">#</a></h3>
+<h4 id="添加文件">添加文件<a hidden class="anchor" aria-hidden="true" href="#添加文件">#</a></h4>
+<ul>
+<li>使用命令<code>git add &lt;file&gt;</code>，注意，可反复多次使用，添加多个文件；</li>
+<li>使用命令<code>git commit -m &lt;message&gt;</code> 提交文件到仓库，添加提交注释信息</li>
+</ul>
+<h4 id="状态查看">状态查看<a hidden class="anchor" aria-hidden="true" href="#状态查看">#</a></h4>
+<p><code>git status</code>查看repository的状态，<code>git diff</code>查看修改了哪些内容</p>
+<h4 id="文件修改">文件修改<a hidden class="anchor" aria-hidden="true" href="#文件修改">#</a></h4>
+<ul>
+<li><code>git status</code>可以查看当前版本库中文件的提交状态</li>
+<li><code>git rm</code>可以删除某一文件</li>
+</ul>
+<h4 id="版本退回">版本退回<a hidden class="anchor" aria-hidden="true" href="#版本退回">#</a></h4>
+<ul>
+<li>
+<p><code>git reset</code>命令可以使文件退回之前的版本或者从之前的版本回到修改后的版本</p>
+<blockquote>
+<p>在Git中，用<code>HEAD</code>表示当前版本，上一个版本就是<code>HEAD^</code>，上上一个版本就是<code>HEAD^^</code>，当然往上100个版本写100个^比较容易数不过来，所以写成<code>HEAD~100</code>。</p>
+</blockquote>
+<ul>
+<li><code>git log</code>命令可以查看提交历史，以便确定要回退到哪个版本。</li>
+<li><code>git reflog</code>可以查看命令历史，以便确定要回到未来的哪个版本。</li>
+</ul>
+<blockquote>
+<p>回退到以前的版本A之后，用<code>git log</code>命令就找不到A之后的版本了，如果想回到之后的版本，需要<code>git reset --hard commitID</code>，但是如果不记得<code>commitID</code>,可以用<code>git reflog</code>，它记录了每一个命令</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="常用的git命令">常用的git命令<a hidden class="anchor" aria-hidden="true" href="#常用的git命令">#</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git init <span style="color:#776e71">#使当前目录变成可以管理的版本仓库（git repository)</span>
+</span></span><span style="display:flex;"><span>git add filename <span style="color:#776e71">#将文件添加到版本仓库</span>
+</span></span><span style="display:flex;"><span>git commit -m <span style="color:#48b685">&#34;description&#34;</span> <span style="color:#776e71">#把文件提交到仓库</span>
+</span></span><span style="display:flex;"><span>git status <span style="color:#776e71">#查看repository的状态</span>
+</span></span><span style="display:flex;"><span>git diff <span style="color:#776e71">#查看修改了哪些内容</span>
+</span></span><span style="display:flex;"><span>git log <span style="color:#776e71">#查看提交日志</span>
+</span></span><span style="display:flex;"><span>git log --pretty<span style="color:#5bc4bf">=</span>oneline <span style="color:#776e71">#简洁地显示提交日志</span>
+</span></span><span style="display:flex;"><span>git reset --hard HEAD~&lt;3&gt; <span style="color:#776e71">#回退到某个版本，比如这里回退到第前3个版本</span>
+</span></span><span style="display:flex;"><span>git reset --hard &lt;commit ID&gt; <span style="color:#776e71">#回退到特定ID的版本</span>
+</span></span><span style="display:flex;"><span>git reflog <span style="color:#776e71">#记录了每个命令，可以用来查看每个操作的编号</span>
+</span></span><span style="display:flex;"><span>git checkout -b &lt;branch&gt; <span style="color:#776e71">#创建并切换分支</span>
+</span></span><span style="display:flex;"><span>git branch <span style="color:#776e71">#查看当前分支</span>
+</span></span></code></pre></div><h2 id="git-配置多个账户">Git 配置多个账户<a hidden class="anchor" aria-hidden="true" href="#git-配置多个账户">#</a></h2>
+<p>这里分两种情况：</p>
+<blockquote>
+<ol>
+<li>一个账户已经进行了配置，添加另外一个账户</li>
+<li>同时配置两个git账户</li>
+</ol>
+</blockquote>
+<p>假如之前你已经有账户进行了git的全局设置，那么首先需要解除git全局<code>用户名/邮箱</code>的设置</p>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git config --global --unset <span style="color:#48b685">&#34;user.name&#34;</span>
+</span></span><span style="display:flex;"><span>git config --global --unset <span style="color:#48b685">&#34;user.email&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#48b685">```</span>   
+</span></span><span style="display:flex;"><span>如果之前并未进行全局设置，则直接开始设置每个仓库独立的用户和邮箱  
+</span></span><span style="display:flex;"><span><span style="color:#48b685">```</span>shell
+</span></span><span style="display:flex;"><span><span style="color:#776e71">#设置第一个用户/邮箱</span>
+</span></span><span style="display:flex;"><span>git config user.email <span style="color:#48b685">&#34;A@gmail.com&#34;</span>
+</span></span><span style="display:flex;"><span>git config user.name <span style="color:#48b685">&#34;A&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#776e71">#设置第二个用户/邮箱</span>
+</span></span><span style="display:flex;"><span>git config user.email <span style="color:#48b685">&#34;B@163.com&#34;</span>
+</span></span><span style="display:flex;"><span>git config user.name <span style="color:#48b685">&#34;B&#34;</span>
+</span></span></code></pre></div><p>在进行单用户操作时我们只需要通过：</p>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ssh-keygen -t rsa -f -C <span style="color:#48b685">&#34;yourmail@xxx.com&#34;</span>
+</span></span></code></pre></div><p>命令直接产生相应的<code>密钥/公钥</code>，但是在多用户的情况下,直接产生两次<code>密钥/公钥</code>会将第一次产生的<code>密钥/公钥</code>覆盖掉。因此，进行多用户操作时，需要指定产生的密钥名称，避免覆盖。</p>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#776e71">#创建A账户的密钥、公钥</span>
+</span></span><span style="display:flex;"><span>ssh-keygen -t rsa -f ~/.ssh/id_rsa_A -C <span style="color:#48b685">&#34;A@gmail.com&#34;</span>
+</span></span><span style="display:flex;"><span>ssh-keygen -t rsa -f ~/.ssh/id_rsa_B -C <span style="color:#48b685">&#34;B@163.com&#34;</span>
+</span></span></code></pre></div><p>此时会在用户的<code>.ssh</code>文件夹下产生<code>id_rsa_A</code>、<code>id_rsa_A.pub</code>和<code>id_rsa_B</code>、<code>id_rsa_B.pub</code>两对<code>密钥/公钥</code>。</p>
+<h5 id="3-设置config文件">3. 设置config文件<a hidden class="anchor" aria-hidden="true" href="#3-设置config文件">#</a></h5>
+<p>在.ssh文件夹下创建config文件,配置不同的仓库指向不同的密钥文件。</p>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#776e71"># A账号</span>
+</span></span><span style="display:flex;"><span>Host A <span style="color:#776e71">#host别名</span>
+</span></span><span style="display:flex;"><span>HostName github.com <span style="color:#776e71">#服务器域名</span>
+</span></span><span style="display:flex;"><span>User git <span style="color:#776e71">#A账号用户名</span>
+</span></span><span style="display:flex;"><span>IdentityFile ~/.ssh/id_rsa
+</span></span><span style="display:flex;"><span><span style="color:#776e71"># B账号</span>
+</span></span><span style="display:flex;"><span>Host B  <span style="color:#776e71">#host别名</span>
+</span></span><span style="display:flex;"><span>HostName github.com <span style="color:#776e71">#服务器域名</span>
+</span></span><span style="display:flex;"><span>User git <span style="color:#776e71">#B账号用户名</span>
+</span></span><span style="display:flex;"><span>IdentityFile ~/.ssh/id_rsa_x
+</span></span></code></pre></div><blockquote>
+<p><strong>原理解析</strong>
+1.ssh 客户端是通过类似 <a href="mailto:git@github.com">git@github.com</a>:githubUserName/repoName.git ** 的地址来识别使用本地的哪个私钥的，地址中的 User 是@前面的git， Host 是@后面的github.com。
+2.如果所有账号的 User 和 Host 都为 git 和 github.com，那么就只能使用一个私钥。所以要对User 和 Host 进行配置，让每个账号使用自己的 Host，即使用上面的别名来代替域名。
+3.配置了别名之后，新的地址就是git@A:githubUserName/repName.git**（在添加远程仓库时使用）。这样 ssh 在连接时就可以区别不同的账号了。</p>
+</blockquote>
+<p>把相应的公钥添加到账户的SSH设置当中，这样git就可以识别不同的账户了。</p>
+
+
+        </div>
+
+        
+
+        <footer class="post-footer">
+            
+<nav class="paginav">
+  <a class="prev" href="http://localhost:1313/en/posts/tech/roc_auc/">
+    <span class="title">« 上一页</span>
+    <br>
+    <span>ROC曲线和AUC</span>
+  </a>
+  <a class="next" href="http://localhost:1313/en/posts/tech/cox_r/">
+    <span class="title">下一页 »</span>
+    <br>
+    <span>Cox模型的R实现</span>
+  </a>
+</nav>
+
+        </footer>
+    </div>
+
+
+
+<div>
+    <div class="pagination__title">
+        <span class="pagination__title-h" style="font-size: 20px;">💬评论</span>
+        <hr />
+    </div>
+
+    <div id="tcomment"></div>
+
+    <script src="https://cdn.staticfile.org/twikoo/1.6.15/twikoo.all.min.js">
+    </script>
+    
+
+    
+
+    <script>
+        twikoo.init({
+            envId: "https://twikoo.lvbibir.cn/", 
+            el: "#tcomment",
+            lang: 'zh-CN',
+            
+            path: window.TWIKOO_MAGIC_PATH||window.location.pathname,
+            
+            
+            
+            
+            
+            
+            
+        });
+    </script>
+
+</div>
+</article>
+</main>
+
+
+<footer class="footer">
+
+    <a href="https://gohugo.io/" target="_blank">
+        
+        <img style="display: unset;" src="https://image.lvbibir.cn/blog/frame-hugo-blue.svg">
+    </a>
+    <a href="https://github.com/adityatelange/hugo-PaperMod" target="_blank">
+        
+        <img style="display: unset;" src="https://image.lvbibir.cn/blog/theme-papermod-lightgrey.svg">
+    </a>
+
+    <br>
+
+    <span id="runtime_span"></span>
+    <script
+        type="text/javascript">function show_runtime() { window.setTimeout("show_runtime()", 1000); X = new Date("7/13/2021 1:00:00"); Y = new Date(); T = (Y.getTime() - X.getTime()); M = 24 * 60 * 60 * 1000; a = T / M; A = Math.floor(a); b = (a - A) * 24; B = Math.floor(b); c = (b - B) * 60; C = Math.floor((b - B) * 60); D = Math.floor((c - C) * 60); runtime_span.innerHTML = "网站已运行" + A + "天" + B + "小时"} show_runtime();</script>
+    |
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span id="busuanzi_container">
+        
+        总访客数:  <span id="busuanzi_value_site_uv"></span>
+        |
+        总访问量:  <span id="busuanzi_value_site_pv"></span>
+    </span>
+
+    <br>
+    <span>
+        Copyright
+        &copy;
+        2021-2024
+        <a href="http://localhost:1313/en/" style="border-bottom:1px solid">Jeason&#39;s Blog</a>
+    </span>
+
+    
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <span class="topInner">
+        <svg class="topSvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+            <path d="M12 6H0l6-6z" />
+        </svg>
+        <span id="read_progress"></span>
+    </span>
+</a>
+
+<script>
+    document.addEventListener('scroll', function (e) {
+        const readProgress = document.getElementById("read_progress");
+        const scrollHeight = document.documentElement.scrollHeight;
+        const clientHeight = document.documentElement.clientHeight;
+        const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        
+        readProgress.innerText = ((scrollTop / (scrollHeight - clientHeight)).toFixed(2) * 100).toFixed(0);
+    })
+</script>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    let mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 400 || document.documentElement.scrollTop > 400) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+
+
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerText = '📄复制';
+
+        function copyingDone() {
+            copybutton.innerText = '👌🏻已复制!';
+            setTimeout(() => {
+                copybutton.innerText = '📄复制';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) {
+            }
+            ;
+            selection.removeRange(range);
+        });
+
+        let language = codeblock.className.replaceAll("language-", "")
+        let macTool = document.createElement("div")
+        let macTool1 = document.createElement("div")
+        let macTool2 = document.createElement("div")
+        let macTool3 = document.createElement("div")
+        let languageType = document.createElement("div")
+        languageType.innerText = language
+        macTool.setAttribute('class', 'mac-tool')
+        macTool1.setAttribute('class', 'mac bb1')
+        macTool2.setAttribute('class', 'mac bb2')
+        macTool3.setAttribute('class', 'mac bb3')
+        languageType.setAttribute('class', 'language-type')
+        macTool.appendChild(macTool1)
+        macTool.appendChild(macTool2)
+        macTool.appendChild(macTool3)
+        macTool.appendChild(languageType)
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+            container.appendChild(macTool)
+        } else if (container.parentNode.firstChild === container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName === "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+            container.appendChild(macTool)
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+            container.appendChild(macTool)
+        }
+    });
+</script>
+
+</body>
+
+</html>

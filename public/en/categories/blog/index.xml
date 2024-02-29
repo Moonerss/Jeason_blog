@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Blog on Jeason&#39;s Blog</title>
+    <link>http://localhost:1313/en/categories/blog/</link>
+    <description>Recent content in Blog on Jeason&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Thu, 29 Feb 2024 16:33:19 +0800</lastBuildDate>
+    <atom:link href="http://localhost:1313/en/categories/blog/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Jekyll-theme-next添加Valine评论系统</title>
+      <link>http://localhost:1313/en/posts/blog/valine/</link>
+      <pubDate>Mon, 18 Mar 2019 16:33:19 +0800</pubDate>
+      <guid>http://localhost:1313/en/posts/blog/valine/</guid>
+      <description>&lt;hr&gt;
+&lt;p&gt;title: Jekyll-theme-next添加Valine评论系统
+date: 2019-03-18 19:42:02
+categories:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Blog
+tags:&lt;/li&gt;
+&lt;li&gt;blog&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;p&gt;给Jekyll添加Valine评论系统&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

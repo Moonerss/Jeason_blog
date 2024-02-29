@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Docker | 常规操作 | Jeason&#39;s Blog</title>
+<meta name="keywords" content="docker">
+<meta name="description" content="本文介绍了Docker的常规操作使用命令">
+<meta name="author" content="作者:Jeason">
+<link rel="canonical" href="http://localhost:1313/en/posts/tech/docker_3/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.e029fa55ed0a02bb684da89d2a53a4e1ba9e26e3719fa48460be52776460b523.css" integrity="sha256-4Cn6Ve0KArtoTaidKlOk4bqeJuNxn6SEYL5Sd2RgtSM=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:1313/img/avatar.jpeg">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/img/avatar.jpeg">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/img/avatar.jpeg">
+<link rel="apple-touch-icon" href="http://localhost:1313/img/avatar.jpeg">
+<link rel="mask-icon" href="http://localhost:1313/img/avatar.jpeg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="http://localhost:1313/en/posts/tech/docker_3/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><script type="text/javascript"
+        async
+        src="https://cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\[\[','\]\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+});
+
+MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<style>
+code.has-jax {
+    font: inherit;
+    font-size: 100%;
+    background: inherit;
+    border: inherit;
+    color: #515151;
+}
+</style>
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = ""; 
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<meta property="og:title" content="Docker | 常规操作" />
+<meta property="og:description" content="本文介绍了Docker的常规操作使用命令" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://localhost:1313/en/posts/tech/docker_3/" />
+<meta property="og:image" content="https://source.unsplash.com/random/400x200?code" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-03-23T15:38:36+08:00" />
+<meta property="article:modified_time" content="2024-02-29T15:38:36+08:00" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://source.unsplash.com/random/400x200?code" />
+<meta name="twitter:title" content="Docker | 常规操作"/>
+<meta name="twitter:description" content="本文介绍了Docker的常规操作使用命令"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "📚 文章",
+      "item": "http://localhost:1313/en/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "👨🏻‍💻 技术",
+      "item": "http://localhost:1313/en/posts/tech/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "Docker | 常规操作",
+      "item": "http://localhost:1313/en/posts/tech/docker_3/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Docker | 常规操作",
+  "name": "Docker | 常规操作",
+  "description": "本文介绍了Docker的常规操作使用命令",
+  "keywords": [
+    "docker"
+  ],
+  "articleBody": "启动 启动容器有两种方式，一种是基于镜像新建一个容器并启动，另外一个是将在终止状态（exited）的容器重新启动。\n新建并启动 所需要的命令主要为 docker run\n## 启动并执行echo命令 $ docker run ubuntu:18.04 /bin/echo 'Hello world' Hello world ## 启动交互式终端 $ docker run -t -i ubuntu:18.04 /bin/bash root@af8bae53bdd3:/# 当利用 docker run 来创建容器时，Docker 在后台运行的标准操作包括：\n检查本地是否存在指定的镜像，不存在就从 registry 下载 利用镜像创建并启动一个容器 分配一个文件系统，并在只读的镜像层外面挂载一层可读写层 从宿主主机配置的网桥接口中桥接一个虚拟接口到容器中去 从地址池配置一个 ip 地址给容器 执行用户指定的应用程序 执行完毕后容器被终止 启动已终止容器 可以利用 docker container start 命令，直接将一个已经终止（exited）的容器启动运行。\n守护态运行 更多的时候，需要让 Docker 在后台运行而不是直接把执行命令的结果输出在当前宿主机下。此时，可以通过添加 -d 参数来实现。\ndocker run ubuntu:18.04 /bin/sh -c \"while true; do echo hello world; sleep 1; done\" hello world hello world hello world hello world ## 如果使用-d参数程序会后台运行 docker run -d ubuntu:18.04 /bin/sh -c \"while true; do echo hello world; sleep 1; done\" 77b2dc01fe0f3f1265df143181e7b9af5e05279a884f4776ee75350ea9d8017a 使用 -d 参数启动后会返回一个唯一的 id，也可以通过 docker container ls 命令来查看容器信息。\ndocker container ls CONTAINER ID IMAGE COMMAND CREATED STATUS PORTS NAMES 77b2dc01fe0f ubuntu:18.04 /bin/sh -c 'while tr 2 minutes ago Up 1 minute agitated_wright 要获取容器的输出信息，可以通过 docker container logs 命令。\ndocker container logs [container ID or NAMES] hello world hello world hello world . . . 终止 可以使用 docker container stop 来终止一个运行中的容器。 终止状态的容器可以用 docker container ls -a 命令看到。例如\ndocker container ls -a CONTAINER ID IMAGE COMMAND CREATED STATUS PORTS NAMES ba267838cc1b ubuntu:18.04 \"/bin/bash\" 30 minutes ago Exited (0) About a minute ago trusting_newton 处于终止状态的容器，可以通过 docker container start 命令来重新启动。 docker container restart 命令会将一个运行态的容器终止，然后再重新启动它.\n进入容器 attach命令 docker run -dit ubuntu 243c32535da7d142fb0e6df616a3c3ada0b8ab417937c853a9e1c251f499f550 docker container ls CONTAINER ID IMAGE COMMAND CREATED STATUS PORTS NAMES 243c32535da7 ubuntu:latest \"/bin/bash\" 18 seconds ago Up 17 seconds nostalgic_hypatia docker attach 243c root@243c32535da7:/# 注意： 如果从这个 stdin 中 exit，会导致容器的停止。\nexec 命令 docker run -dit ubuntu 69d137adef7a8a689cbcb059e94da5489d3cddd240ff675c640c8d96e84fe1f6 docker container ls CONTAINER ID IMAGE COMMAND CREATED STATUS PORTS NAMES 69d137adef7a ubuntu:latest \"/bin/bash\" 18 seconds ago Up 17 seconds zealous_swirles ## 只使用-i参数没有终端，只会返回运行结果 docker exec -i 69d1 bash ls bin boot dev ... ## 使用-it参数可进入终端 docker exec -it 69d1 bash root@69d137adef7a:/# 如果从这个 stdin 中 exit，不会导致容器的停止。\n⚠️使用exec进入容器，相当于重新打开一个终端，并不影响原来运行的程序，使用attach相当于连接到正在执行的终端，不会启动新的进程。\n导出和导入 导出容器 docker container ls -a CONTAINER ID IMAGE COMMAND CREATED STATUS PORTS NAMES 7691a814370e ubuntu:18.04 \"/bin/bash\" 36 hours ago Exited (0) 21 hours ago test docker export 7691a814370e \u003e ubuntu.tar 这样将导出容器快照到本地文件。\n导入容器 cat ubuntu.tar | docker import - test/ubuntu:v1.0 docker image ls REPOSITORY TAG IMAGE ID CREATED VIRTUAL SIZE test/ubuntu v1.0 9d37a6082e97 About a minute ago 171.3 MB ## 也可以通过指定 URL 或者某个目录来导入 docker import http://example.com/exampleimage.tgz example/imagerepo 删除 删除容器 docker container rm trusting_newton trusting_newton 如果要删除一个运行中的容器，可以添加 -f 参数。Docker 会发送 SIGKILL 信号给容器。\n清理所有处于终止状态的容器 用 docker container ls -a 命令可以查看所有已经创建的包括终止状态的容器，如果数量太多要一个个删除可能会很麻烦，用docker container prune命令可以清理掉所有处于终止状态的容器。\n",
+  "wordCount" : "1116",
+  "inLanguage": "en",
+  "image":"https://source.unsplash.com/random/400x200?code","datePublished": "2023-03-23T15:38:36+08:00",
+  "dateModified": "2024-02-29T15:38:36+08:00",
+  "author":{
+    "@type": "Person",
+    "name": "Jeason"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "http://localhost:1313/en/posts/tech/docker_3/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Jeason's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "http://localhost:1313/img/avatar.jpeg"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="http://localhost:1313/en/" accesskey="h" title="Jeason&#39;s Blog (Alt + H)">
+                <img src="http://localhost:1313/img/avatar.jpeg" alt="" aria-label="logo"
+                    height="35">Jeason&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+                
+            </div>
+        </div>
+        <ul id="menu">
+            <li class="menu-item">
+                <a href="http://localhost:1313/en/search" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
+                    <span>🔍 搜索</span>
+                    
+                </a>
+            
+            </li>
+            <li class="menu-item">
+                <a href="http://localhost:1313/en/" title="🏡 主页">
+                    <span>🏡 主页</span>
+                    
+                </a>
+            
+            </li>
+            <li class="menu-item">
+                <a href="http://localhost:1313/en/posts" title="📚 文章">
+                    <span>📚 文章</span>
+                    
+                </a>
+            
+            </li>
+            <li class="menu-item">
+                <a href="http://localhost:1313/en/archives" title="📈 归档">
+                    <span>📈 归档</span>
+                    
+                </a>
+            
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main page">
+<article class="post-single">
+    <div id="single-content">
+        <header class="post-header">
+            <div class="breadcrumbs"><a href="http://localhost:1313/en/">主页</a>&nbsp;»&nbsp;<a href="http://localhost:1313/en/posts/">📚 文章</a>&nbsp;»&nbsp;<a href="http://localhost:1313/en/posts/tech/">👨🏻‍💻 技术</a></div>
+            <h1 class="post-title">
+                Docker | 常规操作
+            </h1>
+            <div class="post-description">
+                本文介绍了Docker的常规操作使用命令
+            </div>
+            <div class="post-meta">创建: 2023-03-23 | 更新: 2024-02-29 | 作者:Jeason
+
+
+
+
+                
+                <span id="busuanzi_container_page_pv">
+                    &nbsp;|&nbsp;访问:&nbsp;<span id="busuanzi_value_page_pv"></span>
+                </span>
+
+</div>
+        </header> <aside id="toc-container" class="toc-container wide">
+    <div class="toc">
+        <details  open>
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">文章目录</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#%e5%90%af%e5%8a%a8" aria-label="启动">启动</a><ul>
+                        
+                <li>
+                    <a href="#%e6%96%b0%e5%bb%ba%e5%b9%b6%e5%90%af%e5%8a%a8" aria-label="新建并启动">新建并启动</a></li>
+                <li>
+                    <a href="#%e5%90%af%e5%8a%a8%e5%b7%b2%e7%bb%88%e6%ad%a2%e5%ae%b9%e5%99%a8" aria-label="启动已终止容器">启动已终止容器</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e5%ae%88%e6%8a%a4%e6%80%81%e8%bf%90%e8%a1%8c" aria-label="守护态运行">守护态运行</a></li>
+                <li>
+                    <a href="#%e7%bb%88%e6%ad%a2" aria-label="终止">终止</a></li>
+                <li>
+                    <a href="#%e8%bf%9b%e5%85%a5%e5%ae%b9%e5%99%a8" aria-label="进入容器">进入容器</a><ul>
+                        
+                <li>
+                    <a href="#attach%e5%91%bd%e4%bb%a4" aria-label="attach命令"><code>attach</code>命令</a></li>
+                <li>
+                    <a href="#exec-%e5%91%bd%e4%bb%a4" aria-label="exec 命令"><code>exec</code> 命令</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e5%af%bc%e5%87%ba%e5%92%8c%e5%af%bc%e5%85%a5" aria-label="导出和导入">导出和导入</a><ul>
+                        
+                <li>
+                    <a href="#%e5%af%bc%e5%87%ba%e5%ae%b9%e5%99%a8" aria-label="导出容器">导出容器</a></li>
+                <li>
+                    <a href="#%e5%af%bc%e5%85%a5%e5%ae%b9%e5%99%a8" aria-label="导入容器">导入容器</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e5%88%a0%e9%99%a4" aria-label="删除">删除</a><ul>
+                        
+                <li>
+                    <a href="#%e5%88%a0%e9%99%a4%e5%ae%b9%e5%99%a8" aria-label="删除容器">删除容器</a></li>
+                <li>
+                    <a href="#%e6%b8%85%e7%90%86%e6%89%80%e6%9c%89%e5%a4%84%e4%ba%8e%e7%bb%88%e6%ad%a2%e7%8a%b6%e6%80%81%e7%9a%84%e5%ae%b9%e5%99%a8" aria-label="清理所有处于终止状态的容器">清理所有处于终止状态的容器</a>
+                </li>
+            </ul>
+            </li>
+            </ul>
+        </div>
+        </details>
+    </div>
+</aside>
+<script>
+    let activeElement;
+    let elements;
+    window.addEventListener('DOMContentLoaded', function (event) {
+        checkTocPosition();
+
+        elements = document.querySelectorAll('h1[id],h2[id],h3[id],h4[id],h5[id],h6[id]');
+        
+        activeElement = elements[0];
+        const id = encodeURI(activeElement.getAttribute('id')).toLowerCase();
+        document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+    }, false);
+
+    window.addEventListener('resize', function(event) {
+        checkTocPosition();
+    }, false);
+
+    window.addEventListener('scroll', () => {
+        
+        activeElement = Array.from(elements).find((element) => {
+            if ((getOffsetTop(element) - window.pageYOffset) > 0 &&
+                (getOffsetTop(element) - window.pageYOffset) < window.innerHeight/2) {
+                return element;
+            }
+        }) || activeElement
+
+        elements.forEach(element => {
+            const id = encodeURI(element.getAttribute('id')).toLowerCase();
+            if (element === activeElement){
+                document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+            } else {
+                document.querySelector(`.inner ul li a[href="#${id}"]`).classList.remove('active');
+            }
+        })
+    }, false);
+
+    const main = parseInt(getComputedStyle(document.body).getPropertyValue('--article-width'), 10);
+    const toc = parseInt(getComputedStyle(document.body).getPropertyValue('--toc-width'), 10);
+    const gap = parseInt(getComputedStyle(document.body).getPropertyValue('--gap'), 10);
+
+    function checkTocPosition() {
+        const width = document.body.scrollWidth;
+        if (width - main - (toc * 2) - (gap * 4) > 0) {
+            document.getElementById("toc-container").classList.add("wide");
+        } else {
+            document.getElementById("toc-container").classList.remove("wide");
+        }
+    }
+
+    function getOffsetTop(element) {
+        if (!element.getClientRects().length) {
+            return 0;
+        }
+        let rect = element.getBoundingClientRect();
+        let win = element.ownerDocument.defaultView;
+        return rect.top + win.pageYOffset;
+    }
+</script>
+        <div class="post-content"><h1 id="启动">启动<a hidden class="anchor" aria-hidden="true" href="#启动">#</a></h1>
+<p>启动容器有两种方式，一种是基于镜像新建一个容器并启动，另外一个是将在终止状态（exited）的容器重新启动。</p>
+<h2 id="新建并启动">新建并启动<a hidden class="anchor" aria-hidden="true" href="#新建并启动">#</a></h2>
+<p>所需要的命令主要为 <code>docker run</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#776e71">## 启动并执行echo命令</span>
+</span></span><span style="display:flex;"><span>$ docker run ubuntu:18.04 /bin/echo <span style="color:#48b685">&#39;Hello world&#39;</span>
+</span></span><span style="display:flex;"><span>Hello world
+</span></span><span style="display:flex;"><span><span style="color:#776e71">## 启动交互式终端</span>
+</span></span><span style="display:flex;"><span>$ docker run -t -i ubuntu:18.04 /bin/bash
+</span></span><span style="display:flex;"><span>root@af8bae53bdd3:/#
+</span></span></code></pre></div><p>当利用 <code>docker run</code> 来创建容器时，Docker 在后台运行的标准操作包括：</p>
+<ul>
+<li>检查本地是否存在指定的镜像，不存在就从 registry 下载</li>
+<li>利用镜像创建并启动一个容器</li>
+<li>分配一个文件系统，并在只读的镜像层外面挂载一层可读写层</li>
+<li>从宿主主机配置的网桥接口中桥接一个虚拟接口到容器中去</li>
+<li>从地址池配置一个 ip 地址给容器</li>
+<li>执行用户指定的应用程序</li>
+<li>执行完毕后容器被终止</li>
+</ul>
+<h2 id="启动已终止容器">启动已终止容器<a hidden class="anchor" aria-hidden="true" href="#启动已终止容器">#</a></h2>
+<p>可以利用 <code>docker container start</code> 命令，直接将一个已经终止（<code>exited</code>）的容器启动运行。</p>
+<h1 id="守护态运行">守护态运行<a hidden class="anchor" aria-hidden="true" href="#守护态运行">#</a></h1>
+<p>更多的时候，需要让 Docker 在后台运行而不是直接把执行命令的结果输出在当前宿主机下。此时，可以通过添加 <code>-d</code> 参数来实现。</p>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>docker run ubuntu:18.04 /bin/sh -c <span style="color:#48b685">&#34;while true; do echo hello world; sleep 1; done&#34;</span>
+</span></span><span style="display:flex;"><span>hello world
+</span></span><span style="display:flex;"><span>hello world
+</span></span><span style="display:flex;"><span>hello world
+</span></span><span style="display:flex;"><span>hello world
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#776e71">## 如果使用-d参数程序会后台运行</span>
+</span></span><span style="display:flex;"><span>docker run -d ubuntu:18.04 /bin/sh -c <span style="color:#48b685">&#34;while true; do echo hello world; sleep 1; done&#34;</span>
+</span></span><span style="display:flex;"><span>77b2dc01fe0f3f1265df143181e7b9af5e05279a884f4776ee75350ea9d8017a
+</span></span></code></pre></div><p>使用 <code>-d</code> 参数启动后会返回一个唯一的 id，也可以通过 <code>docker container ls</code> 命令来查看容器信息。</p>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>docker container ls
+</span></span><span style="display:flex;"><span>CONTAINER ID  IMAGE         COMMAND               CREATED        STATUS       PORTS NAMES
+</span></span><span style="display:flex;"><span>77b2dc01fe0f  ubuntu:18.04  /bin/sh -c <span style="color:#ef6155">&#39;</span><span style="color:#815ba4">while</span> tr  <span style="color:#f99b15">2</span> minutes ago  Up <span style="color:#f99b15">1</span> minute        agitated_wright
+</span></span></code></pre></div><p>要获取容器的输出信息，可以通过 <code>docker container logs</code> 命令。</p>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>docker container logs [container ID or NAMES]
+</span></span><span style="display:flex;"><span>hello world
+</span></span><span style="display:flex;"><span>hello world
+</span></span><span style="display:flex;"><span>hello world
+</span></span><span style="display:flex;"><span>. . .
+</span></span></code></pre></div><h1 id="终止">终止<a hidden class="anchor" aria-hidden="true" href="#终止">#</a></h1>
+<p>可以使用 <code>docker container stop</code> 来终止一个运行中的容器。
+终止状态的容器可以用 <code>docker container ls -a</code> 命令看到。例如</p>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>docker container ls -a
+</span></span><span style="display:flex;"><span>CONTAINER ID        IMAGE                    COMMAND                CREATED             STATUS                          PORTS               NAMES
+</span></span><span style="display:flex;"><span>ba267838cc1b        ubuntu:18.04             <span style="color:#48b685">&#34;/bin/bash&#34;</span>            <span style="color:#f99b15">30</span> minutes ago      Exited <span style="color:#5bc4bf">(</span>0<span style="color:#5bc4bf">)</span> About a minute ago                       trusting_newton
+</span></span></code></pre></div><p>处于终止状态的容器，可以通过 <code>docker container start</code> 命令来重新启动。
+<code>docker container restart</code> 命令会将一个运行态的容器终止，然后再重新启动它.</p>
+<h1 id="进入容器">进入容器<a hidden class="anchor" aria-hidden="true" href="#进入容器">#</a></h1>
+<h2 id="attach命令"><code>attach</code>命令<a hidden class="anchor" aria-hidden="true" href="#attach命令">#</a></h2>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>docker run -dit ubuntu
+</span></span><span style="display:flex;"><span>243c32535da7d142fb0e6df616a3c3ada0b8ab417937c853a9e1c251f499f550
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>docker container ls
+</span></span><span style="display:flex;"><span>CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
+</span></span><span style="display:flex;"><span>243c32535da7        ubuntu:latest       <span style="color:#48b685">&#34;/bin/bash&#34;</span>         <span style="color:#f99b15">18</span> seconds ago      Up <span style="color:#f99b15">17</span> seconds                           nostalgic_hypatia
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>docker attach 243c
+</span></span><span style="display:flex;"><span>root@243c32535da7:/#
+</span></span></code></pre></div><blockquote>
+<p>注意： 如果从这个 stdin 中 exit，会导致容器的停止。</p>
+</blockquote>
+<h2 id="exec-命令"><code>exec</code> 命令<a hidden class="anchor" aria-hidden="true" href="#exec-命令">#</a></h2>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>docker run -dit ubuntu
+</span></span><span style="display:flex;"><span>69d137adef7a8a689cbcb059e94da5489d3cddd240ff675c640c8d96e84fe1f6
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>docker container ls
+</span></span><span style="display:flex;"><span>CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
+</span></span><span style="display:flex;"><span>69d137adef7a        ubuntu:latest       <span style="color:#48b685">&#34;/bin/bash&#34;</span>         <span style="color:#f99b15">18</span> seconds ago      Up <span style="color:#f99b15">17</span> seconds                           zealous_swirles
+</span></span><span style="display:flex;"><span><span style="color:#776e71">## 只使用-i参数没有终端，只会返回运行结果</span>
+</span></span><span style="display:flex;"><span>docker exec -i 69d1 bash
+</span></span><span style="display:flex;"><span>ls
+</span></span><span style="display:flex;"><span>bin
+</span></span><span style="display:flex;"><span>boot
+</span></span><span style="display:flex;"><span>dev
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span><span style="color:#776e71">## 使用-it参数可进入终端</span>
+</span></span><span style="display:flex;"><span>docker exec -it 69d1 bash
+</span></span><span style="display:flex;"><span>root@69d137adef7a:/#
+</span></span></code></pre></div><blockquote>
+<p>如果从这个 stdin 中 exit，不会导致容器的停止。</p>
+</blockquote>
+<blockquote>
+<p>⚠️使用<code>exec</code>进入容器，相当于重新打开一个终端，并不影响原来运行的程序，使用<code>attach</code>相当于连接到正在执行的终端，不会启动新的进程。</p>
+</blockquote>
+<h1 id="导出和导入">导出和导入<a hidden class="anchor" aria-hidden="true" href="#导出和导入">#</a></h1>
+<h2 id="导出容器">导出容器<a hidden class="anchor" aria-hidden="true" href="#导出容器">#</a></h2>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>docker container ls -a
+</span></span><span style="display:flex;"><span>CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS                    PORTS               NAMES
+</span></span><span style="display:flex;"><span>7691a814370e        ubuntu:18.04        <span style="color:#48b685">&#34;/bin/bash&#34;</span>         <span style="color:#f99b15">36</span> hours ago        Exited <span style="color:#5bc4bf">(</span>0<span style="color:#5bc4bf">)</span> <span style="color:#f99b15">21</span> hours ago                       test
+</span></span><span style="display:flex;"><span>docker export 7691a814370e &gt; ubuntu.tar
+</span></span></code></pre></div><p>这样将导出容器快照到本地文件。</p>
+<h2 id="导入容器">导入容器<a hidden class="anchor" aria-hidden="true" href="#导入容器">#</a></h2>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>cat ubuntu.tar | docker import - test/ubuntu:v1.0
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>docker image ls
+</span></span><span style="display:flex;"><span>REPOSITORY          TAG                 IMAGE ID            CREATED              VIRTUAL SIZE
+</span></span><span style="display:flex;"><span>test/ubuntu         v1.0                9d37a6082e97        About a minute ago   171.3 MB
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#776e71">## 也可以通过指定 URL 或者某个目录来导入</span>
+</span></span><span style="display:flex;"><span>docker import http://example.com/exampleimage.tgz example/imagerepo
+</span></span></code></pre></div><h1 id="删除">删除<a hidden class="anchor" aria-hidden="true" href="#删除">#</a></h1>
+<h2 id="删除容器">删除容器<a hidden class="anchor" aria-hidden="true" href="#删除容器">#</a></h2>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>docker container rm trusting_newton
+</span></span><span style="display:flex;"><span>trusting_newton
+</span></span></code></pre></div><p>如果要删除一个运行中的容器，可以添加 <code>-f</code> 参数。Docker 会发送 SIGKILL 信号给容器。</p>
+<h2 id="清理所有处于终止状态的容器">清理所有处于终止状态的容器<a hidden class="anchor" aria-hidden="true" href="#清理所有处于终止状态的容器">#</a></h2>
+<p>用 <code>docker container ls -a</code> 命令可以查看所有已经创建的包括终止状态的容器，如果数量太多要一个个删除可能会很麻烦，用<code>docker container prune</code>命令可以清理掉所有处于终止状态的容器。</p>
+
+
+        </div>
+
+        
+
+        <footer class="post-footer">
+            
+<nav class="paginav">
+  <a class="prev" href="http://localhost:1313/en/posts/tech/docker_4/">
+    <span class="title">« 上一页</span>
+    <br>
+    <span>Docker | 构建镜像</span>
+  </a>
+  <a class="next" href="http://localhost:1313/en/posts/tech/docker_2/">
+    <span class="title">下一页 »</span>
+    <br>
+    <span>Docker | 镜像使用</span>
+  </a>
+</nav>
+
+        </footer>
+    </div>
+
+
+
+<div>
+    <div class="pagination__title">
+        <span class="pagination__title-h" style="font-size: 20px;">💬评论</span>
+        <hr />
+    </div>
+
+    <div id="tcomment"></div>
+
+    <script src="https://cdn.staticfile.org/twikoo/1.6.15/twikoo.all.min.js">
+    </script>
+    
+
+    
+
+    <script>
+        twikoo.init({
+            envId: "https://twikoo.lvbibir.cn/", 
+            el: "#tcomment",
+            lang: 'zh-CN',
+            
+            path: window.TWIKOO_MAGIC_PATH||window.location.pathname,
+            
+            
+            
+            
+            
+            
+            
+        });
+    </script>
+
+</div>
+</article>
+</main>
+
+
+<footer class="footer">
+
+    <a href="https://gohugo.io/" target="_blank">
+        
+        <img style="display: unset;" src="https://image.lvbibir.cn/blog/frame-hugo-blue.svg">
+    </a>
+    <a href="https://github.com/adityatelange/hugo-PaperMod" target="_blank">
+        
+        <img style="display: unset;" src="https://image.lvbibir.cn/blog/theme-papermod-lightgrey.svg">
+    </a>
+
+    <br>
+
+    <span id="runtime_span"></span>
+    <script
+        type="text/javascript">function show_runtime() { window.setTimeout("show_runtime()", 1000); X = new Date("7/13/2021 1:00:00"); Y = new Date(); T = (Y.getTime() - X.getTime()); M = 24 * 60 * 60 * 1000; a = T / M; A = Math.floor(a); b = (a - A) * 24; B = Math.floor(b); c = (b - B) * 60; C = Math.floor((b - B) * 60); D = Math.floor((c - C) * 60); runtime_span.innerHTML = "网站已运行" + A + "天" + B + "小时"} show_runtime();</script>
+    |
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span id="busuanzi_container">
+        
+        总访客数:  <span id="busuanzi_value_site_uv"></span>
+        |
+        总访问量:  <span id="busuanzi_value_site_pv"></span>
+    </span>
+
+    <br>
+    <span>
+        Copyright
+        &copy;
+        2021-2024
+        <a href="http://localhost:1313/en/" style="border-bottom:1px solid">Jeason&#39;s Blog</a>
+    </span>
+
+    
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <span class="topInner">
+        <svg class="topSvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+            <path d="M12 6H0l6-6z" />
+        </svg>
+        <span id="read_progress"></span>
+    </span>
+</a>
+
+<script>
+    document.addEventListener('scroll', function (e) {
+        const readProgress = document.getElementById("read_progress");
+        const scrollHeight = document.documentElement.scrollHeight;
+        const clientHeight = document.documentElement.clientHeight;
+        const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        
+        readProgress.innerText = ((scrollTop / (scrollHeight - clientHeight)).toFixed(2) * 100).toFixed(0);
+    })
+</script>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    let mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 400 || document.documentElement.scrollTop > 400) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+
+
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerText = '📄复制';
+
+        function copyingDone() {
+            copybutton.innerText = '👌🏻已复制!';
+            setTimeout(() => {
+                copybutton.innerText = '📄复制';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) {
+            }
+            ;
+            selection.removeRange(range);
+        });
+
+        let language = codeblock.className.replaceAll("language-", "")
+        let macTool = document.createElement("div")
+        let macTool1 = document.createElement("div")
+        let macTool2 = document.createElement("div")
+        let macTool3 = document.createElement("div")
+        let languageType = document.createElement("div")
+        languageType.innerText = language
+        macTool.setAttribute('class', 'mac-tool')
+        macTool1.setAttribute('class', 'mac bb1')
+        macTool2.setAttribute('class', 'mac bb2')
+        macTool3.setAttribute('class', 'mac bb3')
+        languageType.setAttribute('class', 'language-type')
+        macTool.appendChild(macTool1)
+        macTool.appendChild(macTool2)
+        macTool.appendChild(macTool3)
+        macTool.appendChild(languageType)
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+            container.appendChild(macTool)
+        } else if (container.parentNode.firstChild === container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName === "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+            container.appendChild(macTool)
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+            container.appendChild(macTool)
+        }
+    });
+</script>
+
+</body>
+
+</html>

@@ -1,109 +1,816 @@
-<!doctype html><html lang=en dir=auto><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta name=robots content="index, follow"><title>浅识apply家族 | Jeason's Blog</title>
-<meta name=keywords content="R"><meta name=description content="介绍R语言apply家族函数的相关应用"><meta name=author content="作者:Jeason"><link rel=canonical href=https://jeason.netlify.app/en/posts/tech/apply/><link crossorigin=anonymous href=/assets/css/stylesheet.e029fa55ed0a02bb684da89d2a53a4e1ba9e26e3719fa48460be52776460b523.css integrity="sha256-4Cn6Ve0KArtoTaidKlOk4bqeJuNxn6SEYL5Sd2RgtSM=" rel="preload stylesheet" as=style><link rel=icon href=https://jeason.netlify.app/img/avatar.jpeg><link rel=icon type=image/png sizes=16x16 href=https://jeason.netlify.app/img/avatar.jpeg><link rel=icon type=image/png sizes=32x32 href=https://jeason.netlify.app/img/avatar.jpeg><link rel=apple-touch-icon href=https://jeason.netlify.app/img/avatar.jpeg><link rel=mask-icon href=https://jeason.netlify.app/img/avatar.jpeg><meta name=theme-color content="#2e2e33"><meta name=msapplication-TileColor content="#2e2e33"><link rel=alternate hreflang=en href=https://jeason.netlify.app/en/posts/tech/apply/><noscript><style>#theme-toggle,.top-link{display:none}</style><style>@media(prefers-color-scheme:dark){:root{--theme:rgb(29, 30, 32);--entry:rgb(46, 46, 51);--primary:rgb(218, 218, 219);--secondary:rgb(155, 156, 157);--tertiary:rgb(65, 66, 68);--content:rgb(196, 196, 197);--code-block-bg:rgb(46, 46, 51);--code-bg:rgb(55, 56, 62);--border:rgb(51, 51, 51)}.list{background:var(--theme)}.list:not(.dark)::-webkit-scrollbar-track{background:0 0}.list:not(.dark)::-webkit-scrollbar-thumb{border-color:var(--theme)}}</style></noscript><script>var _hmt=_hmt||[];(function(){var e,t=document.createElement("script");t.src="",e=document.getElementsByTagName("script")[0],e.parentNode.insertBefore(t,e)})()</script><meta property="og:title" content="浅识apply家族"><meta property="og:description" content="介绍R语言apply家族函数的相关应用"><meta property="og:type" content="article"><meta property="og:url" content="https://jeason.netlify.app/en/posts/tech/apply/"><meta property="og:image" content="https://source.unsplash.com/random/400x200?code"><meta property="article:section" content="posts"><meta property="article:published_time" content="2024-02-23T19:46:13+08:00"><meta property="article:modified_time" content="2024-02-23T19:46:13+08:00"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://source.unsplash.com/random/400x200?code"><meta name=twitter:title content="浅识apply家族"><meta name=twitter:description content="介绍R语言apply家族函数的相关应用"><script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"📚 文章","item":"https://jeason.netlify.app/en/posts/"},{"@type":"ListItem","position":2,"name":"👨🏻‍💻 技术","item":"https://jeason.netlify.app/en/posts/tech/"},{"@type":"ListItem","position":3,"name":"浅识apply家族","item":"https://jeason.netlify.app/en/posts/tech/apply/"}]}</script><script type=application/ld+json>{"@context":"https://schema.org","@type":"BlogPosting","headline":"浅识apply家族","name":"浅识apply家族","description":"介绍R语言apply家族函数的相关应用","keywords":["R"],"articleBody":"apply函数 apply函数是最常用的代替for循环的函数。apply函数可以对矩阵、数据框、数组(二维、多维)，按行或列进行循环计算，对子元素进行迭代，并把子元素以参数传递的形式给自定义的FUN函数中，并以返回计算结果。\n函数定义 apply(X, MARGIN, FUN, ...) 参数列表 X：矩阵、数据框、数组\nMARGIN：按行计算或按按列计算，1表示按行，2表示按列\nFUN: 自定义函数\n…: 自定义参数\n应用 对于矩阵行求和\nx\u003c-matrix(1:12,ncol=3) apply(x,1,sum) ## [1] 15 18 21 24 自定义函数的使用\n# 生成data.frame x \u003c- cbind(x1 = 3, x2 = c(4:1, 2:5)); x ## x1 x2 ## [1,] 3 4 ## [2,] 3 3 ## [3,] 3 2 ## [4,] 3 1 ## [5,] 3 2 ## [6,] 3 3 ## [7,] 3 4 ## [8,] 3 5 # 自定义函数myFUN，第一个参数x为数据 # 第二、三个参数为自定义参数，可以通过apply的'...'进行传入。 myFUN\u003c- function(x, c1, c2) { c(sum(x[c1],1), mean(x[c2])) } # 把数据框按行做循环，每行分别传递给myFUN函数，设置c1,c2对应myFUN的第二、三个参数 apply(x,1,myFUN,c1='x1',c2=c('x1','x2')) ## [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] ## [1,] 4.0 4 4.0 4 4.0 4 4.0 4 ## [2,] 3.5 3 2.5 2 2.5 3 3.5 4 lapply函数 lapply函数是一个最基础循环操作函数之一。主要操作对象是list、data.frame，并返回和X长度同样的list结构作为结果集。\n函数定义 lapply(X, FUN, ...) 参数列表 X：矩阵、数据框、数组 FUN: 自定义函数 …: 自定义参数\n应用 对list进行操作\nx \u003c- list(a = c(1:3), b = c(4:6), d = c(10:20)) lapply(x, sum) ## $a ## [1] 6 ## ## $b ## [1] 15 ## ## $d ## [1] 165 对data.frame进行操作\nx \u003c- data.frame(x1=3, x2=c(2:1,4:5)) lapply(x, sum) ## $x1 ## [1] 12 ## ## $x2 ## [1] 12 sapply函数 sapply函数是一个简化版的lapply，sapply增加了2个参数simplify和USE.NAMES，主要就是让输出看起来更友好，返回值为向量，而不是list对象。\n函数定义 sapply(X, FUN, ..., simplify=TRUE, USE.NAMES = TRUE) 参数列表 X：矩阵、数据框、数组 FUN: 自定义函数 …: 自定义参数 simplify：是否数组化，当值是array时，输出结果按数组进行分组 USE.NAMES：如果X为字符串，TRUE设置字符串为数据名，FALSE不设置\n应用 对上面的数据框x进行操作：\nsapply(x, sum) ## x1 x2 ## 12 12 class(lapply(x, sum)) # lapply返回list，sapply返回vector ## [1] \"list\" class(sapply(x, sum)) ## [1] \"numeric\" vapply函数 vapply类似于sapply，提供了FUN.VALUE参数，用来控制返回值的行名。\n函数定义 vapply(X, FUN, FUN.VALUE, ..., USE.NAMES = TRUE) 参数列表 X：矩阵、数据框、数组 FUN: 自定义函数 FUN.VALUE：定义返回值的行名 …: 自定义参数 USE.NAMES：如果X为字符串，TRUE设置字符串为数据名，FALSE不设置\n应用 x \u003c- data.frame(cbind(x1=3, x2=c(2:1,4:5))) vapply(x,cumsum,FUN.VALUE = c('a'=0,'b'=0,'c'=0,'d'=0)) #注意FUN.VALUE的用法 ## x1 x2 ## a 3 2 ## b 6 3 ## c 9 7 ## d 12 12 mapply函数 相当于多参数版本的 sapply。第一次计算传入各组向量的第一个元素到FUN，进行结算得到结果；第二次传入各组向量的第二个元素，得到结果；第三次传入各组向量的第三个元素…以此类推。\n函数定义 mapply(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE,USE.NAMES = TRUE) 参数列表 主要使用的参数有三个 FUN: 自定义函数 FUN.VALUE：定义返回值的行名 …: 自定义参数\n应用 mapply(rep, 1:4, 4:1) #每一组参数都是对应的 ## [[1]] ## [1] 1 1 1 1 ## ## [[2]] ## [1] 2 2 2 ## ## [[3]] ## [1] 3 3 ## ## [[4]] ## [1] 4 tapply函数 tapply用于分组的循环计算，通过INDEX参数可以把数据集X进行分组，相当于group by的操作。\n函数定义 tapply(X, INDEX, FUN = NULL, ..., simplify = TRUE) 参数列表 X：向量 INDEX: 分组索引 FUN: 自定义函数 …: 接收多个数据 simplify：是否数组化，当值array时，输出结果按数组进行分组\n应用 # 对样本分组计数 tapply(warpbreaks$breaks, warpbreaks[,-1], sum) ## tension ## wool L M H ## A 401 216 221 ## B 254 259 169 ","wordCount":"1417","inLanguage":"en","image":"https://source.unsplash.com/random/400x200?code","datePublished":"2024-02-23T19:46:13+08:00","dateModified":"2024-02-23T19:46:13+08:00","author":{"@type":"Person","name":"Jeason"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://jeason.netlify.app/en/posts/tech/apply/"},"publisher":{"@type":"Organization","name":"Jeason's Blog","logo":{"@type":"ImageObject","url":"https://jeason.netlify.app/img/avatar.jpeg"}}}</script></head><body id=top><script>localStorage.getItem("pref-theme")==="dark"?document.body.classList.add("dark"):localStorage.getItem("pref-theme")==="light"?document.body.classList.remove("dark"):window.matchMedia("(prefers-color-scheme: dark)").matches&&document.body.classList.add("dark")</script><header class=header><nav class=nav><div class=logo><a href=https://jeason.netlify.app/en/ accesskey=h title="Jeason's Blog (Alt + H)"><img src=https://jeason.netlify.app/img/avatar.jpeg alt aria-label=logo height=35>Jeason's Blog</a><div class=logo-switches><button id=theme-toggle accesskey=t title="(Alt + T)"><svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg><svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button></div></div><ul id=menu><li class=menu-item><a href=https://jeason.netlify.app/en/search title="🔍 搜索 (Alt + /)" accesskey=/><span>🔍 搜索</span></a></li><li class=menu-item><a href=https://jeason.netlify.app/en/ title="🏡 主页"><span>🏡 主页</span></a></li><li class=menu-item><a href=https://jeason.netlify.app/en/posts title="📚 文章"><span>📚 文章</span></a></li><li class=menu-item><a href=https://jeason.netlify.app/en/archives title="📈 归档"><span>📈 归档</span></a></li></ul></nav></header><main class="main page"><article class=post-single><div id=single-content><header class=post-header><div class=breadcrumbs><a href=https://jeason.netlify.app/en/>主页</a>&nbsp;»&nbsp;<a href=https://jeason.netlify.app/en/posts/>📚 文章</a>&nbsp;»&nbsp;<a href=https://jeason.netlify.app/en/posts/tech/>👨🏻‍💻 技术</a></div><h1 class=post-title>浅识apply家族</h1><div class=post-description>介绍R语言apply家族函数的相关应用</div><div class=post-meta>创建: 2024-02-23 | 更新: 2024-02-23 | 作者:Jeason
-<span id=busuanzi_container_page_pv>&nbsp;|&nbsp;访问:&nbsp;<span id=busuanzi_value_page_pv></span></span></div></header><aside id=toc-container class="toc-container wide"><div class=toc><details open><summary accesskey=c title="(Alt + C)"><span class=details>文章目录</span></summary><div class=inner><ul><li><a href=#apply%e5%87%bd%e6%95%b0 aria-label=apply函数>apply函数</a><ul><li><a href=#%e5%87%bd%e6%95%b0%e5%ae%9a%e4%b9%89 aria-label=函数定义>函数定义</a></li><li><a href=#%e5%8f%82%e6%95%b0%e5%88%97%e8%a1%a8 aria-label=参数列表>参数列表</a></li><li><a href=#%e5%ba%94%e7%94%a8 aria-label=应用>应用</a></li></ul></li><li><a href=#lapply%e5%87%bd%e6%95%b0 aria-label=lapply函数>lapply函数</a><ul><li><a href=#%e5%87%bd%e6%95%b0%e5%ae%9a%e4%b9%89-1 aria-label=函数定义>函数定义</a></li><li><a href=#%e5%8f%82%e6%95%b0%e5%88%97%e8%a1%a8-1 aria-label=参数列表>参数列表</a></li><li><a href=#%e5%ba%94%e7%94%a8-1 aria-label=应用>应用</a></li></ul></li><li><a href=#sapply%e5%87%bd%e6%95%b0 aria-label=sapply函数>sapply函数</a><ul><li><a href=#%e5%87%bd%e6%95%b0%e5%ae%9a%e4%b9%89-2 aria-label=函数定义>函数定义</a></li><li><a href=#%e5%8f%82%e6%95%b0%e5%88%97%e8%a1%a8-2 aria-label=参数列表>参数列表</a></li><li><a href=#%e5%ba%94%e7%94%a8-2 aria-label=应用>应用</a></li></ul></li><li><a href=#vapply%e5%87%bd%e6%95%b0 aria-label=vapply函数>vapply函数</a><ul><li><a href=#%e5%87%bd%e6%95%b0%e5%ae%9a%e4%b9%89-3 aria-label=函数定义>函数定义</a></li><li><a href=#%e5%8f%82%e6%95%b0%e5%88%97%e8%a1%a8-3 aria-label=参数列表>参数列表</a></li><li><a href=#%e5%ba%94%e7%94%a8-3 aria-label=应用>应用</a></li></ul></li><li><a href=#mapply%e5%87%bd%e6%95%b0 aria-label=mapply函数>mapply函数</a><ul><li><a href=#%e5%87%bd%e6%95%b0%e5%ae%9a%e4%b9%89-4 aria-label=函数定义>函数定义</a></li><li><a href=#%e5%8f%82%e6%95%b0%e5%88%97%e8%a1%a8-4 aria-label=参数列表>参数列表</a></li><li><a href=#%e5%ba%94%e7%94%a8-4 aria-label=应用>应用</a></li></ul></li><li><a href=#tapply%e5%87%bd%e6%95%b0 aria-label=tapply函数>tapply函数</a><ul><li><a href=#%e5%87%bd%e6%95%b0%e5%ae%9a%e4%b9%89-5 aria-label=函数定义>函数定义</a></li><li><a href=#%e5%8f%82%e6%95%b0%e5%88%97%e8%a1%a8-5 aria-label=参数列表>参数列表</a></li><li><a href=#%e5%ba%94%e7%94%a8-5 aria-label=应用>应用</a></li></ul></li></ul></div></details></div></aside><script>let activeElement,elements;window.addEventListener("DOMContentLoaded",function(){checkTocPosition(),elements=document.querySelectorAll("h1[id],h2[id],h3[id],h4[id],h5[id],h6[id]"),activeElement=elements[0];const t=encodeURI(activeElement.getAttribute("id")).toLowerCase();document.querySelector(`.inner ul li a[href="#${t}"]`).classList.add("active")},!1),window.addEventListener("resize",function(){checkTocPosition()},!1),window.addEventListener("scroll",()=>{activeElement=Array.from(elements).find(e=>{if(getOffsetTop(e)-window.pageYOffset>0&&getOffsetTop(e)-window.pageYOffset<window.innerHeight/2)return e})||activeElement,elements.forEach(e=>{const t=encodeURI(e.getAttribute("id")).toLowerCase();e===activeElement?document.querySelector(`.inner ul li a[href="#${t}"]`).classList.add("active"):document.querySelector(`.inner ul li a[href="#${t}"]`).classList.remove("active")})},!1);const main=parseInt(getComputedStyle(document.body).getPropertyValue("--article-width"),10),toc=parseInt(getComputedStyle(document.body).getPropertyValue("--toc-width"),10),gap=parseInt(getComputedStyle(document.body).getPropertyValue("--gap"),10);function checkTocPosition(){const e=document.body.scrollWidth;e-main-toc*2-gap*4>0?document.getElementById("toc-container").classList.add("wide"):document.getElementById("toc-container").classList.remove("wide")}function getOffsetTop(e){if(!e.getClientRects().length)return 0;let t=e.getBoundingClientRect(),n=e.ownerDocument.defaultView;return t.top+n.pageYOffset}</script><div class=post-content><h3 id=apply函数>apply函数<a hidden class=anchor aria-hidden=true href=#apply函数>#</a></h3><p>apply函数是最常用的代替for循环的函数。apply函数可以对矩阵、数据框、数组(二维、多维)，按行或列进行循环计算，对子元素进行迭代，并把子元素以参数传递的形式给自定义的FUN函数中，并以返回计算结果。</p><h4 id=函数定义>函数定义<a hidden class=anchor aria-hidden=true href=#函数定义>#</a></h4><div class=highlight><pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-r data-lang=r><span style=display:flex><span><span style=color:#06b6ef>apply</span>(X, MARGIN, FUN, <span style=color:#815ba4>...</span>)
-</span></span></code></pre></div><h4 id=参数列表>参数列表<a hidden class=anchor aria-hidden=true href=#参数列表>#</a></h4><p><code>X</code>：矩阵、数据框、数组</p><p><code>MARGIN</code>：按行计算或按按列计算，1表示按行，2表示按列</p><p><code>FUN</code>: 自定义函数</p><p><code>…</code>: 自定义参数</p><h4 id=应用>应用<a hidden class=anchor aria-hidden=true href=#应用>#</a></h4><ol><li><p>对于矩阵行求和</p><div class=highlight><pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-r data-lang=r><span style=display:flex><span>x<span style=color:#5bc4bf>&lt;-</span><span style=color:#06b6ef>matrix</span>(<span style=color:#f99b15>1</span><span style=color:#5bc4bf>:</span><span style=color:#f99b15>12</span>,ncol<span style=color:#5bc4bf>=</span><span style=color:#f99b15>3</span>)
-</span></span><span style=display:flex><span><span style=color:#06b6ef>apply</span>(x,<span style=color:#f99b15>1</span>,sum)
-</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback><span style=display:flex><span>## [1] 15 18 21 24
-</span></span></code></pre></div></li><li><p>自定义函数的使用</p><div class=highlight><pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-r data-lang=r><span style=display:flex><span><span style=color:#776e71>#  生成data.frame  </span>
-</span></span><span style=display:flex><span>x <span style=color:#5bc4bf>&lt;-</span> <span style=color:#06b6ef>cbind</span>(x1 <span style=color:#5bc4bf>=</span> <span style=color:#f99b15>3</span>, x2 <span style=color:#5bc4bf>=</span> <span style=color:#06b6ef>c</span>(<span style=color:#f99b15>4</span><span style=color:#5bc4bf>:</span><span style=color:#f99b15>1</span>, <span style=color:#f99b15>2</span><span style=color:#5bc4bf>:</span><span style=color:#f99b15>5</span>)); x
-</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback><span style=display:flex><span>##      x1 x2
-</span></span><span style=display:flex><span>## [1,]  3  4
-</span></span><span style=display:flex><span>## [2,]  3  3
-</span></span><span style=display:flex><span>## [3,]  3  2
-</span></span><span style=display:flex><span>## [4,]  3  1
-</span></span><span style=display:flex><span>## [5,]  3  2
-</span></span><span style=display:flex><span>## [6,]  3  3
-</span></span><span style=display:flex><span>## [7,]  3  4
-</span></span><span style=display:flex><span>## [8,]  3  5
-</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-r data-lang=r><span style=display:flex><span><span style=color:#776e71># 自定义函数myFUN，第一个参数x为数据</span>
-</span></span><span style=display:flex><span><span style=color:#776e71># 第二、三个参数为自定义参数，可以通过apply的&#39;...&#39;进行传入。</span>
-</span></span><span style=display:flex><span>myFUN<span style=color:#5bc4bf>&lt;-</span> <span style=color:#815ba4>function</span>(x, c1, c2) {
-</span></span><span style=display:flex><span>   <span style=color:#06b6ef>c</span>(<span style=color:#06b6ef>sum</span>(x[c1],<span style=color:#f99b15>1</span>), <span style=color:#06b6ef>mean</span>(x[c2])) 
-</span></span><span style=display:flex><span>}
-</span></span><span style=display:flex><span><span style=color:#776e71># 把数据框按行做循环，每行分别传递给myFUN函数，设置c1,c2对应myFUN的第二、三个参数</span>
-</span></span><span style=display:flex><span><span style=color:#06b6ef>apply</span>(x,<span style=color:#f99b15>1</span>,myFUN,c1<span style=color:#5bc4bf>=</span><span style=color:#48b685>&#39;x1&#39;</span>,c2<span style=color:#5bc4bf>=</span><span style=color:#06b6ef>c</span>(<span style=color:#48b685>&#39;x1&#39;</span>,<span style=color:#48b685>&#39;x2&#39;</span>))
-</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback><span style=display:flex><span>##      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8]
-</span></span><span style=display:flex><span>## [1,]  4.0    4  4.0    4  4.0    4  4.0    4
-</span></span><span style=display:flex><span>## [2,]  3.5    3  2.5    2  2.5    3  3.5    4
-</span></span></code></pre></div></li></ol><h3 id=lapply函数>lapply函数<a hidden class=anchor aria-hidden=true href=#lapply函数>#</a></h3><p>lapply函数是一个最基础循环操作函数之一。主要操作对象是list、data.frame，并返回和X长度同样的list结构作为结果集。</p><h4 id=函数定义-1>函数定义<a hidden class=anchor aria-hidden=true href=#函数定义-1>#</a></h4><div class=highlight><pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-r data-lang=r><span style=display:flex><span><span style=color:#06b6ef>lapply</span>(X, FUN, <span style=color:#815ba4>...</span>)
-</span></span></code></pre></div><h4 id=参数列表-1>参数列表<a hidden class=anchor aria-hidden=true href=#参数列表-1>#</a></h4><p><code>X</code>：矩阵、数据框、数组
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>浅识apply家族 | Jeason&#39;s Blog</title>
+<meta name="keywords" content="R">
+<meta name="description" content="介绍R语言apply家族函数的相关应用">
+<meta name="author" content="作者:Jeason">
+<link rel="canonical" href="http://localhost:1313/en/posts/tech/apply/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.e029fa55ed0a02bb684da89d2a53a4e1ba9e26e3719fa48460be52776460b523.css" integrity="sha256-4Cn6Ve0KArtoTaidKlOk4bqeJuNxn6SEYL5Sd2RgtSM=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:1313/img/avatar.jpeg">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/img/avatar.jpeg">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/img/avatar.jpeg">
+<link rel="apple-touch-icon" href="http://localhost:1313/img/avatar.jpeg">
+<link rel="mask-icon" href="http://localhost:1313/img/avatar.jpeg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="http://localhost:1313/en/posts/tech/apply/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><script type="text/javascript"
+        async
+        src="https://cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\[\[','\]\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+});
+
+MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<style>
+code.has-jax {
+    font: inherit;
+    font-size: 100%;
+    background: inherit;
+    border: inherit;
+    color: #515151;
+}
+</style>
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = ""; 
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<meta property="og:title" content="浅识apply家族" />
+<meta property="og:description" content="介绍R语言apply家族函数的相关应用" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://localhost:1313/en/posts/tech/apply/" />
+<meta property="og:image" content="https://source.unsplash.com/random/400x200?code" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2024-02-23T19:46:13+08:00" />
+<meta property="article:modified_time" content="2024-02-23T19:46:13+08:00" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://source.unsplash.com/random/400x200?code" />
+<meta name="twitter:title" content="浅识apply家族"/>
+<meta name="twitter:description" content="介绍R语言apply家族函数的相关应用"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "📚 文章",
+      "item": "http://localhost:1313/en/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "👨🏻‍💻 技术",
+      "item": "http://localhost:1313/en/posts/tech/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "浅识apply家族",
+      "item": "http://localhost:1313/en/posts/tech/apply/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "浅识apply家族",
+  "name": "浅识apply家族",
+  "description": "介绍R语言apply家族函数的相关应用",
+  "keywords": [
+    "R"
+  ],
+  "articleBody": "apply函数 apply函数是最常用的代替for循环的函数。apply函数可以对矩阵、数据框、数组(二维、多维)，按行或列进行循环计算，对子元素进行迭代，并把子元素以参数传递的形式给自定义的FUN函数中，并以返回计算结果。\n函数定义 apply(X, MARGIN, FUN, ...) 参数列表 X：矩阵、数据框、数组\nMARGIN：按行计算或按按列计算，1表示按行，2表示按列\nFUN: 自定义函数\n…: 自定义参数\n应用 对于矩阵行求和\nx\u003c-matrix(1:12,ncol=3) apply(x,1,sum) ## [1] 15 18 21 24 自定义函数的使用\n# 生成data.frame x \u003c- cbind(x1 = 3, x2 = c(4:1, 2:5)); x ## x1 x2 ## [1,] 3 4 ## [2,] 3 3 ## [3,] 3 2 ## [4,] 3 1 ## [5,] 3 2 ## [6,] 3 3 ## [7,] 3 4 ## [8,] 3 5 # 自定义函数myFUN，第一个参数x为数据 # 第二、三个参数为自定义参数，可以通过apply的'...'进行传入。 myFUN\u003c- function(x, c1, c2) { c(sum(x[c1],1), mean(x[c2])) } # 把数据框按行做循环，每行分别传递给myFUN函数，设置c1,c2对应myFUN的第二、三个参数 apply(x,1,myFUN,c1='x1',c2=c('x1','x2')) ## [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] ## [1,] 4.0 4 4.0 4 4.0 4 4.0 4 ## [2,] 3.5 3 2.5 2 2.5 3 3.5 4 lapply函数 lapply函数是一个最基础循环操作函数之一。主要操作对象是list、data.frame，并返回和X长度同样的list结构作为结果集。\n函数定义 lapply(X, FUN, ...) 参数列表 X：矩阵、数据框、数组 FUN: 自定义函数 …: 自定义参数\n应用 对list进行操作\nx \u003c- list(a = c(1:3), b = c(4:6), d = c(10:20)) lapply(x, sum) ## $a ## [1] 6 ## ## $b ## [1] 15 ## ## $d ## [1] 165 对data.frame进行操作\nx \u003c- data.frame(x1=3, x2=c(2:1,4:5)) lapply(x, sum) ## $x1 ## [1] 12 ## ## $x2 ## [1] 12 sapply函数 sapply函数是一个简化版的lapply，sapply增加了2个参数simplify和USE.NAMES，主要就是让输出看起来更友好，返回值为向量，而不是list对象。\n函数定义 sapply(X, FUN, ..., simplify=TRUE, USE.NAMES = TRUE) 参数列表 X：矩阵、数据框、数组 FUN: 自定义函数 …: 自定义参数 simplify：是否数组化，当值是array时，输出结果按数组进行分组 USE.NAMES：如果X为字符串，TRUE设置字符串为数据名，FALSE不设置\n应用 对上面的数据框x进行操作：\nsapply(x, sum) ## x1 x2 ## 12 12 class(lapply(x, sum)) # lapply返回list，sapply返回vector ## [1] \"list\" class(sapply(x, sum)) ## [1] \"numeric\" vapply函数 vapply类似于sapply，提供了FUN.VALUE参数，用来控制返回值的行名。\n函数定义 vapply(X, FUN, FUN.VALUE, ..., USE.NAMES = TRUE) 参数列表 X：矩阵、数据框、数组 FUN: 自定义函数 FUN.VALUE：定义返回值的行名 …: 自定义参数 USE.NAMES：如果X为字符串，TRUE设置字符串为数据名，FALSE不设置\n应用 x \u003c- data.frame(cbind(x1=3, x2=c(2:1,4:5))) vapply(x,cumsum,FUN.VALUE = c('a'=0,'b'=0,'c'=0,'d'=0)) #注意FUN.VALUE的用法 ## x1 x2 ## a 3 2 ## b 6 3 ## c 9 7 ## d 12 12 mapply函数 相当于多参数版本的 sapply。第一次计算传入各组向量的第一个元素到FUN，进行结算得到结果；第二次传入各组向量的第二个元素，得到结果；第三次传入各组向量的第三个元素…以此类推。\n函数定义 mapply(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE,USE.NAMES = TRUE) 参数列表 主要使用的参数有三个 FUN: 自定义函数 FUN.VALUE：定义返回值的行名 …: 自定义参数\n应用 mapply(rep, 1:4, 4:1) #每一组参数都是对应的 ## [[1]] ## [1] 1 1 1 1 ## ## [[2]] ## [1] 2 2 2 ## ## [[3]] ## [1] 3 3 ## ## [[4]] ## [1] 4 tapply函数 tapply用于分组的循环计算，通过INDEX参数可以把数据集X进行分组，相当于group by的操作。\n函数定义 tapply(X, INDEX, FUN = NULL, ..., simplify = TRUE) 参数列表 X：向量 INDEX: 分组索引 FUN: 自定义函数 …: 接收多个数据 simplify：是否数组化，当值array时，输出结果按数组进行分组\n应用 # 对样本分组计数 tapply(warpbreaks$breaks, warpbreaks[,-1], sum) ## tension ## wool L M H ## A 401 216 221 ## B 254 259 169 ",
+  "wordCount" : "1417",
+  "inLanguage": "en",
+  "image":"https://source.unsplash.com/random/400x200?code","datePublished": "2024-02-23T19:46:13+08:00",
+  "dateModified": "2024-02-23T19:46:13+08:00",
+  "author":{
+    "@type": "Person",
+    "name": "Jeason"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "http://localhost:1313/en/posts/tech/apply/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Jeason's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "http://localhost:1313/img/avatar.jpeg"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="http://localhost:1313/en/" accesskey="h" title="Jeason&#39;s Blog (Alt + H)">
+                <img src="http://localhost:1313/img/avatar.jpeg" alt="" aria-label="logo"
+                    height="35">Jeason&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+                
+            </div>
+        </div>
+        <ul id="menu">
+            <li class="menu-item">
+                <a href="http://localhost:1313/en/search" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
+                    <span>🔍 搜索</span>
+                    
+                </a>
+            
+            </li>
+            <li class="menu-item">
+                <a href="http://localhost:1313/en/" title="🏡 主页">
+                    <span>🏡 主页</span>
+                    
+                </a>
+            
+            </li>
+            <li class="menu-item">
+                <a href="http://localhost:1313/en/posts" title="📚 文章">
+                    <span>📚 文章</span>
+                    
+                </a>
+            
+            </li>
+            <li class="menu-item">
+                <a href="http://localhost:1313/en/archives" title="📈 归档">
+                    <span>📈 归档</span>
+                    
+                </a>
+            
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main page">
+<article class="post-single">
+    <div id="single-content">
+        <header class="post-header">
+            <div class="breadcrumbs"><a href="http://localhost:1313/en/">主页</a>&nbsp;»&nbsp;<a href="http://localhost:1313/en/posts/">📚 文章</a>&nbsp;»&nbsp;<a href="http://localhost:1313/en/posts/tech/">👨🏻‍💻 技术</a></div>
+            <h1 class="post-title">
+                浅识apply家族
+            </h1>
+            <div class="post-description">
+                介绍R语言apply家族函数的相关应用
+            </div>
+            <div class="post-meta">创建: 2024-02-23 | 更新: 2024-02-23 | 作者:Jeason
+
+
+
+
+                
+                <span id="busuanzi_container_page_pv">
+                    &nbsp;|&nbsp;访问:&nbsp;<span id="busuanzi_value_page_pv"></span>
+                </span>
+
+</div>
+        </header> <aside id="toc-container" class="toc-container wide">
+    <div class="toc">
+        <details  open>
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">文章目录</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#apply%e5%87%bd%e6%95%b0" aria-label="apply函数">apply函数</a><ul>
+                        
+                <li>
+                    <a href="#%e5%87%bd%e6%95%b0%e5%ae%9a%e4%b9%89" aria-label="函数定义">函数定义</a></li>
+                <li>
+                    <a href="#%e5%8f%82%e6%95%b0%e5%88%97%e8%a1%a8" aria-label="参数列表">参数列表</a></li>
+                <li>
+                    <a href="#%e5%ba%94%e7%94%a8" aria-label="应用">应用</a></li></ul>
+                </li>
+                <li>
+                    <a href="#lapply%e5%87%bd%e6%95%b0" aria-label="lapply函数">lapply函数</a><ul>
+                        
+                <li>
+                    <a href="#%e5%87%bd%e6%95%b0%e5%ae%9a%e4%b9%89-1" aria-label="函数定义">函数定义</a></li>
+                <li>
+                    <a href="#%e5%8f%82%e6%95%b0%e5%88%97%e8%a1%a8-1" aria-label="参数列表">参数列表</a></li>
+                <li>
+                    <a href="#%e5%ba%94%e7%94%a8-1" aria-label="应用">应用</a></li></ul>
+                </li>
+                <li>
+                    <a href="#sapply%e5%87%bd%e6%95%b0" aria-label="sapply函数">sapply函数</a><ul>
+                        
+                <li>
+                    <a href="#%e5%87%bd%e6%95%b0%e5%ae%9a%e4%b9%89-2" aria-label="函数定义">函数定义</a></li>
+                <li>
+                    <a href="#%e5%8f%82%e6%95%b0%e5%88%97%e8%a1%a8-2" aria-label="参数列表">参数列表</a></li>
+                <li>
+                    <a href="#%e5%ba%94%e7%94%a8-2" aria-label="应用">应用</a></li></ul>
+                </li>
+                <li>
+                    <a href="#vapply%e5%87%bd%e6%95%b0" aria-label="vapply函数">vapply函数</a><ul>
+                        
+                <li>
+                    <a href="#%e5%87%bd%e6%95%b0%e5%ae%9a%e4%b9%89-3" aria-label="函数定义">函数定义</a></li>
+                <li>
+                    <a href="#%e5%8f%82%e6%95%b0%e5%88%97%e8%a1%a8-3" aria-label="参数列表">参数列表</a></li>
+                <li>
+                    <a href="#%e5%ba%94%e7%94%a8-3" aria-label="应用">应用</a></li></ul>
+                </li>
+                <li>
+                    <a href="#mapply%e5%87%bd%e6%95%b0" aria-label="mapply函数">mapply函数</a><ul>
+                        
+                <li>
+                    <a href="#%e5%87%bd%e6%95%b0%e5%ae%9a%e4%b9%89-4" aria-label="函数定义">函数定义</a></li>
+                <li>
+                    <a href="#%e5%8f%82%e6%95%b0%e5%88%97%e8%a1%a8-4" aria-label="参数列表">参数列表</a></li>
+                <li>
+                    <a href="#%e5%ba%94%e7%94%a8-4" aria-label="应用">应用</a></li></ul>
+                </li>
+                <li>
+                    <a href="#tapply%e5%87%bd%e6%95%b0" aria-label="tapply函数">tapply函数</a><ul>
+                        
+                <li>
+                    <a href="#%e5%87%bd%e6%95%b0%e5%ae%9a%e4%b9%89-5" aria-label="函数定义">函数定义</a></li>
+                <li>
+                    <a href="#%e5%8f%82%e6%95%b0%e5%88%97%e8%a1%a8-5" aria-label="参数列表">参数列表</a></li>
+                <li>
+                    <a href="#%e5%ba%94%e7%94%a8-5" aria-label="应用">应用</a>
+                </li>
+            </ul>
+            </li>
+            </ul>
+        </div>
+        </details>
+    </div>
+</aside>
+<script>
+    let activeElement;
+    let elements;
+    window.addEventListener('DOMContentLoaded', function (event) {
+        checkTocPosition();
+
+        elements = document.querySelectorAll('h1[id],h2[id],h3[id],h4[id],h5[id],h6[id]');
+        
+        activeElement = elements[0];
+        const id = encodeURI(activeElement.getAttribute('id')).toLowerCase();
+        document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+    }, false);
+
+    window.addEventListener('resize', function(event) {
+        checkTocPosition();
+    }, false);
+
+    window.addEventListener('scroll', () => {
+        
+        activeElement = Array.from(elements).find((element) => {
+            if ((getOffsetTop(element) - window.pageYOffset) > 0 &&
+                (getOffsetTop(element) - window.pageYOffset) < window.innerHeight/2) {
+                return element;
+            }
+        }) || activeElement
+
+        elements.forEach(element => {
+            const id = encodeURI(element.getAttribute('id')).toLowerCase();
+            if (element === activeElement){
+                document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+            } else {
+                document.querySelector(`.inner ul li a[href="#${id}"]`).classList.remove('active');
+            }
+        })
+    }, false);
+
+    const main = parseInt(getComputedStyle(document.body).getPropertyValue('--article-width'), 10);
+    const toc = parseInt(getComputedStyle(document.body).getPropertyValue('--toc-width'), 10);
+    const gap = parseInt(getComputedStyle(document.body).getPropertyValue('--gap'), 10);
+
+    function checkTocPosition() {
+        const width = document.body.scrollWidth;
+        if (width - main - (toc * 2) - (gap * 4) > 0) {
+            document.getElementById("toc-container").classList.add("wide");
+        } else {
+            document.getElementById("toc-container").classList.remove("wide");
+        }
+    }
+
+    function getOffsetTop(element) {
+        if (!element.getClientRects().length) {
+            return 0;
+        }
+        let rect = element.getBoundingClientRect();
+        let win = element.ownerDocument.defaultView;
+        return rect.top + win.pageYOffset;
+    }
+</script>
+        <div class="post-content"><h3 id="apply函数">apply函数<a hidden class="anchor" aria-hidden="true" href="#apply函数">#</a></h3>
+<p>apply函数是最常用的代替for循环的函数。apply函数可以对矩阵、数据框、数组(二维、多维)，按行或列进行循环计算，对子元素进行迭代，并把子元素以参数传递的形式给自定义的FUN函数中，并以返回计算结果。</p>
+<h4 id="函数定义">函数定义<a hidden class="anchor" aria-hidden="true" href="#函数定义">#</a></h4>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#06b6ef">apply</span>(X, MARGIN, FUN, <span style="color:#815ba4">...</span>)
+</span></span></code></pre></div><h4 id="参数列表">参数列表<a hidden class="anchor" aria-hidden="true" href="#参数列表">#</a></h4>
+<p><code>X</code>：矩阵、数据框、数组</p>
+<p><code>MARGIN</code>：按行计算或按按列计算，1表示按行，2表示按列</p>
+<p><code>FUN</code>: 自定义函数</p>
+<p><code>…</code>: 自定义参数</p>
+<h4 id="应用">应用<a hidden class="anchor" aria-hidden="true" href="#应用">#</a></h4>
+<ol>
+<li>
+<p>对于矩阵行求和</p>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>x<span style="color:#5bc4bf">&lt;-</span><span style="color:#06b6ef">matrix</span>(<span style="color:#f99b15">1</span><span style="color:#5bc4bf">:</span><span style="color:#f99b15">12</span>,ncol<span style="color:#5bc4bf">=</span><span style="color:#f99b15">3</span>)
+</span></span><span style="display:flex;"><span><span style="color:#06b6ef">apply</span>(x,<span style="color:#f99b15">1</span>,sum)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>## [1] 15 18 21 24
+</span></span></code></pre></div></li>
+<li>
+<p>自定义函数的使用</p>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#776e71">#  生成data.frame  </span>
+</span></span><span style="display:flex;"><span>x <span style="color:#5bc4bf">&lt;-</span> <span style="color:#06b6ef">cbind</span>(x1 <span style="color:#5bc4bf">=</span> <span style="color:#f99b15">3</span>, x2 <span style="color:#5bc4bf">=</span> <span style="color:#06b6ef">c</span>(<span style="color:#f99b15">4</span><span style="color:#5bc4bf">:</span><span style="color:#f99b15">1</span>, <span style="color:#f99b15">2</span><span style="color:#5bc4bf">:</span><span style="color:#f99b15">5</span>)); x
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>##      x1 x2
+</span></span><span style="display:flex;"><span>## [1,]  3  4
+</span></span><span style="display:flex;"><span>## [2,]  3  3
+</span></span><span style="display:flex;"><span>## [3,]  3  2
+</span></span><span style="display:flex;"><span>## [4,]  3  1
+</span></span><span style="display:flex;"><span>## [5,]  3  2
+</span></span><span style="display:flex;"><span>## [6,]  3  3
+</span></span><span style="display:flex;"><span>## [7,]  3  4
+</span></span><span style="display:flex;"><span>## [8,]  3  5
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#776e71"># 自定义函数myFUN，第一个参数x为数据</span>
+</span></span><span style="display:flex;"><span><span style="color:#776e71"># 第二、三个参数为自定义参数，可以通过apply的&#39;...&#39;进行传入。</span>
+</span></span><span style="display:flex;"><span>myFUN<span style="color:#5bc4bf">&lt;-</span> <span style="color:#815ba4">function</span>(x, c1, c2) {
+</span></span><span style="display:flex;"><span>   <span style="color:#06b6ef">c</span>(<span style="color:#06b6ef">sum</span>(x[c1],<span style="color:#f99b15">1</span>), <span style="color:#06b6ef">mean</span>(x[c2])) 
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#776e71"># 把数据框按行做循环，每行分别传递给myFUN函数，设置c1,c2对应myFUN的第二、三个参数</span>
+</span></span><span style="display:flex;"><span><span style="color:#06b6ef">apply</span>(x,<span style="color:#f99b15">1</span>,myFUN,c1<span style="color:#5bc4bf">=</span><span style="color:#48b685">&#39;x1&#39;</span>,c2<span style="color:#5bc4bf">=</span><span style="color:#06b6ef">c</span>(<span style="color:#48b685">&#39;x1&#39;</span>,<span style="color:#48b685">&#39;x2&#39;</span>))
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>##      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8]
+</span></span><span style="display:flex;"><span>## [1,]  4.0    4  4.0    4  4.0    4  4.0    4
+</span></span><span style="display:flex;"><span>## [2,]  3.5    3  2.5    2  2.5    3  3.5    4
+</span></span></code></pre></div></li>
+</ol>
+<h3 id="lapply函数">lapply函数<a hidden class="anchor" aria-hidden="true" href="#lapply函数">#</a></h3>
+<p>lapply函数是一个最基础循环操作函数之一。主要操作对象是list、data.frame，并返回和X长度同样的list结构作为结果集。</p>
+<h4 id="函数定义-1">函数定义<a hidden class="anchor" aria-hidden="true" href="#函数定义-1">#</a></h4>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#06b6ef">lapply</span>(X, FUN, <span style="color:#815ba4">...</span>)
+</span></span></code></pre></div><h4 id="参数列表-1">参数列表<a hidden class="anchor" aria-hidden="true" href="#参数列表-1">#</a></h4>
+<p><code>X</code>：矩阵、数据框、数组
 <code>FUN</code>: 自定义函数
-<code>…</code>: 自定义参数</p><h4 id=应用-1>应用<a hidden class=anchor aria-hidden=true href=#应用-1>#</a></h4><ol><li><p>对list进行操作</p><div class=highlight><pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-r data-lang=r><span style=display:flex><span>x <span style=color:#5bc4bf>&lt;-</span> <span style=color:#06b6ef>list</span>(a <span style=color:#5bc4bf>=</span> <span style=color:#06b6ef>c</span>(<span style=color:#f99b15>1</span><span style=color:#5bc4bf>:</span><span style=color:#f99b15>3</span>), b <span style=color:#5bc4bf>=</span> <span style=color:#06b6ef>c</span>(<span style=color:#f99b15>4</span><span style=color:#5bc4bf>:</span><span style=color:#f99b15>6</span>), d <span style=color:#5bc4bf>=</span> <span style=color:#06b6ef>c</span>(<span style=color:#f99b15>10</span><span style=color:#5bc4bf>:</span><span style=color:#f99b15>20</span>))
-</span></span><span style=display:flex><span><span style=color:#06b6ef>lapply</span>(x, sum)
-</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback><span style=display:flex><span>## $a
-</span></span><span style=display:flex><span>## [1] 6
-</span></span><span style=display:flex><span>## 
-</span></span><span style=display:flex><span>## $b
-</span></span><span style=display:flex><span>## [1] 15
-</span></span><span style=display:flex><span>## 
-</span></span><span style=display:flex><span>## $d
-</span></span><span style=display:flex><span>## [1] 165
-</span></span></code></pre></div></li><li><p>对data.frame进行操作</p><div class=highlight><pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-r data-lang=r><span style=display:flex><span>x <span style=color:#5bc4bf>&lt;-</span> <span style=color:#06b6ef>data.frame</span>(x1<span style=color:#5bc4bf>=</span><span style=color:#f99b15>3</span>, x2<span style=color:#5bc4bf>=</span><span style=color:#06b6ef>c</span>(<span style=color:#f99b15>2</span><span style=color:#5bc4bf>:</span><span style=color:#f99b15>1</span>,<span style=color:#f99b15>4</span><span style=color:#5bc4bf>:</span><span style=color:#f99b15>5</span>))
-</span></span><span style=display:flex><span><span style=color:#06b6ef>lapply</span>(x, sum)
-</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback><span style=display:flex><span>## $x1
-</span></span><span style=display:flex><span>## [1] 12
-</span></span><span style=display:flex><span>## 
-</span></span><span style=display:flex><span>## $x2
-</span></span><span style=display:flex><span>## [1] 12
-</span></span></code></pre></div></li></ol><h3 id=sapply函数>sapply函数<a hidden class=anchor aria-hidden=true href=#sapply函数>#</a></h3><p>sapply函数是一个简化版的lapply，sapply增加了2个参数simplify和USE.NAMES，主要就是让输出看起来更友好，返回值为向量，而不是list对象。</p><h4 id=函数定义-2>函数定义<a hidden class=anchor aria-hidden=true href=#函数定义-2>#</a></h4><div class=highlight><pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-r data-lang=r><span style=display:flex><span><span style=color:#06b6ef>sapply</span>(X, FUN, <span style=color:#815ba4>...</span>, simplify<span style=color:#5bc4bf>=</span><span style=color:#815ba4>TRUE</span>, USE.NAMES <span style=color:#5bc4bf>=</span> <span style=color:#815ba4>TRUE</span>)
-</span></span></code></pre></div><h4 id=参数列表-2>参数列表<a hidden class=anchor aria-hidden=true href=#参数列表-2>#</a></h4><p><code>X</code>：矩阵、数据框、数组
+<code>…</code>: 自定义参数</p>
+<h4 id="应用-1">应用<a hidden class="anchor" aria-hidden="true" href="#应用-1">#</a></h4>
+<ol>
+<li>
+<p>对list进行操作</p>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>x <span style="color:#5bc4bf">&lt;-</span> <span style="color:#06b6ef">list</span>(a <span style="color:#5bc4bf">=</span> <span style="color:#06b6ef">c</span>(<span style="color:#f99b15">1</span><span style="color:#5bc4bf">:</span><span style="color:#f99b15">3</span>), b <span style="color:#5bc4bf">=</span> <span style="color:#06b6ef">c</span>(<span style="color:#f99b15">4</span><span style="color:#5bc4bf">:</span><span style="color:#f99b15">6</span>), d <span style="color:#5bc4bf">=</span> <span style="color:#06b6ef">c</span>(<span style="color:#f99b15">10</span><span style="color:#5bc4bf">:</span><span style="color:#f99b15">20</span>))
+</span></span><span style="display:flex;"><span><span style="color:#06b6ef">lapply</span>(x, sum)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>## $a
+</span></span><span style="display:flex;"><span>## [1] 6
+</span></span><span style="display:flex;"><span>## 
+</span></span><span style="display:flex;"><span>## $b
+</span></span><span style="display:flex;"><span>## [1] 15
+</span></span><span style="display:flex;"><span>## 
+</span></span><span style="display:flex;"><span>## $d
+</span></span><span style="display:flex;"><span>## [1] 165
+</span></span></code></pre></div></li>
+<li>
+<p>对data.frame进行操作</p>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>x <span style="color:#5bc4bf">&lt;-</span> <span style="color:#06b6ef">data.frame</span>(x1<span style="color:#5bc4bf">=</span><span style="color:#f99b15">3</span>, x2<span style="color:#5bc4bf">=</span><span style="color:#06b6ef">c</span>(<span style="color:#f99b15">2</span><span style="color:#5bc4bf">:</span><span style="color:#f99b15">1</span>,<span style="color:#f99b15">4</span><span style="color:#5bc4bf">:</span><span style="color:#f99b15">5</span>))
+</span></span><span style="display:flex;"><span><span style="color:#06b6ef">lapply</span>(x, sum)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>## $x1
+</span></span><span style="display:flex;"><span>## [1] 12
+</span></span><span style="display:flex;"><span>## 
+</span></span><span style="display:flex;"><span>## $x2
+</span></span><span style="display:flex;"><span>## [1] 12
+</span></span></code></pre></div></li>
+</ol>
+<h3 id="sapply函数">sapply函数<a hidden class="anchor" aria-hidden="true" href="#sapply函数">#</a></h3>
+<p>sapply函数是一个简化版的lapply，sapply增加了2个参数simplify和USE.NAMES，主要就是让输出看起来更友好，返回值为向量，而不是list对象。</p>
+<h4 id="函数定义-2">函数定义<a hidden class="anchor" aria-hidden="true" href="#函数定义-2">#</a></h4>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#06b6ef">sapply</span>(X, FUN, <span style="color:#815ba4">...</span>, simplify<span style="color:#5bc4bf">=</span><span style="color:#815ba4">TRUE</span>, USE.NAMES <span style="color:#5bc4bf">=</span> <span style="color:#815ba4">TRUE</span>)
+</span></span></code></pre></div><h4 id="参数列表-2">参数列表<a hidden class="anchor" aria-hidden="true" href="#参数列表-2">#</a></h4>
+<p><code>X</code>：矩阵、数据框、数组
 <code>FUN</code>: 自定义函数
 <code>…</code>: 自定义参数
 <code>simplify</code>：是否数组化，当值是array时，输出结果按数组进行分组
-<code>USE.NAMES</code>：如果X为字符串，TRUE设置字符串为数据名，FALSE不设置</p><h4 id=应用-2>应用<a hidden class=anchor aria-hidden=true href=#应用-2>#</a></h4><p>对上面的数据框<code>x</code>进行操作：</p><div class=highlight><pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-r data-lang=r><span style=display:flex><span><span style=color:#06b6ef>sapply</span>(x, sum)
-</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback><span style=display:flex><span>## x1 x2 
-</span></span><span style=display:flex><span>## 12 12
-</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-r data-lang=r><span style=display:flex><span><span style=color:#06b6ef>class</span>(<span style=color:#06b6ef>lapply</span>(x, sum)) <span style=color:#776e71># lapply返回list，sapply返回vector</span>
-</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback><span style=display:flex><span>## [1] &#34;list&#34;
-</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-r data-lang=r><span style=display:flex><span><span style=color:#06b6ef>class</span>(<span style=color:#06b6ef>sapply</span>(x, sum))
-</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback><span style=display:flex><span>## [1] &#34;numeric&#34;
-</span></span></code></pre></div><h3 id=vapply函数>vapply函数<a hidden class=anchor aria-hidden=true href=#vapply函数>#</a></h3><p>vapply类似于sapply，提供了FUN.VALUE参数，用来控制返回值的行名。</p><h4 id=函数定义-3>函数定义<a hidden class=anchor aria-hidden=true href=#函数定义-3>#</a></h4><div class=highlight><pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-r data-lang=r><span style=display:flex><span><span style=color:#06b6ef>vapply</span>(X, FUN, FUN.VALUE, <span style=color:#815ba4>...</span>, USE.NAMES <span style=color:#5bc4bf>=</span> <span style=color:#815ba4>TRUE</span>)
-</span></span></code></pre></div><h4 id=参数列表-3>参数列表<a hidden class=anchor aria-hidden=true href=#参数列表-3>#</a></h4><p><code>X</code>：矩阵、数据框、数组
+<code>USE.NAMES</code>：如果X为字符串，TRUE设置字符串为数据名，FALSE不设置</p>
+<h4 id="应用-2">应用<a hidden class="anchor" aria-hidden="true" href="#应用-2">#</a></h4>
+<p>对上面的数据框<code>x</code>进行操作：</p>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#06b6ef">sapply</span>(x, sum)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>## x1 x2 
+</span></span><span style="display:flex;"><span>## 12 12
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#06b6ef">class</span>(<span style="color:#06b6ef">lapply</span>(x, sum)) <span style="color:#776e71"># lapply返回list，sapply返回vector</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>## [1] &#34;list&#34;
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#06b6ef">class</span>(<span style="color:#06b6ef">sapply</span>(x, sum))
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>## [1] &#34;numeric&#34;
+</span></span></code></pre></div><h3 id="vapply函数">vapply函数<a hidden class="anchor" aria-hidden="true" href="#vapply函数">#</a></h3>
+<p>vapply类似于sapply，提供了FUN.VALUE参数，用来控制返回值的行名。</p>
+<h4 id="函数定义-3">函数定义<a hidden class="anchor" aria-hidden="true" href="#函数定义-3">#</a></h4>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#06b6ef">vapply</span>(X, FUN, FUN.VALUE, <span style="color:#815ba4">...</span>, USE.NAMES <span style="color:#5bc4bf">=</span> <span style="color:#815ba4">TRUE</span>)
+</span></span></code></pre></div><h4 id="参数列表-3">参数列表<a hidden class="anchor" aria-hidden="true" href="#参数列表-3">#</a></h4>
+<p><code>X</code>：矩阵、数据框、数组
 <code>FUN</code>: 自定义函数
 <code>FUN.VALUE</code>：定义返回值的行名
 <code>…</code>: 自定义参数
-<code>USE.NAMES</code>：如果X为字符串，TRUE设置字符串为数据名，FALSE不设置</p><h4 id=应用-3>应用<a hidden class=anchor aria-hidden=true href=#应用-3>#</a></h4><div class=highlight><pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-r data-lang=r><span style=display:flex><span>x <span style=color:#5bc4bf>&lt;-</span> <span style=color:#06b6ef>data.frame</span>(<span style=color:#06b6ef>cbind</span>(x1<span style=color:#5bc4bf>=</span><span style=color:#f99b15>3</span>, x2<span style=color:#5bc4bf>=</span><span style=color:#06b6ef>c</span>(<span style=color:#f99b15>2</span><span style=color:#5bc4bf>:</span><span style=color:#f99b15>1</span>,<span style=color:#f99b15>4</span><span style=color:#5bc4bf>:</span><span style=color:#f99b15>5</span>)))
-</span></span><span style=display:flex><span><span style=color:#06b6ef>vapply</span>(x,cumsum,FUN.VALUE <span style=color:#5bc4bf>=</span> <span style=color:#06b6ef>c</span>(<span style=color:#48b685>&#39;a&#39;</span><span style=color:#5bc4bf>=</span><span style=color:#f99b15>0</span>,<span style=color:#48b685>&#39;b&#39;</span><span style=color:#5bc4bf>=</span><span style=color:#f99b15>0</span>,<span style=color:#48b685>&#39;c&#39;</span><span style=color:#5bc4bf>=</span><span style=color:#f99b15>0</span>,<span style=color:#48b685>&#39;d&#39;</span><span style=color:#5bc4bf>=</span><span style=color:#f99b15>0</span>)) <span style=color:#776e71>#注意FUN.VALUE的用法</span>
-</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback><span style=display:flex><span>##   x1 x2
-</span></span><span style=display:flex><span>## a  3  2
-</span></span><span style=display:flex><span>## b  6  3
-</span></span><span style=display:flex><span>## c  9  7
-</span></span><span style=display:flex><span>## d 12 12
-</span></span></code></pre></div><h3 id=mapply函数>mapply函数<a hidden class=anchor aria-hidden=true href=#mapply函数>#</a></h3><p>相当于多参数版本的 sapply。第一次计算传入各组向量的第一个元素到FUN，进行结算得到结果；第二次传入各组向量的第二个元素，得到结果；第三次传入各组向量的第三个元素…以此类推。</p><h4 id=函数定义-4>函数定义<a hidden class=anchor aria-hidden=true href=#函数定义-4>#</a></h4><div class=highlight><pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-r data-lang=r><span style=display:flex><span><span style=color:#06b6ef>mapply</span>(FUN, <span style=color:#815ba4>...</span>, MoreArgs <span style=color:#5bc4bf>=</span> <span style=color:#815ba4>NULL</span>, SIMPLIFY <span style=color:#5bc4bf>=</span> <span style=color:#815ba4>TRUE</span>,USE.NAMES <span style=color:#5bc4bf>=</span> <span style=color:#815ba4>TRUE</span>)
-</span></span></code></pre></div><h4 id=参数列表-4>参数列表<a hidden class=anchor aria-hidden=true href=#参数列表-4>#</a></h4><p>主要使用的参数有三个
+<code>USE.NAMES</code>：如果X为字符串，TRUE设置字符串为数据名，FALSE不设置</p>
+<h4 id="应用-3">应用<a hidden class="anchor" aria-hidden="true" href="#应用-3">#</a></h4>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>x <span style="color:#5bc4bf">&lt;-</span> <span style="color:#06b6ef">data.frame</span>(<span style="color:#06b6ef">cbind</span>(x1<span style="color:#5bc4bf">=</span><span style="color:#f99b15">3</span>, x2<span style="color:#5bc4bf">=</span><span style="color:#06b6ef">c</span>(<span style="color:#f99b15">2</span><span style="color:#5bc4bf">:</span><span style="color:#f99b15">1</span>,<span style="color:#f99b15">4</span><span style="color:#5bc4bf">:</span><span style="color:#f99b15">5</span>)))
+</span></span><span style="display:flex;"><span><span style="color:#06b6ef">vapply</span>(x,cumsum,FUN.VALUE <span style="color:#5bc4bf">=</span> <span style="color:#06b6ef">c</span>(<span style="color:#48b685">&#39;a&#39;</span><span style="color:#5bc4bf">=</span><span style="color:#f99b15">0</span>,<span style="color:#48b685">&#39;b&#39;</span><span style="color:#5bc4bf">=</span><span style="color:#f99b15">0</span>,<span style="color:#48b685">&#39;c&#39;</span><span style="color:#5bc4bf">=</span><span style="color:#f99b15">0</span>,<span style="color:#48b685">&#39;d&#39;</span><span style="color:#5bc4bf">=</span><span style="color:#f99b15">0</span>)) <span style="color:#776e71">#注意FUN.VALUE的用法</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>##   x1 x2
+</span></span><span style="display:flex;"><span>## a  3  2
+</span></span><span style="display:flex;"><span>## b  6  3
+</span></span><span style="display:flex;"><span>## c  9  7
+</span></span><span style="display:flex;"><span>## d 12 12
+</span></span></code></pre></div><h3 id="mapply函数">mapply函数<a hidden class="anchor" aria-hidden="true" href="#mapply函数">#</a></h3>
+<p>相当于多参数版本的 sapply。第一次计算传入各组向量的第一个元素到FUN，进行结算得到结果；第二次传入各组向量的第二个元素，得到结果；第三次传入各组向量的第三个元素…以此类推。</p>
+<h4 id="函数定义-4">函数定义<a hidden class="anchor" aria-hidden="true" href="#函数定义-4">#</a></h4>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#06b6ef">mapply</span>(FUN, <span style="color:#815ba4">...</span>, MoreArgs <span style="color:#5bc4bf">=</span> <span style="color:#815ba4">NULL</span>, SIMPLIFY <span style="color:#5bc4bf">=</span> <span style="color:#815ba4">TRUE</span>,USE.NAMES <span style="color:#5bc4bf">=</span> <span style="color:#815ba4">TRUE</span>)
+</span></span></code></pre></div><h4 id="参数列表-4">参数列表<a hidden class="anchor" aria-hidden="true" href="#参数列表-4">#</a></h4>
+<p>主要使用的参数有三个
 <code>FUN</code>: 自定义函数
 <code>FUN.VALUE</code>：定义返回值的行名
-<code>…</code>: 自定义参数</p><h4 id=应用-4>应用<a hidden class=anchor aria-hidden=true href=#应用-4>#</a></h4><div class=highlight><pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-r data-lang=r><span style=display:flex><span><span style=color:#06b6ef>mapply</span>(rep, <span style=color:#f99b15>1</span><span style=color:#5bc4bf>:</span><span style=color:#f99b15>4</span>, <span style=color:#f99b15>4</span><span style=color:#5bc4bf>:</span><span style=color:#f99b15>1</span>) <span style=color:#776e71>#每一组参数都是对应的</span>
-</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback><span style=display:flex><span>## [[1]]
-</span></span><span style=display:flex><span>## [1] 1 1 1 1
-</span></span><span style=display:flex><span>## 
-</span></span><span style=display:flex><span>## [[2]]
-</span></span><span style=display:flex><span>## [1] 2 2 2
-</span></span><span style=display:flex><span>## 
-</span></span><span style=display:flex><span>## [[3]]
-</span></span><span style=display:flex><span>## [1] 3 3
-</span></span><span style=display:flex><span>## 
-</span></span><span style=display:flex><span>## [[4]]
-</span></span><span style=display:flex><span>## [1] 4
-</span></span></code></pre></div><h3 id=tapply函数>tapply函数<a hidden class=anchor aria-hidden=true href=#tapply函数>#</a></h3><p>tapply用于分组的循环计算，通过INDEX参数可以把数据集X进行分组，相当于group by的操作。</p><h4 id=函数定义-5>函数定义<a hidden class=anchor aria-hidden=true href=#函数定义-5>#</a></h4><div class=highlight><pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-r data-lang=r><span style=display:flex><span><span style=color:#06b6ef>tapply</span>(X, INDEX, FUN <span style=color:#5bc4bf>=</span> <span style=color:#815ba4>NULL</span>, <span style=color:#815ba4>...</span>, simplify <span style=color:#5bc4bf>=</span> <span style=color:#815ba4>TRUE</span>)
-</span></span></code></pre></div><h4 id=参数列表-5>参数列表<a hidden class=anchor aria-hidden=true href=#参数列表-5>#</a></h4><p><code>X</code>：向量
+<code>…</code>: 自定义参数</p>
+<h4 id="应用-4">应用<a hidden class="anchor" aria-hidden="true" href="#应用-4">#</a></h4>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#06b6ef">mapply</span>(rep, <span style="color:#f99b15">1</span><span style="color:#5bc4bf">:</span><span style="color:#f99b15">4</span>, <span style="color:#f99b15">4</span><span style="color:#5bc4bf">:</span><span style="color:#f99b15">1</span>) <span style="color:#776e71">#每一组参数都是对应的</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>## [[1]]
+</span></span><span style="display:flex;"><span>## [1] 1 1 1 1
+</span></span><span style="display:flex;"><span>## 
+</span></span><span style="display:flex;"><span>## [[2]]
+</span></span><span style="display:flex;"><span>## [1] 2 2 2
+</span></span><span style="display:flex;"><span>## 
+</span></span><span style="display:flex;"><span>## [[3]]
+</span></span><span style="display:flex;"><span>## [1] 3 3
+</span></span><span style="display:flex;"><span>## 
+</span></span><span style="display:flex;"><span>## [[4]]
+</span></span><span style="display:flex;"><span>## [1] 4
+</span></span></code></pre></div><h3 id="tapply函数">tapply函数<a hidden class="anchor" aria-hidden="true" href="#tapply函数">#</a></h3>
+<p>tapply用于分组的循环计算，通过INDEX参数可以把数据集X进行分组，相当于group by的操作。</p>
+<h4 id="函数定义-5">函数定义<a hidden class="anchor" aria-hidden="true" href="#函数定义-5">#</a></h4>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#06b6ef">tapply</span>(X, INDEX, FUN <span style="color:#5bc4bf">=</span> <span style="color:#815ba4">NULL</span>, <span style="color:#815ba4">...</span>, simplify <span style="color:#5bc4bf">=</span> <span style="color:#815ba4">TRUE</span>)
+</span></span></code></pre></div><h4 id="参数列表-5">参数列表<a hidden class="anchor" aria-hidden="true" href="#参数列表-5">#</a></h4>
+<p><code>X</code>：向量
 <code>INDEX</code>: 分组索引
 <code>FUN</code>: 自定义函数
 <code>…</code>: 接收多个数据
-<code>simplify</code>：是否数组化，当值array时，输出结果按数组进行分组</p><h4 id=应用-5>应用<a hidden class=anchor aria-hidden=true href=#应用-5>#</a></h4><div class=highlight><pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-r data-lang=r><span style=display:flex><span><span style=color:#776e71># 对样本分组计数</span>
-</span></span><span style=display:flex><span><span style=color:#06b6ef>tapply</span>(warpbreaks<span style=color:#5bc4bf>$</span>breaks, warpbreaks[,<span style=color:#f99b15>-1</span>], sum)
-</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback><span style=display:flex><span>##     tension
-</span></span><span style=display:flex><span>## wool   L   M   H
-</span></span><span style=display:flex><span>##    A 401 216 221
-</span></span><span style=display:flex><span>##    B 254 259 169
-</span></span></code></pre></div></div><footer class=post-footer><nav class=paginav><a class=next href=https://jeason.netlify.app/en/posts/read/bioinfo_resource/><span class=title>下一页 »</span><br><span>生物信息学学习资源</span></a></nav></footer></div><div><div class=pagination__title><span class=pagination__title-h style=font-size:20px>💬评论</span><hr></div><div id=tcomment></div><script src=https://cdn.staticfile.org/twikoo/1.6.15/twikoo.all.min.js></script><script>twikoo.init({envId:"https://twikoo.lvbibir.cn/",el:"#tcomment",lang:"zh-CN",path:window.TWIKOO_MAGIC_PATH||window.location.pathname})</script></div></article></main><footer class=footer><a href=https://gohugo.io/ target=_blank><img style=display:unset src=https://image.lvbibir.cn/blog/frame-hugo-blue.svg>
-</a><a href=https://github.com/adityatelange/hugo-PaperMod target=_blank><img style=display:unset src=https://image.lvbibir.cn/blog/theme-papermod-lightgrey.svg></a><br><span id=runtime_span></span>
-<script type=text/javascript>function show_runtime(){window.setTimeout("show_runtime()",1e3),X=new Date("7/13/2021 1:00:00"),Y=new Date,T=Y.getTime()-X.getTime(),M=24*60*60*1e3,a=T/M,A=Math.floor(a),b=(a-A)*24,B=Math.floor(b),c=(b-B)*60,C=Math.floor((b-B)*60),D=Math.floor((c-C)*60),runtime_span.innerHTML="网站已运行"+A+"天"+B+"小时"}show_runtime()</script>|
-<script async src=//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js></script><span id=busuanzi_container>总访客数: <span id=busuanzi_value_site_uv></span>
-|
-总访问量: <span id=busuanzi_value_site_pv></span></span><br><span>Copyright
-&copy;
-2021-2024
-<a href=https://jeason.netlify.app/en/ style="border-bottom:1px solid">Jeason's Blog</a></span></footer><a href=#top aria-label="go to top" title="Go to Top (Alt + G)" class=top-link id=top-link accesskey=g><span class=topInner><svg class="topSvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentcolor"><path d="M12 6H0l6-6z"/></svg>
-<span id=read_progress></span>
-</span></a><script>document.addEventListener("scroll",function(){const t=document.getElementById("read_progress"),n=document.documentElement.scrollHeight,s=document.documentElement.clientHeight,o=document.documentElement.scrollTop||document.body.scrollTop;t.innerText=((o/(n-s)).toFixed(2)*100).toFixed(0)})</script><script>let menu=document.getElementById("menu");menu&&(menu.scrollLeft=localStorage.getItem("menu-scroll-position"),menu.onscroll=function(){localStorage.setItem("menu-scroll-position",menu.scrollLeft)}),document.querySelectorAll('a[href^="#"]').forEach(e=>{e.addEventListener("click",function(e){e.preventDefault();var t=this.getAttribute("href").substr(1);window.matchMedia("(prefers-reduced-motion: reduce)").matches?document.querySelector(`[id='${decodeURIComponent(t)}']`).scrollIntoView():document.querySelector(`[id='${decodeURIComponent(t)}']`).scrollIntoView({behavior:"smooth"}),t==="top"?history.replaceState(null,null," "):history.pushState(null,null,`#${t}`)})})</script><script>let mybutton=document.getElementById("top-link");window.onscroll=function(){document.body.scrollTop>400||document.documentElement.scrollTop>400?(mybutton.style.visibility="visible",mybutton.style.opacity="1"):(mybutton.style.visibility="hidden",mybutton.style.opacity="0")}</script><script>document.getElementById("theme-toggle").addEventListener("click",()=>{document.body.className.includes("dark")?(document.body.classList.remove("dark"),localStorage.setItem("pref-theme","light")):(document.body.classList.add("dark"),localStorage.setItem("pref-theme","dark"))})</script><script>document.querySelectorAll("pre > code").forEach(e=>{const s=e.parentNode.parentNode,t=document.createElement("button");t.classList.add("copy-code"),t.innerText="📄复制";function c(){t.innerText="👌🏻已复制!",setTimeout(()=>{t.innerText="📄复制"},2e3)}t.addEventListener("click",t=>{const n=document.createRange();n.selectNodeContents(e);const s=window.getSelection();s.removeAllRanges(),s.addRange(n);try{document.execCommand("copy"),c()}catch{}s.removeRange(n)});let l=e.className.replaceAll("language-",""),n=document.createElement("div"),i=document.createElement("div"),a=document.createElement("div"),r=document.createElement("div"),o=document.createElement("div");o.innerText=l,n.setAttribute("class","mac-tool"),i.setAttribute("class","mac bb1"),a.setAttribute("class","mac bb2"),r.setAttribute("class","mac bb3"),o.setAttribute("class","language-type"),n.appendChild(i),n.appendChild(a),n.appendChild(r),n.appendChild(o),s.classList.contains("highlight")?(s.appendChild(t),s.appendChild(n)):s.parentNode.firstChild===s||(e.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName==="TABLE"?(e.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(t),s.appendChild(n)):(e.parentNode.appendChild(t),s.appendChild(n)))})</script></body></html>
+<code>simplify</code>：是否数组化，当值array时，输出结果按数组进行分组</p>
+<h4 id="应用-5">应用<a hidden class="anchor" aria-hidden="true" href="#应用-5">#</a></h4>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#776e71"># 对样本分组计数</span>
+</span></span><span style="display:flex;"><span><span style="color:#06b6ef">tapply</span>(warpbreaks<span style="color:#5bc4bf">$</span>breaks, warpbreaks[,<span style="color:#f99b15">-1</span>], sum)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>##     tension
+</span></span><span style="display:flex;"><span>## wool   L   M   H
+</span></span><span style="display:flex;"><span>##    A 401 216 221
+</span></span><span style="display:flex;"><span>##    B 254 259 169
+</span></span></code></pre></div>
+
+        </div>
+
+        
+
+        <footer class="post-footer">
+            
+<nav class="paginav">
+  <a class="prev" href="http://localhost:1313/en/posts/tech/c_index/">
+    <span class="title">« 上一页</span>
+    <br>
+    <span>C-index计算的相关问题</span>
+  </a>
+  <a class="next" href="http://localhost:1313/en/posts/read/bioinfo_resource/">
+    <span class="title">下一页 »</span>
+    <br>
+    <span>生物信息学学习资源</span>
+  </a>
+</nav>
+
+        </footer>
+    </div>
+
+
+
+<div>
+    <div class="pagination__title">
+        <span class="pagination__title-h" style="font-size: 20px;">💬评论</span>
+        <hr />
+    </div>
+
+    <div id="tcomment"></div>
+
+    <script src="https://cdn.staticfile.org/twikoo/1.6.15/twikoo.all.min.js">
+    </script>
+    
+
+    
+
+    <script>
+        twikoo.init({
+            envId: "https://twikoo.lvbibir.cn/", 
+            el: "#tcomment",
+            lang: 'zh-CN',
+            
+            path: window.TWIKOO_MAGIC_PATH||window.location.pathname,
+            
+            
+            
+            
+            
+            
+            
+        });
+    </script>
+
+</div>
+</article>
+</main>
+
+
+<footer class="footer">
+
+    <a href="https://gohugo.io/" target="_blank">
+        
+        <img style="display: unset;" src="https://image.lvbibir.cn/blog/frame-hugo-blue.svg">
+    </a>
+    <a href="https://github.com/adityatelange/hugo-PaperMod" target="_blank">
+        
+        <img style="display: unset;" src="https://image.lvbibir.cn/blog/theme-papermod-lightgrey.svg">
+    </a>
+
+    <br>
+
+    <span id="runtime_span"></span>
+    <script
+        type="text/javascript">function show_runtime() { window.setTimeout("show_runtime()", 1000); X = new Date("7/13/2021 1:00:00"); Y = new Date(); T = (Y.getTime() - X.getTime()); M = 24 * 60 * 60 * 1000; a = T / M; A = Math.floor(a); b = (a - A) * 24; B = Math.floor(b); c = (b - B) * 60; C = Math.floor((b - B) * 60); D = Math.floor((c - C) * 60); runtime_span.innerHTML = "网站已运行" + A + "天" + B + "小时"} show_runtime();</script>
+    |
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span id="busuanzi_container">
+        
+        总访客数:  <span id="busuanzi_value_site_uv"></span>
+        |
+        总访问量:  <span id="busuanzi_value_site_pv"></span>
+    </span>
+
+    <br>
+    <span>
+        Copyright
+        &copy;
+        2021-2024
+        <a href="http://localhost:1313/en/" style="border-bottom:1px solid">Jeason&#39;s Blog</a>
+    </span>
+
+    
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <span class="topInner">
+        <svg class="topSvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+            <path d="M12 6H0l6-6z" />
+        </svg>
+        <span id="read_progress"></span>
+    </span>
+</a>
+
+<script>
+    document.addEventListener('scroll', function (e) {
+        const readProgress = document.getElementById("read_progress");
+        const scrollHeight = document.documentElement.scrollHeight;
+        const clientHeight = document.documentElement.clientHeight;
+        const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        
+        readProgress.innerText = ((scrollTop / (scrollHeight - clientHeight)).toFixed(2) * 100).toFixed(0);
+    })
+</script>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    let mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 400 || document.documentElement.scrollTop > 400) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+
+
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerText = '📄复制';
+
+        function copyingDone() {
+            copybutton.innerText = '👌🏻已复制!';
+            setTimeout(() => {
+                copybutton.innerText = '📄复制';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) {
+            }
+            ;
+            selection.removeRange(range);
+        });
+
+        let language = codeblock.className.replaceAll("language-", "")
+        let macTool = document.createElement("div")
+        let macTool1 = document.createElement("div")
+        let macTool2 = document.createElement("div")
+        let macTool3 = document.createElement("div")
+        let languageType = document.createElement("div")
+        languageType.innerText = language
+        macTool.setAttribute('class', 'mac-tool')
+        macTool1.setAttribute('class', 'mac bb1')
+        macTool2.setAttribute('class', 'mac bb2')
+        macTool3.setAttribute('class', 'mac bb3')
+        languageType.setAttribute('class', 'language-type')
+        macTool.appendChild(macTool1)
+        macTool.appendChild(macTool2)
+        macTool.appendChild(macTool3)
+        macTool.appendChild(languageType)
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+            container.appendChild(macTool)
+        } else if (container.parentNode.firstChild === container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName === "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+            container.appendChild(macTool)
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+            container.appendChild(macTool)
+        }
+    });
+</script>
+
+</body>
+
+</html>

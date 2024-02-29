@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>StatQuest on Jeason&#39;s Blog</title>
+    <link>http://localhost:1313/en/tags/statquest/</link>
+    <description>Recent content in StatQuest on Jeason&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Wed, 28 Feb 2024 21:14:44 +0800</lastBuildDate>
+    <atom:link href="http://localhost:1313/en/tags/statquest/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>PCA分析原理</title>
+      <link>http://localhost:1313/en/posts/tech/pca/</link>
+      <pubDate>Sat, 27 Nov 2021 21:14:44 +0800</pubDate>
+      <guid>http://localhost:1313/en/posts/tech/pca/</guid>
+      <description>本文介绍了PCA分析的原理和基本思想，以及在R语言中的实现过程</description>
+    </item>
+  </channel>
+</rss>

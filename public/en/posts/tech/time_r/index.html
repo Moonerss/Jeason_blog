@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>计算R代码运行的时间 | Jeason&#39;s Blog</title>
+<meta name="keywords" content="R, benchmark">
+<meta name="description" content="这里主要介绍了在R语言中如何实现计算运行时间的问题，以及不同方法的使用示例">
+<meta name="author" content="作者:Jeason">
+<link rel="canonical" href="http://localhost:1313/en/posts/tech/time_r/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.e029fa55ed0a02bb684da89d2a53a4e1ba9e26e3719fa48460be52776460b523.css" integrity="sha256-4Cn6Ve0KArtoTaidKlOk4bqeJuNxn6SEYL5Sd2RgtSM=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:1313/img/avatar.jpeg">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/img/avatar.jpeg">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/img/avatar.jpeg">
+<link rel="apple-touch-icon" href="http://localhost:1313/img/avatar.jpeg">
+<link rel="mask-icon" href="http://localhost:1313/img/avatar.jpeg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="http://localhost:1313/en/posts/tech/time_r/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><script type="text/javascript"
+        async
+        src="https://cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\[\[','\]\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+});
+
+MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<style>
+code.has-jax {
+    font: inherit;
+    font-size: 100%;
+    background: inherit;
+    border: inherit;
+    color: #515151;
+}
+</style>
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = ""; 
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<meta property="og:title" content="计算R代码运行的时间" />
+<meta property="og:description" content="这里主要介绍了在R语言中如何实现计算运行时间的问题，以及不同方法的使用示例" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://localhost:1313/en/posts/tech/time_r/" />
+<meta property="og:image" content="https://source.unsplash.com/random/400x200?code" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-10-04T20:07:03+08:00" />
+<meta property="article:modified_time" content="2024-02-28T20:07:03+08:00" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://source.unsplash.com/random/400x200?code" />
+<meta name="twitter:title" content="计算R代码运行的时间"/>
+<meta name="twitter:description" content="这里主要介绍了在R语言中如何实现计算运行时间的问题，以及不同方法的使用示例"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "📚 文章",
+      "item": "http://localhost:1313/en/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "👨🏻‍💻 技术",
+      "item": "http://localhost:1313/en/posts/tech/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "计算R代码运行的时间",
+      "item": "http://localhost:1313/en/posts/tech/time_r/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "计算R代码运行的时间",
+  "name": "计算R代码运行的时间",
+  "description": "这里主要介绍了在R语言中如何实现计算运行时间的问题，以及不同方法的使用示例",
+  "keywords": [
+    "R", "benchmark"
+  ],
+  "articleBody": "使用Sys.time 可以根据程序运行起始和终止的时间差计算运行时间\nsleep_for_a_minute \u003c- function() { Sys.sleep(10) } start_time \u003c- Sys.time() sleep_for_a_minute() end_time \u003c- Sys.time() end_time - start_time ## Time difference of 10.15231 secs 使用tictoc tictoc包中的tic和toc函数和Sys.time函数的使用方法是类似的。但是tictoc提供了更加方便的使用形式，便于操作。\n可以对单个代码块的运行时间进行测试 library(tictoc) tic(\"sleeping\") print(\"falling asleep...\") sleep_for_a_minute() print(\"...waking up\") toc() ## [1] \"falling asleep...\" ## [1] \"...waking up\" ## sleeping: 10.19 sec elapsed 也可以同时对多段代码进行测试 tic(\"total\") tic(\"data generation\") X \u003c- matrix(rnorm(50000*1000), 50000, 1000) b \u003c- sample(1:1000, 1000) y \u003c- runif(1) + X %*% b + rnorm(50000) toc() tic(\"model fitting\") model \u003c- lm(y ~ X) toc() toc() ## data generation: 3.83 sec elapsed ## model fitting: 46.69 sec elapsed ## total: 50.52 sec elapsed 使用system.time 使用system.time函数直接包裹运行代码测试运行时间，简单快捷\nsystem.time({ sleep_for_a_minute() }) ## user system elapsed ## 0.00 0.00 10.14 其中的elapsed表示运行代码真正花费的时间\n使用rbenchmark rbenchmark是基于system.time的封装，提供了高效的用法进行专业的代码测试与比较\nlibrary(rbenchmark) benchmark(\"lm\" = { X \u003c- matrix(rnorm(1000), 100, 10) y \u003c- X %*% sample(1:10, 10) + rnorm(100) b \u003c- lm(y ~ X + 0)$coef }, \"pseudoinverse\" = { X \u003c- matrix(rnorm(1000), 100, 10) y \u003c- X %*% sample(1:10, 10) + rnorm(100) b \u003c- solve(t(X) %*% X) %*% t(X) %*% y }, \"linear system\" = { X \u003c- matrix(rnorm(1000), 100, 10) y \u003c- X %*% sample(1:10, 10) + rnorm(100) b \u003c- solve(t(X) %*% X, t(X) %*% y) }, replications = 1000, columns = c(\"test\", \"replications\", \"elapsed\", \"relative\", \"user.self\", \"sys.self\")) ## test replications elapsed relative user.self sys.self ## 3 linear system 1000 0.14 1.000 0.14 0 ## 1 lm 1000 1.17 8.357 1.18 0 ## 2 pseudoinverse 1000 0.19 1.357 0.19 0 结果中的elapsed、user.self、sys.self与system.time函数结果中表示的意义相同，relative表示函数运行的时间利用率\n使用microbenchmark microbenchmark和rbenchmark一样，可以用来比较多个代码之间的运行速率，而microbenchmark提供了更加人性化的绘图功能可以直观的比较运行时间的差异。\nlibrary(microbenchmark) set.seed(2017) n \u003c- 10000 p \u003c- 100 X \u003c- matrix(rnorm(n*p), n, p) y \u003c- X %*% rnorm(p) + rnorm(100) check_for_equal_coefs \u003c- function(values) { tol \u003c- 1e-12 max_error \u003c- max(c(abs(values[[1]] - values[[2]]), abs(values[[2]] - values[[3]]), abs(values[[1]] - values[[3]]))) max_error \u003c tol } mbm \u003c- microbenchmark(\"lm\" = { b \u003c- lm(y ~ X + 0)$coef }, \"pseudoinverse\" = { b \u003c- solve(t(X) %*% X) %*% t(X) %*% y }, \"linear system\" = { b \u003c- solve(t(X) %*% X, t(X) %*% y) }, check = check_for_equal_coefs) mbm ## Unit: milliseconds ## expr min lq mean median uq max neval cld ## lm 101.7592 114.4618 127.4006 122.7064 129.7980 430.7439 100 b ## pseudoinverse 173.2464 189.6997 201.1508 195.0444 207.6843 269.1587 100 c ## linear system 97.0324 106.8963 113.9581 112.2040 117.1509 193.9128 100 a library(ggplot2) autoplot(mbm) ",
+  "wordCount" : "800",
+  "inLanguage": "en",
+  "image":"https://source.unsplash.com/random/400x200?code","datePublished": "2021-10-04T20:07:03+08:00",
+  "dateModified": "2024-02-28T20:07:03+08:00",
+  "author":{
+    "@type": "Person",
+    "name": "Jeason"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "http://localhost:1313/en/posts/tech/time_r/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Jeason's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "http://localhost:1313/img/avatar.jpeg"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="http://localhost:1313/en/" accesskey="h" title="Jeason&#39;s Blog (Alt + H)">
+                <img src="http://localhost:1313/img/avatar.jpeg" alt="" aria-label="logo"
+                    height="35">Jeason&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+                
+            </div>
+        </div>
+        <ul id="menu">
+            <li class="menu-item">
+                <a href="http://localhost:1313/en/search" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
+                    <span>🔍 搜索</span>
+                    
+                </a>
+            
+            </li>
+            <li class="menu-item">
+                <a href="http://localhost:1313/en/" title="🏡 主页">
+                    <span>🏡 主页</span>
+                    
+                </a>
+            
+            </li>
+            <li class="menu-item">
+                <a href="http://localhost:1313/en/posts" title="📚 文章">
+                    <span>📚 文章</span>
+                    
+                </a>
+            
+            </li>
+            <li class="menu-item">
+                <a href="http://localhost:1313/en/archives" title="📈 归档">
+                    <span>📈 归档</span>
+                    
+                </a>
+            
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main page">
+<article class="post-single">
+    <div id="single-content">
+        <header class="post-header">
+            <div class="breadcrumbs"><a href="http://localhost:1313/en/">主页</a>&nbsp;»&nbsp;<a href="http://localhost:1313/en/posts/">📚 文章</a>&nbsp;»&nbsp;<a href="http://localhost:1313/en/posts/tech/">👨🏻‍💻 技术</a></div>
+            <h1 class="post-title">
+                计算R代码运行的时间
+            </h1>
+            <div class="post-description">
+                这里主要介绍了在R语言中如何实现计算运行时间的问题，以及不同方法的使用示例
+            </div>
+            <div class="post-meta">创建: 2021-10-04 | 更新: 2024-02-28 | 作者:Jeason
+
+
+
+
+                
+                <span id="busuanzi_container_page_pv">
+                    &nbsp;|&nbsp;访问:&nbsp;<span id="busuanzi_value_page_pv"></span>
+                </span>
+
+</div>
+        </header> <aside id="toc-container" class="toc-container wide">
+    <div class="toc">
+        <details  open>
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">文章目录</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#%e4%bd%bf%e7%94%a8systime" aria-label="使用Sys.time">使用<code>Sys.time</code></a></li>
+                <li>
+                    <a href="#%e4%bd%bf%e7%94%a8tictoc" aria-label="使用tictoc">使用<code>tictoc</code></a></li>
+                <li>
+                    <a href="#%e4%bd%bf%e7%94%a8systemtime" aria-label="使用system.time">使用<code>system.time</code></a></li>
+                <li>
+                    <a href="#%e4%bd%bf%e7%94%a8rbenchmark" aria-label="使用rbenchmark">使用<code>rbenchmark</code></a></li>
+                <li>
+                    <a href="#%e4%bd%bf%e7%94%a8microbenchmark" aria-label="使用microbenchmark">使用<code>microbenchmark</code></a>
+                </li>
+            </ul>
+        </div>
+        </details>
+    </div>
+</aside>
+<script>
+    let activeElement;
+    let elements;
+    window.addEventListener('DOMContentLoaded', function (event) {
+        checkTocPosition();
+
+        elements = document.querySelectorAll('h1[id],h2[id],h3[id],h4[id],h5[id],h6[id]');
+        
+        activeElement = elements[0];
+        const id = encodeURI(activeElement.getAttribute('id')).toLowerCase();
+        document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+    }, false);
+
+    window.addEventListener('resize', function(event) {
+        checkTocPosition();
+    }, false);
+
+    window.addEventListener('scroll', () => {
+        
+        activeElement = Array.from(elements).find((element) => {
+            if ((getOffsetTop(element) - window.pageYOffset) > 0 &&
+                (getOffsetTop(element) - window.pageYOffset) < window.innerHeight/2) {
+                return element;
+            }
+        }) || activeElement
+
+        elements.forEach(element => {
+            const id = encodeURI(element.getAttribute('id')).toLowerCase();
+            if (element === activeElement){
+                document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+            } else {
+                document.querySelector(`.inner ul li a[href="#${id}"]`).classList.remove('active');
+            }
+        })
+    }, false);
+
+    const main = parseInt(getComputedStyle(document.body).getPropertyValue('--article-width'), 10);
+    const toc = parseInt(getComputedStyle(document.body).getPropertyValue('--toc-width'), 10);
+    const gap = parseInt(getComputedStyle(document.body).getPropertyValue('--gap'), 10);
+
+    function checkTocPosition() {
+        const width = document.body.scrollWidth;
+        if (width - main - (toc * 2) - (gap * 4) > 0) {
+            document.getElementById("toc-container").classList.add("wide");
+        } else {
+            document.getElementById("toc-container").classList.remove("wide");
+        }
+    }
+
+    function getOffsetTop(element) {
+        if (!element.getClientRects().length) {
+            return 0;
+        }
+        let rect = element.getBoundingClientRect();
+        let win = element.ownerDocument.defaultView;
+        return rect.top + win.pageYOffset;
+    }
+</script>
+        <div class="post-content"><h2 id="使用systime">使用<code>Sys.time</code><a hidden class="anchor" aria-hidden="true" href="#使用systime">#</a></h2>
+<p>可以根据程序运行起始和终止的时间差计算运行时间</p>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>sleep_for_a_minute <span style="color:#5bc4bf">&lt;-</span> <span style="color:#815ba4">function</span>() { <span style="color:#06b6ef">Sys.sleep</span>(<span style="color:#f99b15">10</span>) }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>start_time <span style="color:#5bc4bf">&lt;-</span> <span style="color:#06b6ef">Sys.time</span>()
+</span></span><span style="display:flex;"><span><span style="color:#06b6ef">sleep_for_a_minute</span>()
+</span></span><span style="display:flex;"><span>end_time <span style="color:#5bc4bf">&lt;-</span> <span style="color:#06b6ef">Sys.time</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>end_time <span style="color:#5bc4bf">-</span> start_time
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#776e71">## Time difference of 10.15231 secs</span>
+</span></span></code></pre></div><h2 id="使用tictoc">使用<code>tictoc</code><a hidden class="anchor" aria-hidden="true" href="#使用tictoc">#</a></h2>
+<p><code>tictoc</code>包中的<code>tic</code>和<code>toc</code>函数和<code>Sys.time</code>函数的使用方法是类似的。但是<code>tictoc</code>提供了更加方便的使用形式，便于操作。</p>
+<ul>
+<li>可以对单个代码块的运行时间进行测试</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#06b6ef">library</span>(tictoc)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#06b6ef">tic</span>(<span style="color:#48b685">&#34;sleeping&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#06b6ef">print</span>(<span style="color:#48b685">&#34;falling asleep...&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#06b6ef">sleep_for_a_minute</span>()
+</span></span><span style="display:flex;"><span><span style="color:#06b6ef">print</span>(<span style="color:#48b685">&#34;...waking up&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#06b6ef">toc</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#776e71">## [1] &#34;falling asleep...&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#776e71">## [1] &#34;...waking up&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#776e71">## sleeping: 10.19 sec elapsed</span>
+</span></span></code></pre></div><ul>
+<li>也可以同时对多段代码进行测试</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#06b6ef">tic</span>(<span style="color:#48b685">&#34;total&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#06b6ef">tic</span>(<span style="color:#48b685">&#34;data generation&#34;</span>)
+</span></span><span style="display:flex;"><span>X <span style="color:#5bc4bf">&lt;-</span> <span style="color:#06b6ef">matrix</span>(<span style="color:#06b6ef">rnorm</span>(<span style="color:#f99b15">50000</span><span style="color:#5bc4bf">*</span><span style="color:#f99b15">1000</span>), <span style="color:#f99b15">50000</span>, <span style="color:#f99b15">1000</span>)
+</span></span><span style="display:flex;"><span>b <span style="color:#5bc4bf">&lt;-</span> <span style="color:#06b6ef">sample</span>(<span style="color:#f99b15">1</span><span style="color:#5bc4bf">:</span><span style="color:#f99b15">1000</span>, <span style="color:#f99b15">1000</span>)
+</span></span><span style="display:flex;"><span>y <span style="color:#5bc4bf">&lt;-</span> <span style="color:#06b6ef">runif</span>(<span style="color:#f99b15">1</span>) <span style="color:#5bc4bf">+</span> X <span style="color:#5bc4bf">%*%</span> b <span style="color:#5bc4bf">+</span> <span style="color:#06b6ef">rnorm</span>(<span style="color:#f99b15">50000</span>)
+</span></span><span style="display:flex;"><span><span style="color:#06b6ef">toc</span>()
+</span></span><span style="display:flex;"><span><span style="color:#06b6ef">tic</span>(<span style="color:#48b685">&#34;model fitting&#34;</span>)
+</span></span><span style="display:flex;"><span>model <span style="color:#5bc4bf">&lt;-</span> <span style="color:#06b6ef">lm</span>(y <span style="color:#5bc4bf">~</span> X)
+</span></span><span style="display:flex;"><span><span style="color:#06b6ef">toc</span>()
+</span></span><span style="display:flex;"><span><span style="color:#06b6ef">toc</span>()
+</span></span><span style="display:flex;"><span><span style="color:#776e71">## data generation: 3.83 sec elapsed</span>
+</span></span><span style="display:flex;"><span><span style="color:#776e71">## model fitting: 46.69 sec elapsed</span>
+</span></span><span style="display:flex;"><span><span style="color:#776e71">## total: 50.52 sec elapsed</span>
+</span></span></code></pre></div><h2 id="使用systemtime">使用<code>system.time</code><a hidden class="anchor" aria-hidden="true" href="#使用systemtime">#</a></h2>
+<p>使用<code>system.time</code>函数直接包裹运行代码测试运行时间，简单快捷</p>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#06b6ef">system.time</span>({ <span style="color:#06b6ef">sleep_for_a_minute</span>() })
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#776e71">##    user  system elapsed </span>
+</span></span><span style="display:flex;"><span><span style="color:#776e71">##    0.00    0.00   10.14</span>
+</span></span></code></pre></div><p>其中的<code>elapsed</code>表示运行代码真正花费的时间</p>
+<h2 id="使用rbenchmark">使用<code>rbenchmark</code><a hidden class="anchor" aria-hidden="true" href="#使用rbenchmark">#</a></h2>
+<p><code>rbenchmark</code>是基于<code>system.time</code>的封装，提供了高效的用法进行专业的代码测试与比较</p>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#06b6ef">library</span>(rbenchmark)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#06b6ef">benchmark</span>(<span style="color:#48b685">&#34;lm&#34;</span> <span style="color:#5bc4bf">=</span> {
+</span></span><span style="display:flex;"><span>            X <span style="color:#5bc4bf">&lt;-</span> <span style="color:#06b6ef">matrix</span>(<span style="color:#06b6ef">rnorm</span>(<span style="color:#f99b15">1000</span>), <span style="color:#f99b15">100</span>, <span style="color:#f99b15">10</span>)
+</span></span><span style="display:flex;"><span>            y <span style="color:#5bc4bf">&lt;-</span> X <span style="color:#5bc4bf">%*%</span> <span style="color:#06b6ef">sample</span>(<span style="color:#f99b15">1</span><span style="color:#5bc4bf">:</span><span style="color:#f99b15">10</span>, <span style="color:#f99b15">10</span>) <span style="color:#5bc4bf">+</span> <span style="color:#06b6ef">rnorm</span>(<span style="color:#f99b15">100</span>)
+</span></span><span style="display:flex;"><span>            b <span style="color:#5bc4bf">&lt;-</span> <span style="color:#06b6ef">lm</span>(y <span style="color:#5bc4bf">~</span> X <span style="color:#5bc4bf">+</span> <span style="color:#f99b15">0</span>)<span style="color:#5bc4bf">$</span>coef
+</span></span><span style="display:flex;"><span>          },
+</span></span><span style="display:flex;"><span>          <span style="color:#48b685">&#34;pseudoinverse&#34;</span> <span style="color:#5bc4bf">=</span> {
+</span></span><span style="display:flex;"><span>            X <span style="color:#5bc4bf">&lt;-</span> <span style="color:#06b6ef">matrix</span>(<span style="color:#06b6ef">rnorm</span>(<span style="color:#f99b15">1000</span>), <span style="color:#f99b15">100</span>, <span style="color:#f99b15">10</span>)
+</span></span><span style="display:flex;"><span>            y <span style="color:#5bc4bf">&lt;-</span> X <span style="color:#5bc4bf">%*%</span> <span style="color:#06b6ef">sample</span>(<span style="color:#f99b15">1</span><span style="color:#5bc4bf">:</span><span style="color:#f99b15">10</span>, <span style="color:#f99b15">10</span>) <span style="color:#5bc4bf">+</span> <span style="color:#06b6ef">rnorm</span>(<span style="color:#f99b15">100</span>)
+</span></span><span style="display:flex;"><span>            b <span style="color:#5bc4bf">&lt;-</span> <span style="color:#06b6ef">solve</span>(<span style="color:#06b6ef">t</span>(X) <span style="color:#5bc4bf">%*%</span> X) <span style="color:#5bc4bf">%*%</span> <span style="color:#06b6ef">t</span>(X) <span style="color:#5bc4bf">%*%</span> y
+</span></span><span style="display:flex;"><span>          },
+</span></span><span style="display:flex;"><span>          <span style="color:#48b685">&#34;linear system&#34;</span> <span style="color:#5bc4bf">=</span> {
+</span></span><span style="display:flex;"><span>            X <span style="color:#5bc4bf">&lt;-</span> <span style="color:#06b6ef">matrix</span>(<span style="color:#06b6ef">rnorm</span>(<span style="color:#f99b15">1000</span>), <span style="color:#f99b15">100</span>, <span style="color:#f99b15">10</span>)
+</span></span><span style="display:flex;"><span>            y <span style="color:#5bc4bf">&lt;-</span> X <span style="color:#5bc4bf">%*%</span> <span style="color:#06b6ef">sample</span>(<span style="color:#f99b15">1</span><span style="color:#5bc4bf">:</span><span style="color:#f99b15">10</span>, <span style="color:#f99b15">10</span>) <span style="color:#5bc4bf">+</span> <span style="color:#06b6ef">rnorm</span>(<span style="color:#f99b15">100</span>)
+</span></span><span style="display:flex;"><span>            b <span style="color:#5bc4bf">&lt;-</span> <span style="color:#06b6ef">solve</span>(<span style="color:#06b6ef">t</span>(X) <span style="color:#5bc4bf">%*%</span> X, <span style="color:#06b6ef">t</span>(X) <span style="color:#5bc4bf">%*%</span> y)
+</span></span><span style="display:flex;"><span>          },
+</span></span><span style="display:flex;"><span>          replications <span style="color:#5bc4bf">=</span> <span style="color:#f99b15">1000</span>,
+</span></span><span style="display:flex;"><span>          columns <span style="color:#5bc4bf">=</span> <span style="color:#06b6ef">c</span>(<span style="color:#48b685">&#34;test&#34;</span>, <span style="color:#48b685">&#34;replications&#34;</span>, <span style="color:#48b685">&#34;elapsed&#34;</span>,
+</span></span><span style="display:flex;"><span>                      <span style="color:#48b685">&#34;relative&#34;</span>, <span style="color:#48b685">&#34;user.self&#34;</span>, <span style="color:#48b685">&#34;sys.self&#34;</span>))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#776e71">##            test replications elapsed relative user.self sys.self</span>
+</span></span><span style="display:flex;"><span><span style="color:#776e71">## 3 linear system         1000    0.14    1.000      0.14        0</span>
+</span></span><span style="display:flex;"><span><span style="color:#776e71">## 1            lm         1000    1.17    8.357      1.18        0</span>
+</span></span><span style="display:flex;"><span><span style="color:#776e71">## 2 pseudoinverse         1000    0.19    1.357      0.19        0</span>
+</span></span></code></pre></div><p>结果中的<code>elapsed</code>、<code>user.self</code>、<code>sys.self</code>与<code>system.time</code>函数结果中表示的意义相同，<code>relative</code>表示函数运行的时间利用率</p>
+<h2 id="使用microbenchmark">使用<code>microbenchmark</code><a hidden class="anchor" aria-hidden="true" href="#使用microbenchmark">#</a></h2>
+<p><code>microbenchmark</code>和<code>rbenchmark</code>一样，可以用来比较多个代码之间的运行速率，而<code>microbenchmark</code>提供了更加人性化的绘图功能可以直观的比较运行时间的差异。</p>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#06b6ef">library</span>(microbenchmark)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#06b6ef">set.seed</span>(<span style="color:#f99b15">2017</span>)
+</span></span><span style="display:flex;"><span>n <span style="color:#5bc4bf">&lt;-</span> <span style="color:#f99b15">10000</span>
+</span></span><span style="display:flex;"><span>p <span style="color:#5bc4bf">&lt;-</span> <span style="color:#f99b15">100</span>
+</span></span><span style="display:flex;"><span>X <span style="color:#5bc4bf">&lt;-</span> <span style="color:#06b6ef">matrix</span>(<span style="color:#06b6ef">rnorm</span>(n<span style="color:#5bc4bf">*</span>p), n, p)
+</span></span><span style="display:flex;"><span>y <span style="color:#5bc4bf">&lt;-</span> X <span style="color:#5bc4bf">%*%</span> <span style="color:#06b6ef">rnorm</span>(p) <span style="color:#5bc4bf">+</span> <span style="color:#06b6ef">rnorm</span>(<span style="color:#f99b15">100</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>check_for_equal_coefs <span style="color:#5bc4bf">&lt;-</span> <span style="color:#815ba4">function</span>(values) {
+</span></span><span style="display:flex;"><span>  tol <span style="color:#5bc4bf">&lt;-</span> <span style="color:#f99b15">1e-12</span>
+</span></span><span style="display:flex;"><span>  max_error <span style="color:#5bc4bf">&lt;-</span> <span style="color:#06b6ef">max</span>(<span style="color:#06b6ef">c</span>(<span style="color:#06b6ef">abs</span>(values[[1]] <span style="color:#5bc4bf">-</span> values[[2]]),
+</span></span><span style="display:flex;"><span>                     <span style="color:#06b6ef">abs</span>(values[[2]] <span style="color:#5bc4bf">-</span> values[[3]]),
+</span></span><span style="display:flex;"><span>                     <span style="color:#06b6ef">abs</span>(values[[1]] <span style="color:#5bc4bf">-</span> values[[3]])))
+</span></span><span style="display:flex;"><span>  max_error <span style="color:#5bc4bf">&lt;</span> tol
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>mbm <span style="color:#5bc4bf">&lt;-</span> <span style="color:#06b6ef">microbenchmark</span>(<span style="color:#48b685">&#34;lm&#34;</span> <span style="color:#5bc4bf">=</span> { b <span style="color:#5bc4bf">&lt;-</span> <span style="color:#06b6ef">lm</span>(y <span style="color:#5bc4bf">~</span> X <span style="color:#5bc4bf">+</span> <span style="color:#f99b15">0</span>)<span style="color:#5bc4bf">$</span>coef },
+</span></span><span style="display:flex;"><span>               <span style="color:#48b685">&#34;pseudoinverse&#34;</span> <span style="color:#5bc4bf">=</span> {
+</span></span><span style="display:flex;"><span>                 b <span style="color:#5bc4bf">&lt;-</span> <span style="color:#06b6ef">solve</span>(<span style="color:#06b6ef">t</span>(X) <span style="color:#5bc4bf">%*%</span> X) <span style="color:#5bc4bf">%*%</span> <span style="color:#06b6ef">t</span>(X) <span style="color:#5bc4bf">%*%</span> y
+</span></span><span style="display:flex;"><span>               },
+</span></span><span style="display:flex;"><span>               <span style="color:#48b685">&#34;linear system&#34;</span> <span style="color:#5bc4bf">=</span> {
+</span></span><span style="display:flex;"><span>                 b <span style="color:#5bc4bf">&lt;-</span> <span style="color:#06b6ef">solve</span>(<span style="color:#06b6ef">t</span>(X) <span style="color:#5bc4bf">%*%</span> X, <span style="color:#06b6ef">t</span>(X) <span style="color:#5bc4bf">%*%</span> y)
+</span></span><span style="display:flex;"><span>               },
+</span></span><span style="display:flex;"><span>               check <span style="color:#5bc4bf">=</span> check_for_equal_coefs)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>mbm
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#776e71">## Unit: milliseconds</span>
+</span></span><span style="display:flex;"><span><span style="color:#776e71">##           expr      min       lq     mean   median       uq      max neval cld</span>
+</span></span><span style="display:flex;"><span><span style="color:#776e71">##             lm 101.7592 114.4618 127.4006 122.7064 129.7980 430.7439   100  b </span>
+</span></span><span style="display:flex;"><span><span style="color:#776e71">##  pseudoinverse 173.2464 189.6997 201.1508 195.0444 207.6843 269.1587   100   c</span>
+</span></span><span style="display:flex;"><span><span style="color:#776e71">##  linear system  97.0324 106.8963 113.9581 112.2040 117.1509 193.9128   100 a</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#06b6ef">library</span>(ggplot2)
+</span></span><span style="display:flex;"><span><span style="color:#06b6ef">autoplot</span>(mbm)
+</span></span></code></pre></div><p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/time_r/unnamed-chunk-7-1.png" alt=""  />
+</p>
+
+
+        </div>
+
+        
+
+        <footer class="post-footer">
+            
+<nav class="paginav">
+  <a class="prev" href="http://localhost:1313/en/posts/tech/data_preprocess/">
+    <span class="title">« 上一页</span>
+    <br>
+    <span>归一化与标准化</span>
+  </a>
+  <a class="next" href="http://localhost:1313/en/posts/tech/scent/">
+    <span class="title">下一页 »</span>
+    <br>
+    <span>SCENT包Debug</span>
+  </a>
+</nav>
+
+        </footer>
+    </div>
+
+
+
+<div>
+    <div class="pagination__title">
+        <span class="pagination__title-h" style="font-size: 20px;">💬评论</span>
+        <hr />
+    </div>
+
+    <div id="tcomment"></div>
+
+    <script src="https://cdn.staticfile.org/twikoo/1.6.15/twikoo.all.min.js">
+    </script>
+    
+
+    
+
+    <script>
+        twikoo.init({
+            envId: "https://twikoo.lvbibir.cn/", 
+            el: "#tcomment",
+            lang: 'zh-CN',
+            
+            path: window.TWIKOO_MAGIC_PATH||window.location.pathname,
+            
+            
+            
+            
+            
+            
+            
+        });
+    </script>
+
+</div>
+</article>
+</main>
+
+
+<footer class="footer">
+
+    <a href="https://gohugo.io/" target="_blank">
+        
+        <img style="display: unset;" src="https://image.lvbibir.cn/blog/frame-hugo-blue.svg">
+    </a>
+    <a href="https://github.com/adityatelange/hugo-PaperMod" target="_blank">
+        
+        <img style="display: unset;" src="https://image.lvbibir.cn/blog/theme-papermod-lightgrey.svg">
+    </a>
+
+    <br>
+
+    <span id="runtime_span"></span>
+    <script
+        type="text/javascript">function show_runtime() { window.setTimeout("show_runtime()", 1000); X = new Date("7/13/2021 1:00:00"); Y = new Date(); T = (Y.getTime() - X.getTime()); M = 24 * 60 * 60 * 1000; a = T / M; A = Math.floor(a); b = (a - A) * 24; B = Math.floor(b); c = (b - B) * 60; C = Math.floor((b - B) * 60); D = Math.floor((c - C) * 60); runtime_span.innerHTML = "网站已运行" + A + "天" + B + "小时"} show_runtime();</script>
+    |
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span id="busuanzi_container">
+        
+        总访客数:  <span id="busuanzi_value_site_uv"></span>
+        |
+        总访问量:  <span id="busuanzi_value_site_pv"></span>
+    </span>
+
+    <br>
+    <span>
+        Copyright
+        &copy;
+        2021-2024
+        <a href="http://localhost:1313/en/" style="border-bottom:1px solid">Jeason&#39;s Blog</a>
+    </span>
+
+    
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <span class="topInner">
+        <svg class="topSvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+            <path d="M12 6H0l6-6z" />
+        </svg>
+        <span id="read_progress"></span>
+    </span>
+</a>
+
+<script>
+    document.addEventListener('scroll', function (e) {
+        const readProgress = document.getElementById("read_progress");
+        const scrollHeight = document.documentElement.scrollHeight;
+        const clientHeight = document.documentElement.clientHeight;
+        const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        
+        readProgress.innerText = ((scrollTop / (scrollHeight - clientHeight)).toFixed(2) * 100).toFixed(0);
+    })
+</script>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    let mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 400 || document.documentElement.scrollTop > 400) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+
+
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerText = '📄复制';
+
+        function copyingDone() {
+            copybutton.innerText = '👌🏻已复制!';
+            setTimeout(() => {
+                copybutton.innerText = '📄复制';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) {
+            }
+            ;
+            selection.removeRange(range);
+        });
+
+        let language = codeblock.className.replaceAll("language-", "")
+        let macTool = document.createElement("div")
+        let macTool1 = document.createElement("div")
+        let macTool2 = document.createElement("div")
+        let macTool3 = document.createElement("div")
+        let languageType = document.createElement("div")
+        languageType.innerText = language
+        macTool.setAttribute('class', 'mac-tool')
+        macTool1.setAttribute('class', 'mac bb1')
+        macTool2.setAttribute('class', 'mac bb2')
+        macTool3.setAttribute('class', 'mac bb3')
+        languageType.setAttribute('class', 'language-type')
+        macTool.appendChild(macTool1)
+        macTool.appendChild(macTool2)
+        macTool.appendChild(macTool3)
+        macTool.appendChild(languageType)
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+            container.appendChild(macTool)
+        } else if (container.parentNode.firstChild === container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName === "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+            container.appendChild(macTool)
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+            container.appendChild(macTool)
+        }
+    });
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,1276 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>HTML基本语法 | Jeason&#39;s Blog</title>
+<meta name="keywords" content="HTML">
+<meta name="description" content="这里汇总了一些常用的HTML语法">
+<meta name="author" content="作者:Jeason">
+<link rel="canonical" href="http://localhost:1313/en/posts/blog/html/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.e029fa55ed0a02bb684da89d2a53a4e1ba9e26e3719fa48460be52776460b523.css" integrity="sha256-4Cn6Ve0KArtoTaidKlOk4bqeJuNxn6SEYL5Sd2RgtSM=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:1313/img/avatar.jpeg">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/img/avatar.jpeg">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/img/avatar.jpeg">
+<link rel="apple-touch-icon" href="http://localhost:1313/img/avatar.jpeg">
+<link rel="mask-icon" href="http://localhost:1313/img/avatar.jpeg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="http://localhost:1313/en/posts/blog/html/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><script type="text/javascript"
+        async
+        src="https://cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\[\[','\]\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+});
+
+MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<style>
+code.has-jax {
+    font: inherit;
+    font-size: 100%;
+    background: inherit;
+    border: inherit;
+    color: #515151;
+}
+</style>
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = ""; 
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<meta property="og:title" content="HTML基本语法" />
+<meta property="og:description" content="这里汇总了一些常用的HTML语法" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://localhost:1313/en/posts/blog/html/" />
+<meta property="og:image" content="https://source.unsplash.com/random/400x200?code" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2019-06-10T17:31:46+08:00" />
+<meta property="article:modified_time" content="2024-02-28T17:31:46+08:00" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://source.unsplash.com/random/400x200?code" />
+<meta name="twitter:title" content="HTML基本语法"/>
+<meta name="twitter:description" content="这里汇总了一些常用的HTML语法"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "📚 文章",
+      "item": "http://localhost:1313/en/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "🏗️ 建站",
+      "item": "http://localhost:1313/en/posts/blog/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "HTML基本语法",
+      "item": "http://localhost:1313/en/posts/blog/html/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "HTML基本语法",
+  "name": "HTML基本语法",
+  "description": "这里汇总了一些常用的HTML语法",
+  "keywords": [
+    "HTML"
+  ],
+  "articleBody": "HTML 超文本标记语言（英语：HyperText Markup Language，简称：HTML）是一种用于创建网页的标准标记语言。HTML可以用 来建立自己的 WEB 站点，HTML 运行在浏览器上，由浏览器来解析。\nHTML 不是一种编程语言，而是一种标记语言，它使用一套标记标签(markup tag)来描述网页；HTML文档包含了HTML标签和文本内容，HTML文档也被称为web页面。\nhtml 元素 HTML文档由 HTML 元素定义。HTML元素包括：开始标签，元素内容，结束标签\nHTML 元素语法 HTML 元素以开始标签起始 HTML 元素以结束标签终止 元素的内容是开始标签与结束标签之间的内容 某些 HTML 元素具有空内容（empty content） 空元素在开始标签中进行关闭（以开始标签的结束而结束） 大多数 HTML 元素可拥有属性 HTML 文档是由嵌套的 HTML 元素构成的\nHTML 属性 属性是 HTML 元素提供的附加信息。\nHTML 元素可以设置属性 属性可以在元素中添加附加信息 属性一般描述于开始标签 属性总是以名称/值对的形式出现，比如：name=“value”。 \u003ca href=\"http://www.runoob.com\"\u003e这是一个链接\u003c/a\u003e HTML 标题 在 HTML 文档中，标题很重要。标题（Heading）是通过 - 标签进行定义的. 定义最大的标题。 定义最小的标题。\n\u003ch1\u003e这是一个标题。\u003c/h1\u003e \u003ch2\u003e这是一个标题。\u003c/h2\u003e \u003ch3\u003e这是一个标题。\u003c/h3\u003e 请确保将 HTML 标题 标签只用于标题。不要仅仅是为了生成粗体或大号的文本而使用标题。\nHTML 水平线 标签在 HTML 页面中创建水平线。 用于分隔内容。\nHTML注释 可以将注释插入 HTML 代码中，这样可以提高其可读性，使代码更易被人理解。浏览器会忽略注释，也不会显示它们。\n注释写法如下:\nHTML 段落 段落是通过 标签定义的。如果在不产生新段落的情况下换行需要使用\n\u003cp\u003e这个\u003cbr\u003e段落\u003cbr\u003e演示了分行的效果\u003c/p\u003e 元素是一个空的 HTML 元素。由于关闭标签没有任何意义，因此它没有结束标签。\nHTML 格式化标签 HTML 文本格式化标签 标签 描述 定义粗体文本 定义着重文字 定义斜体字 定义小号字 定义加重语气 定义下标字 定义上标字 定义插入字 定义删除字 HTML “计算机输出” 标签 标签 描述 定义计算机代码 定义键盘码 定义计算机代码样本 定义变量 定义预格式文本 HTML 引文, 引用, 及标签定义 标签 描述 定义缩写 定义地址 定义文字方向 定义长的引用 定义短的引用语 定义引用、引证 定义一个定义项目 HTML头部信息 HTML 元素 元素包含了所有的头部标签元素。在 元素中你可以插入脚本（scripts）, 样式文件（CSS），及各种meta信息。\n可以添加在头部区域的元素标签为: \u003c/code\u003e,\u003ccode\u003e \u003cstyle\u003e\u003c/code\u003e, \u003ccode\u003e\u003cmeta\u003e\u003c/code\u003e, \u003ccode\u003e\u003clink\u003e\u003c/code\u003e,\u003ccode\u003e \u003cscript\u003e\u003c/code\u003e,\u003ccode\u003e\u003cnoscript\u003e\u003c/code\u003e, and \u003ccode\u003e\u003cbase\u003e\u003c/code\u003e.\n\u003ch3 id=\"html-title-元素\"\u003eHTML \u003ccode\u003e\u003ctitle\u003e\u003c/code\u003e 元素\u003c/h3\u003e \u003cp\u003e\u003ccode\u003e\u003ctitle\u003e\u003c/code\u003e 标签定义了不同文档的标题，在HTML/XHTML 文档中是必须的。\n\u003cul\u003e \u003cli\u003e定义了浏览器工具栏的标题\u003c/li\u003e \u003cli\u003e当网页添加到收藏夹时，显示在收藏夹中的标题\u003c/li\u003e \u003cli\u003e显示在搜索引擎结果页面的标题\u003c/li\u003e \u003c/ul\u003e \u003ch3 id=\"html-base-元素\"\u003eHTML \u003ccode\u003e\u003cbase\u003e\u003c/code\u003e 元素\u003c/h3\u003e \u003cp\u003e\u003ccode\u003e\u003cbase\u003e\u003c/code\u003e 标签描述了基本的链接地址/链接目标，该标签作为HTML文档中所有的链接标签的默认链接.\n\u003ch3 id=\"html-link-元素\"\u003eHTML \u003ccode\u003e\u003clink\u003e\u003c/code\u003e 元素\u003c/h3\u003e \u003cp\u003e\u003ccode\u003e\u003clink\u003e\u003c/code\u003e 标签定义了文档与外部资源之间的关系，通常用于链接到样式表.\n\u003ch3 id=\"html-style-元素\"\u003eHTML \u003ccode\u003e\u003cstyle\u003e\u003c/code\u003e 元素\u003c/h3\u003e \u003cp\u003e\u003ccode\u003e\u003cstyle\u003e\u003c/code\u003e 标签定义了HTML文档的样式文件引用地址，也可以直接添加样式来渲染 HTML 文档\n\u003ch3 id=\"html-meta-元素\"\u003eHTML \u003ccode\u003e\u003cmeta\u003e\u003c/code\u003e 元素\u003c/h3\u003e \u003cp\u003e\u003ccode\u003e\u003cmeta\u003e\u003c/code\u003e 标签提供了元数据.\u003cstrong\u003e元数据也不显示在页面上，但会被浏览器解析\u003c/strong\u003e。META 元素通常用于指定网页的描述，关键词，文件的最后修改时间，作者，和其他元数据。元数据可以使用于浏览器（如何显示内容或重新加载页面），搜索引擎（关键词），或其他Web服务。\u003ccode\u003e\u003cmeta\u003e\u003c/code\u003e 一般放置于 \u003ccode\u003e\u003chead\u003e\u003c/code\u003e 区域\n\u003ch3 id=\"html-script-元素\"\u003eHTML \u003ccode\u003e\u003cscript\u003e\u003c/code\u003e 元素\u003c/h3\u003e \u003cp\u003e\u003ccode\u003e\u003cscript\u003e\u003c/code\u003e标签用于加载脚本文件，如： JavaScript\n\u003ch3 id=\"html-head-元素汇总\"\u003eHTML head 元素汇总\u003c/h3\u003e \u003ctable\u003e \u003cthead\u003e \u003ctr\u003e \u003cth\u003e标签\u003c/th\u003e \u003cth\u003e描述\u003c/th\u003e \u003c/tr\u003e \u003c/thead\u003e \u003ctbody\u003e \u003ctr\u003e \u003ctd\u003e\u003ccode\u003e\u003chead\u003e\u003c/code\u003e\u003c/td\u003e \u003ctd\u003e定义了文档的信息\u003c/td\u003e \u003c/tr\u003e \u003ctr\u003e \u003ctd\u003e\u003ccode\u003e\u003ctitle\u003e\u003c/code\u003e\u003c/td\u003e \u003ctd\u003e定义了文档的标题\u003c/td\u003e \u003c/tr\u003e \u003ctr\u003e \u003ctd\u003e\u003ccode\u003e\u003cbase\u003e\u003c/code\u003e\u003c/td\u003e \u003ctd\u003e定义了页面链接标签的默认链接地址\u003c/td\u003e \u003c/tr\u003e \u003ctr\u003e \u003ctd\u003e\u003ccode\u003e\u003clink\u003e\u003c/code\u003e\u003c/td\u003e \u003ctd\u003e定义了一个文档和外部资源之间的关系\u003c/td\u003e \u003c/tr\u003e \u003ctr\u003e \u003ctd\u003e\u003ccode\u003e\u003cmeta\u003e\u003c/code\u003e\u003c/td\u003e \u003ctd\u003e定义了HTML文档中的元数据\u003c/td\u003e \u003c/tr\u003e \u003ctr\u003e \u003ctd\u003e\u003ccode\u003e\u003cscript\u003e\u003c/code\u003e\u003c/td\u003e \u003ctd\u003e定义了客户端的脚本文件\u003c/td\u003e \u003c/tr\u003e \u003ctr\u003e \u003ctd\u003e\u003ccode\u003e\u003cstyle\u003e\u003c/code\u003e\u003c/td\u003e \u003ctd\u003e定义了HTML文档的样式文件\u003c/td\u003e \u003c/tr\u003e \u003c/tbody\u003e \u003c/table\u003e \u003ch2 id=\"html-样式--css\"\u003eHTML 样式- CSS\u003c/h2\u003e \u003cp\u003eCSS (Cascading Style Sheets) 用于渲染HTML元素标签的样式.CSS 可以通过以下方式添加到HTML中:\n\u003cul\u003e \u003cli\u003e内联样式- 在HTML元素中使用\"style\" \u003cstrong\u003e属性\u003c/strong\u003e\u003c/li\u003e \u003cli\u003e内部样式表 -在HTML文档头部 \u003ccode\u003e\u003chead\u003e\u003c/code\u003e 区域使用\u003ccode\u003e\u003cstyle\u003e\u003c/code\u003e \u003cstrong\u003e元素\u003c/strong\u003e 来包含CSS\u003c/li\u003e \u003cli\u003e外部引用 - 使用外部 CSS \u003cstrong\u003e文件\u003c/strong\u003e\u003c/li\u003e \u003c/ul\u003e \u003cblockquote\u003e \u003cp\u003e使用CSS最好的方式是通过外部引用CSS文件.\n\u003c/blockquote\u003e \u003ch2 id=\"html-图像\"\u003eHTML 图像\u003c/h2\u003e \u003cp\u003e在 HTML 中，图像由\u003ccode\u003e\u003cimg\u003e\u003c/code\u003e 标签定义。\u003ccode\u003e\u003cimg\u003e\u003c/code\u003e 是空标签，意思是说，它只包含属性，并且没有闭合标签。\n\u003cblockquote\u003e \u003cp\u003e空格\u003ccode\u003e\n\u003c/code\u003e也是没有闭合标签的\n\u003c/blockquote\u003e \u003cp\u003e定义图像的一般语法：\n\u003cdiv class=\"highlight\"\u003e\u003cpre tabindex=\"0\" style=\"color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;\"\u003e\u003ccode class=\"language-html\" data-lang=\"html\"\u003e\u003cspan style=\"display:flex;\"\u003e\u003cspan\u003e\u003c\u003cspan style=\"color:#5bc4bf\"\u003eimg\u003c/span\u003e \u003cspan style=\"color:#06b6ef\"\u003esrc\u003c/span\u003e\u003cspan style=\"color:#5bc4bf\"\u003e=\u003c/span\u003e\u003cspan style=\"color:#48b685\"\u003e\"url\"\u003c/span\u003e \u003cspan style=\"color:#06b6ef\"\u003ealt\u003c/span\u003e\u003cspan style=\"color:#5bc4bf\"\u003e=\u003c/span\u003e\u003cspan style=\"color:#48b685\"\u003e\"some_text\"\u003c/span\u003e\u003e \u003c/span\u003e\u003c/span\u003e\u003c/code\u003e\u003c/pre\u003e\u003c/div\u003e\u003ch3 id=\"alt属性\"\u003eAlt属性\u003c/h3\u003e \u003cp\u003ealt 属性用来为图像定义一串预备的可替换的文本。在浏览器无法载入图像时，替换文本属性告诉读者她们失去的信息。此时，浏览器将显示这个替代性的文本而不是图像。\n\u003cdiv class=\"highlight\"\u003e\u003cpre tabindex=\"0\" style=\"color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;\"\u003e\u003ccode class=\"language-html\" data-lang=\"html\"\u003e\u003cspan style=\"display:flex;\"\u003e\u003cspan\u003e\u003c\u003cspan style=\"color:#5bc4bf\"\u003eimg\u003c/span\u003e \u003cspan style=\"color:#06b6ef\"\u003esrc\u003c/span\u003e\u003cspan style=\"color:#5bc4bf\"\u003e=\u003c/span\u003e\u003cspan style=\"color:#48b685\"\u003e\"boat.gif\"\u003c/span\u003e \u003cspan style=\"color:#06b6ef\"\u003ealt\u003c/span\u003e\u003cspan style=\"color:#5bc4bf\"\u003e=\u003c/span\u003e\u003cspan style=\"color:#48b685\"\u003e\"Big Boat\"\u003c/span\u003e\u003e \u003c/span\u003e\u003c/span\u003e\u003c/code\u003e\u003c/pre\u003e\u003c/div\u003e\u003ch3 id=\"设置图像的高度与宽度\"\u003e设置图像的高度与宽度\u003c/h3\u003e \u003cp\u003eheight（高度） 与 width（宽度）属性用于设置图像的高度与宽度。\n\u003cp\u003e属性值默认单位为像素:\n\u003cdiv class=\"highlight\"\u003e\u003cpre tabindex=\"0\" style=\"color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;\"\u003e\u003ccode class=\"language-html\" data-lang=\"html\"\u003e\u003cspan style=\"display:flex;\"\u003e\u003cspan\u003e\u003c\u003cspan style=\"color:#5bc4bf\"\u003eimg\u003c/span\u003e \u003cspan style=\"color:#06b6ef\"\u003esrc\u003c/span\u003e\u003cspan style=\"color:#5bc4bf\"\u003e=\u003c/span\u003e\u003cspan style=\"color:#48b685\"\u003e\"pulpit.jpg\"\u003c/span\u003e \u003cspan style=\"color:#06b6ef\"\u003ealt\u003c/span\u003e\u003cspan style=\"color:#5bc4bf\"\u003e=\u003c/span\u003e\u003cspan style=\"color:#48b685\"\u003e\"Pulpit rock\"\u003c/span\u003e \u003cspan style=\"color:#06b6ef\"\u003ewidth\u003c/span\u003e\u003cspan style=\"color:#5bc4bf\"\u003e=\u003c/span\u003e\u003cspan style=\"color:#48b685\"\u003e\"304\"\u003c/span\u003e \u003cspan style=\"color:#06b6ef\"\u003eheight\u003c/span\u003e\u003cspan style=\"color:#5bc4bf\"\u003e=\u003c/span\u003e\u003cspan style=\"color:#48b685\"\u003e\"228\"\u003c/span\u003e\u003e \u003c/span\u003e\u003c/span\u003e\u003c/code\u003e\u003c/pre\u003e\u003c/div\u003e\u003ch2 id=\"html-表格\"\u003eHTML 表格\u003c/h2\u003e \u003cp\u003e表格由 \u003ccode\u003e\u003ctable\u003e\u003c/code\u003e 标签来定义。每个表格均有若干行（由 \u003ccode\u003e\u003ctr\u003e\u003c/code\u003e 标签定义），每行被分割为若干单元格（由\u003ccode\u003e\u003ctd\u003e\u003c/code\u003e 标签定义）。字母 td 指表格数据（table data），即数据单元格的内容。数据单元格可以包含文本、图片、列表、段落、表单、水平线、表格等等。\n\u003cp\u003e表格的表头使用 \u003ccode\u003e\u003cth\u003e\u003c/code\u003e 标签进行定义。\n\u003cdiv class=\"highlight\"\u003e\u003cpre tabindex=\"0\" style=\"color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;\"\u003e\u003ccode class=\"language-html\" data-lang=\"html\"\u003e\u003cspan style=\"display:flex;\"\u003e\u003cspan\u003e\u003c\u003cspan style=\"color:#5bc4bf\"\u003etable\u003c/span\u003e \u003cspan style=\"color:#06b6ef\"\u003eborder\u003c/span\u003e\u003cspan style=\"color:#5bc4bf\"\u003e=\u003c/span\u003e\u003cspan style=\"color:#48b685\"\u003e\"1\"\u003c/span\u003e\u003e \u003c/span\u003e\u003c/span\u003e\u003cspan style=\"display:flex;\"\u003e\u003cspan\u003e \u003c\u003cspan style=\"color:#5bc4bf\"\u003etr\u003c/span\u003e\u003e \u003c/span\u003e\u003c/span\u003e\u003cspan style=\"display:flex;\"\u003e\u003cspan\u003e \u003c\u003cspan style=\"color:#5bc4bf\"\u003eth\u003c/span\u003e\u003eHeader 1\u003c/\u003cspan style=\"color:#5bc4bf\"\u003eth\u003c/span\u003e\u003e \u003c/span\u003e\u003c/span\u003e\u003cspan style=\"display:flex;\"\u003e\u003cspan\u003e \u003c\u003cspan style=\"color:#5bc4bf\"\u003eth\u003c/span\u003e\u003eHeader 2\u003c/\u003cspan style=\"color:#5bc4bf\"\u003eth\u003c/span\u003e\u003e \u003c/span\u003e\u003c/span\u003e\u003cspan style=\"display:flex;\"\u003e\u003cspan\u003e \u003c/\u003cspan style=\"color:#5bc4bf\"\u003etr\u003c/span\u003e\u003e \u003c/span\u003e\u003c/span\u003e\u003cspan style=\"display:flex;\"\u003e\u003cspan\u003e \u003c\u003cspan style=\"color:#5bc4bf\"\u003etr\u003c/span\u003e\u003e \u003c/span\u003e\u003c/span\u003e\u003cspan style=\"display:flex;\"\u003e\u003cspan\u003e \u003c\u003cspan style=\"color:#5bc4bf\"\u003etd\u003c/span\u003e\u003erow 1, cell 1\u003c/\u003cspan style=\"color:#5bc4bf\"\u003etd\u003c/span\u003e\u003e \u003c/span\u003e\u003c/span\u003e\u003cspan style=\"display:flex;\"\u003e\u003cspan\u003e \u003c\u003cspan style=\"color:#5bc4bf\"\u003etd\u003c/span\u003e\u003erow 1, cell 2\u003c/\u003cspan style=\"color:#5bc4bf\"\u003etd\u003c/span\u003e\u003e \u003c/span\u003e\u003c/span\u003e\u003cspan style=\"display:flex;\"\u003e\u003cspan\u003e \u003c/\u003cspan style=\"color:#5bc4bf\"\u003etr\u003c/span\u003e\u003e \u003c/span\u003e\u003c/span\u003e\u003cspan style=\"display:flex;\"\u003e\u003cspan\u003e \u003c\u003cspan style=\"color:#5bc4bf\"\u003etr\u003c/span\u003e\u003e \u003c/span\u003e\u003c/span\u003e\u003cspan style=\"display:flex;\"\u003e\u003cspan\u003e \u003c\u003cspan style=\"color:#5bc4bf\"\u003etd\u003c/span\u003e\u003erow 2, cell 1\u003c/\u003cspan style=\"color:#5bc4bf\"\u003etd\u003c/span\u003e\u003e \u003c/span\u003e\u003c/span\u003e\u003cspan style=\"display:flex;\"\u003e\u003cspan\u003e \u003c\u003cspan style=\"color:#5bc4bf\"\u003etd\u003c/span\u003e\u003erow 2, cell 2\u003c/\u003cspan style=\"color:#5bc4bf\"\u003etd\u003c/span\u003e\u003e \u003c/span\u003e\u003c/span\u003e\u003cspan style=\"display:flex;\"\u003e\u003cspan\u003e \u003c/\u003cspan style=\"color:#5bc4bf\"\u003etr\u003c/span\u003e\u003e \u003c/span\u003e\u003c/span\u003e\u003cspan style=\"display:flex;\"\u003e\u003cspan\u003e\u003c/\u003cspan style=\"color:#5bc4bf\"\u003etable\u003c/span\u003e\u003e \u003c/span\u003e\u003c/span\u003e\u003c/code\u003e\u003c/pre\u003e\u003c/div\u003e\u003ctable border=\"1\"\u003e \u003ctr\u003e \u003cth\u003eHeader 1\u003c/th\u003e \u003cth\u003eHeader 2\u003c/th\u003e \u003c/tr\u003e \u003ctr\u003e \u003ctd\u003erow 1, cell 1\u003c/td\u003e \u003ctd\u003erow 1, cell 2\u003c/td\u003e \u003c/tr\u003e \u003ctr\u003e \u003ctd\u003erow 2, cell 1\u003c/td\u003e \u003ctd\u003erow 2, cell 2\u003c/td\u003e \u003c/tr\u003e \u003c/table\u003e \u003cblockquote\u003e \u003cp\u003e大多数浏览器会把表头显示为粗体居中的文本\n\u003c/blockquote\u003e \u003ctable\u003e \u003cthead\u003e \u003ctr\u003e \u003cth\u003e标签\u003c/th\u003e \u003cth\u003e描述\u003c/th\u003e \u003c/tr\u003e \u003c/thead\u003e \u003ctbody\u003e \u003ctr\u003e \u003ctd\u003e\u003ccode\u003e\u003ctable\u003e\u003c/code\u003e\u003c/td\u003e \u003ctd\u003e定义表格\u003c/td\u003e \u003c/tr\u003e \u003ctr\u003e \u003ctd\u003e\u003ccode\u003e\u003cth\u003e\u003c/code\u003e\u003c/td\u003e \u003ctd\u003e定义表格的表头\u003c/td\u003e \u003c/tr\u003e \u003ctr\u003e \u003ctd\u003e\u003ccode\u003e\u003ctr\u003e\u003c/code\u003e\u003c/td\u003e \u003ctd\u003e定义表格的行\u003c/td\u003e \u003c/tr\u003e \u003ctr\u003e \u003ctd\u003e\u003ccode\u003e\u003ctd\u003e\u003c/code\u003e\u003c/td\u003e \u003ctd\u003e定义表格单元格\u003c/td\u003e \u003c/tr\u003e \u003ctr\u003e \u003ctd\u003e\u003ccode\u003e\u003ccaption\u003e\u003c/code\u003e\u003c/td\u003e \u003ctd\u003e定义表格标题\u003c/td\u003e \u003c/tr\u003e \u003ctr\u003e \u003ctd\u003e\u003ccode\u003e\u003ccolgroup\u003e\u003c/code\u003e\u003c/td\u003e \u003ctd\u003e定义表格列的组\u003c/td\u003e \u003c/tr\u003e \u003ctr\u003e \u003ctd\u003e\u003ccode\u003e\u003ccol\u003e\u003c/code\u003e\u003c/td\u003e \u003ctd\u003e定义用于表格列的属性\u003c/td\u003e \u003c/tr\u003e \u003ctr\u003e \u003ctd\u003e\u003ccode\u003e\u003cthead\u003e\u003c/code\u003e\u003c/td\u003e \u003ctd\u003e定义表格的页眉\u003c/td\u003e \u003c/tr\u003e \u003ctr\u003e \u003ctd\u003e\u003ccode\u003e\u003ctbody\u003e\u003c/code\u003e\u003c/td\u003e \u003ctd\u003e定义表格的主体\u003c/td\u003e \u003c/tr\u003e \u003ctr\u003e \u003ctd\u003e\u003ccode\u003e\u003ctfoot\u003e\u003c/code\u003e\u003c/td\u003e \u003ctd\u003e定义表格的页脚\u003c/td\u003e \u003c/tr\u003e \u003c/tbody\u003e \u003c/table\u003e \u003ch2 id=\"html-列表\"\u003eHTML 列表\u003c/h2\u003e \u003ch3 id=\"html无序列表\"\u003eHTML无序列表\u003c/h3\u003e \u003cp\u003e无序列表是一个项目的列表，此列项目使用粗体圆点（典型的小黑圆圈）进行标记。\n\u003cp\u003e无序列表使用 \u003ccode\u003e\u003cul\u003e\u003c/code\u003e 标签\n\u003cdiv class=\"highlight\"\u003e\u003cpre tabindex=\"0\" style=\"color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;\"\u003e\u003ccode class=\"language-html\" data-lang=\"html\"\u003e\u003cspan style=\"display:flex;\"\u003e\u003cspan\u003e\u003c\u003cspan style=\"color:#5bc4bf\"\u003eul\u003c/span\u003e\u003e \u003c/span\u003e\u003c/span\u003e\u003cspan style=\"display:flex;\"\u003e\u003cspan\u003e\u003c\u003cspan style=\"color:#5bc4bf\"\u003eli\u003c/span\u003e\u003eCoffee\u003c/\u003cspan style=\"color:#5bc4bf\"\u003eli\u003c/span\u003e\u003e \u003c/span\u003e\u003c/span\u003e\u003cspan style=\"display:flex;\"\u003e\u003cspan\u003e\u003c\u003cspan style=\"color:#5bc4bf\"\u003eli\u003c/span\u003e\u003eMilk\u003c/\u003cspan style=\"color:#5bc4bf\"\u003eli\u003c/span\u003e\u003e \u003c/span\u003e\u003c/span\u003e\u003cspan style=\"display:flex;\"\u003e\u003cspan\u003e\u003c/\u003cspan style=\"color:#5bc4bf\"\u003eul\u003c/span\u003e\u003e \u003c/span\u003e\u003c/span\u003e\u003c/code\u003e\u003c/pre\u003e\u003c/div\u003e\u003cul\u003e \u003cli\u003eCoffee\u003c/li\u003e \u003cli\u003eMilk\u003c/li\u003e \u003c/ul\u003e \u003ch3 id=\"html-有序列表\"\u003eHTML 有序列表\u003c/h3\u003e \u003cp\u003e有序列表也是一列项目，列表项目使用数字进行标记。 有序列表始于 \u003ccode\u003e\u003col\u003e\u003c/code\u003e 标签。每个列表项始于 \u003ccode\u003e\u003cli\u003e\u003c/code\u003e 标签。列表项使用数字来标记。\n\u003cdiv class=\"highlight\"\u003e\u003cpre tabindex=\"0\" style=\"color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;\"\u003e\u003ccode class=\"language-html\" data-lang=\"html\"\u003e\u003cspan style=\"display:flex;\"\u003e\u003cspan\u003e\u003c\u003cspan style=\"color:#5bc4bf\"\u003eol\u003c/span\u003e\u003e \u003c/span\u003e\u003c/span\u003e\u003cspan style=\"display:flex;\"\u003e\u003cspan\u003e\u003c\u003cspan style=\"color:#5bc4bf\"\u003eli\u003c/span\u003e\u003eCoffee\u003c/\u003cspan style=\"color:#5bc4bf\"\u003eli\u003c/span\u003e\u003e \u003c/span\u003e\u003c/span\u003e\u003cspan style=\"display:flex;\"\u003e\u003cspan\u003e\u003c\u003cspan style=\"color:#5bc4bf\"\u003eli\u003c/span\u003e\u003eMilk\u003c/\u003cspan style=\"color:#5bc4bf\"\u003eli\u003c/span\u003e\u003e \u003c/span\u003e\u003c/span\u003e\u003cspan style=\"display:flex;\"\u003e\u003cspan\u003e\u003c/\u003cspan style=\"color:#5bc4bf\"\u003eol\u003c/span\u003e\u003e \u003c/span\u003e\u003c/span\u003e\u003c/code\u003e\u003c/pre\u003e\u003c/div\u003e\u003col\u003e \u003cli\u003eCoffee\u003c/li\u003e \u003cli\u003eMilk\u003c/li\u003e \u003c/ol\u003e \u003ch3 id=\"html-自定义列表\"\u003eHTML 自定义列表\u003c/h3\u003e \u003cp\u003e自定义列表不仅仅是一列项目，而是项目及其注释的组合。\n\u003cp\u003e自定义列表以 \u003ccode\u003e\u003cdl\u003e\u003c/code\u003e 标签开始。每个自定义列表项以 \u003ccode\u003e\u003cdt\u003e\u003c/code\u003e 开始。每个自定义列表项的定义以 \u003ccode\u003e\u003cdd\u003e\u003c/code\u003e 开始。\n\u003cdiv class=\"highlight\"\u003e\u003cpre tabindex=\"0\" style=\"color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;\"\u003e\u003ccode class=\"language-html\" data-lang=\"html\"\u003e\u003cspan style=\"display:flex;\"\u003e\u003cspan\u003e\u003c\u003cspan style=\"color:#5bc4bf\"\u003edl\u003c/span\u003e\u003e \u003c/span\u003e\u003c/span\u003e\u003cspan style=\"display:flex;\"\u003e\u003cspan\u003e\u003c\u003cspan style=\"color:#5bc4bf\"\u003edt\u003c/span\u003e\u003eCoffee\u003c/\u003cspan style=\"color:#5bc4bf\"\u003edt\u003c/span\u003e\u003e \u003c/span\u003e\u003c/span\u003e\u003cspan style=\"display:flex;\"\u003e\u003cspan\u003e\u003c\u003cspan style=\"color:#5bc4bf\"\u003edd\u003c/span\u003e\u003e- black hot drink\u003c/\u003cspan style=\"color:#5bc4bf\"\u003edd\u003c/span\u003e\u003e \u003c/span\u003e\u003c/span\u003e\u003cspan style=\"display:flex;\"\u003e\u003cspan\u003e\u003c\u003cspan style=\"color:#5bc4bf\"\u003edt\u003c/span\u003e\u003eMilk\u003c/\u003cspan style=\"color:#5bc4bf\"\u003edt\u003c/span\u003e\u003e \u003c/span\u003e\u003c/span\u003e\u003cspan style=\"display:flex;\"\u003e\u003cspan\u003e\u003c\u003cspan style=\"color:#5bc4bf\"\u003edd\u003c/span\u003e\u003e- white cold drink\u003c/\u003cspan style=\"color:#5bc4bf\"\u003edd\u003c/span\u003e\u003e \u003c/span\u003e\u003c/span\u003e\u003cspan style=\"display:flex;\"\u003e\u003cspan\u003e\u003c/\u003cspan style=\"color:#5bc4bf\"\u003edl\u003c/span\u003e\u003e \u003c/span\u003e\u003c/span\u003e\u003c/code\u003e\u003c/pre\u003e\u003c/div\u003e\u003cdl\u003e \u003cdt\u003eCoffee\u003c/dt\u003e \u003cdd\u003e- black hot drink\u003c/dd\u003e \u003cdt\u003eMilk\u003c/dt\u003e \u003cdd\u003e- white cold drink\u003c/dd\u003e \u003c/dl\u003e \u003ch2 id=\"html-区块\"\u003eHTML 区块\u003c/h2\u003e \u003cp\u003e大多数 HTML 元素被定义为\u003cstrong\u003e块级元素\u003c/strong\u003e或\u003cstrong\u003e内联元素\u003c/strong\u003e。\n\u003cp\u003e\u003cstrong\u003e块级元素\u003c/strong\u003e在浏览器显示时，通常会以新行来开始（和结束）。（如：\u003ccode\u003e\u003ch1\u003e\u003c/code\u003e, \u003ccode\u003e\u003cp\u003e\u003c/code\u003e, \u003ccode\u003e\u003cul\u003e\u003c/code\u003e, \u003ccode\u003e\u003ctable\u003e\u003c/code\u003e）\n\u003cp\u003e\u003cstrong\u003e内联元素\u003c/strong\u003e在显示时通常不会以新行开始。（如：\u003ccode\u003e\u003cb\u003e\u003c/code\u003e, \u003ccode\u003e\u003ctd\u003e\u003c/code\u003e, \u003ccode\u003e\u003ca\u003e\u003c/code\u003e, \u003ccode\u003e\u003cimg\u003e\u003c/code\u003e）\n\u003cp\u003e\u003cstrong\u003e\u003ccode\u003e\u003cdiv\u003e\u003c/code\u003e 元素是块级元素\u003c/strong\u003e，它可用于组合其他 HTML 元素的容器。\u003ccode\u003e\u003cdiv\u003e\u003c/code\u003e 元素没有特定的含义。除此之外，由于它属于块级元素，浏览器会在其前后显示折行。如果与 CSS 一同使用，\u003ccode\u003e\u003cdiv\u003e\u003c/code\u003e 元素可用于对大的内容块设置样式属性。\n\u003cp\u003e\u003cstrong\u003e\u003ccode\u003e\u003cspan\u003e\u003c/code\u003e 元素是内联元素\u003c/strong\u003e，可用作文本的容器。\u003ccode\u003e\u003cspan\u003e\u003c/code\u003e 元素也没有特定的含义。当与 CSS 一同使用时，\u003ccode\u003e\u003cspan\u003e\u003c/code\u003e 元素可用于为部分文本设置样式属性。\n\u003ch2 id=\"html-布局\"\u003eHTML 布局\u003c/h2\u003e \u003cp\u003e大多数网站可以使用 \u003ccode\u003e\u003cdiv\u003e\u003c/code\u003e 或者 \u003ccode\u003e\u003ctable\u003e\u003c/code\u003e 元素来创建多列。CSS 用于对元素进行定位，或者为页面创建背景以及色彩丰富的外观。\n\u003cp\u003e例如：\n\u003cdiv class=\"highlight\"\u003e\u003cpre tabindex=\"0\" style=\"color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;\"\u003e\u003ccode class=\"language-html\" data-lang=\"html\"\u003e\u003cspan style=\"display:flex;\"\u003e\u003cspan\u003e\u003cspan style=\"color:#776e71\"\u003e\u003c!DOCTYPE html\u003e\u003c/span\u003e \u003c/span\u003e\u003c/span\u003e\u003cspan style=\"display:flex;\"\u003e\u003cspan\u003e\u003c\u003cspan style=\"color:#5bc4bf\"\u003ehtml\u003c/span\u003e\u003e \u003c/span\u003e\u003c/span\u003e\u003cspan style=\"display:flex;\"\u003e\u003cspan\u003e\u003c\u003cspan style=\"color:#5bc4bf\"\u003ehead\u003c/span\u003e\u003e \u003c/span\u003e\u003c/span\u003e\u003cspan style=\"display:flex;\"\u003e\u003cspan\u003e\u003c\u003cspan style=\"color:#5bc4bf\"\u003emeta\u003c/span\u003e \u003cspan style=\"color:#06b6ef\"\u003echarset\u003c/span\u003e\u003cspan style=\"color:#5bc4bf\"\u003e=\u003c/span\u003e\u003cspan style=\"color:#48b685\"\u003e\"utf-8\"\u003c/span\u003e\u003e \u003c/span\u003e\u003c/span\u003e\u003cspan style=\"display:flex;\"\u003e\u003cspan\u003e\u003c\u003cspan style=\"color:#5bc4bf\"\u003etitle\u003c/span\u003e\u003eDemo\u003c/\u003cspan style=\"color:#5bc4bf\"\u003etitle\u003c/span\u003e\u003e \u003c/span\u003e\u003c/span\u003e\u003cspan style=\"display:flex;\"\u003e\u003cspan\u003e\u003c/\u003cspan style=\"color:#5bc4bf\"\u003ehead\u003c/span\u003e\u003e \u003c/span\u003e\u003c/span\u003e\u003cspan style=\"display:flex;\"\u003e\u003cspan\u003e\u003c\u003cspan style=\"color:#5bc4bf\"\u003ebody\u003c/span\u003e\u003e \u003c/span\u003e\u003c/span\u003e\u003cspan style=\"display:flex;\"\u003e\u003cspan\u003e\t\u003c\u003cspan style=\"color:#5bc4bf\"\u003ediv\u003c/span\u003e \u003cspan style=\"color:#06b6ef\"\u003eid\u003c/span\u003e\u003cspan style=\"color:#5bc4bf\"\u003e=\u003c/span\u003e\u003cspan style=\"color:#48b685\"\u003e\"maxname\"\u003c/span\u003e \u003cspan style=\"color:#06b6ef\"\u003estyle\u003c/span\u003e\u003cspan style=\"color:#5bc4bf\"\u003e=\u003c/span\u003e\u003cspan style=\"color:#48b685\"\u003e\"width:500px;\"\u003c/span\u003e\u003e \u003c/span\u003e\u003c/span\u003e\u003cspan style=\"display:flex;\"\u003e\u003cspan\u003e \u003c\u003cspan style=\"color:#5bc4bf\"\u003ediv\u003c/span\u003e \u003cspan style=\"color:#06b6ef\"\u003eid\u003c/span\u003e\u003cspan style=\"color:#5bc4bf\"\u003e=\u003c/span\u003e\u003cspan style=\"color:#48b685\"\u003e\"hname\"\u003c/span\u003e \u003cspan style=\"color:#06b6ef\"\u003estyle\u003c/span\u003e\u003cspan style=\"color:#5bc4bf\"\u003e=\u003c/span\u003e\u003cspan style=\"color:#48b685\"\u003e\"background-color:#666FFF;\"\u003c/span\u003e\u003e \u003c/span\u003e\u003c/span\u003e\u003cspan style=\"display:flex;\"\u003e\u003cspan\u003e \u003c\u003cspan style=\"color:#5bc4bf\"\u003eh1\u003c/span\u003e \u003cspan style=\"color:#06b6ef\"\u003estyle\u003c/span\u003e\u003cspan style=\"color:#5bc4bf\"\u003e=\u003c/span\u003e\u003cspan style=\"color:#48b685\"\u003e\"margin-bottom:0;text-align:center;\"\u003c/span\u003e\u003eDiv布局实例\u003c/\u003cspan style=\"color:#5bc4bf\"\u003eh1\u003c/span\u003e\u003e \u003c/span\u003e\u003c/span\u003e\u003cspan style=\"display:flex;\"\u003e\u003cspan\u003e \u003c/\u003cspan style=\"color:#5bc4bf\"\u003ediv\u003c/span\u003e\u003e \u003c/span\u003e\u003c/span\u003e\u003cspan style=\"display:flex;\"\u003e\u003cspan\u003e \u003c\u003cspan style=\"color:#5bc4bf\"\u003ediv\u003c/span\u003e \u003cspan style=\"color:#06b6ef\"\u003eid\u003c/span\u003e\u003cspan style=\"color:#5bc4bf\"\u003e=\u003c/span\u003e\u003cspan style=\"color:#48b685\"\u003e\"menu\"\u003c/span\u003e \u003cspan style=\"color:#06b6ef\"\u003estyle\u003c/span\u003e\u003cspan style=\"color:#5bc4bf\"\u003e=\u003c/span\u003e\u003cspan style=\"color:#48b685\"\u003e\"background-color:#FFFFFF;height:200px;width:100px;float:left;\"\u003c/span\u003e\u003e \u003c/span\u003e\u003c/span\u003e\u003cspan style=\"display:flex;\"\u003e\u003cspan\u003e 菜单\u003c\u003cspan style=\"color:#5bc4bf\"\u003ebr\u003c/span\u003e/\u003e \u003c/span\u003e\u003c/span\u003e\u003cspan style=\"display:flex;\"\u003e\u003cspan\u003e num1\u003c\u003cspan style=\"color:#5bc4bf\"\u003ebr\u003c/span\u003e/\u003e \u003c/span\u003e\u003c/span\u003e\u003cspan style=\"display:flex;\"\u003e\u003cspan\u003e num2\u003c\u003cspan style=\"color:#5bc4bf\"\u003ebr\u003c/span\u003e/\u003e \u003c/span\u003e\u003c/span\u003e\u003cspan style=\"display:flex;\"\u003e\u003cspan\u003e num3 \u003c/span\u003e\u003c/span\u003e\u003cspan style=\"display:flex;\"\u003e\u003cspan\u003e \u003c/\u003cspan style=\"color:#5bc4bf\"\u003ediv\u003c/span\u003e\u003e \u003c/span\u003e\u003c/span\u003e\u003cspan style=\"display:flex;\"\u003e\u003cspan\u003e \u003c\u003cspan style=\"color:#5bc4bf\"\u003ediv\u003c/span\u003e \u003cspan style=\"color:#06b6ef\"\u003eid\u003c/span\u003e\u003cspan style=\"color:#5bc4bf\"\u003e=\u003c/span\u003e\u003cspan style=\"color:#48b685\"\u003e\"content\"\u003c/span\u003e \u003cspan style=\"color:#06b6ef\"\u003estyle\u003c/span\u003e\u003cspan style=\"color:#5bc4bf\"\u003e=\u003c/span\u003e\u003cspan style=\"color:#48b685\"\u003e\"background-color:#FFFF00;height:200px;width:300px;float:left;\"\u003c/span\u003e\u003e \u003c/span\u003e\u003c/span\u003e\u003cspan style=\"display:flex;\"\u003e\u003cspan\u003e 中间信息 \u003c/span\u003e\u003c/span\u003e\u003cspan style=\"display:flex;\"\u003e\u003cspan\u003e \u003c/\u003cspan style=\"color:#5bc4bf\"\u003ediv\u003c/span\u003e\u003e \u003c/span\u003e\u003c/span\u003e\u003cspan style=\"display:flex;\"\u003e\u003cspan\u003e \u003c\u003cspan style=\"color:#5bc4bf\"\u003ediv\u003c/span\u003e \u003cspan style=\"color:#06b6ef\"\u003eid\u003c/span\u003e\u003cspan style=\"color:#5bc4bf\"\u003e=\u003c/span\u003e\u003cspan style=\"color:#48b685\"\u003e\"right\"\u003c/span\u003e \u003cspan style=\"color:#06b6ef\"\u003estyle\u003c/span\u003e\u003cspan style=\"color:#5bc4bf\"\u003e=\u003c/span\u003e\u003cspan style=\"color:#48b685\"\u003e\"background-color:#000000;color:#FFFFFF;height:200px;width:100px;float:right;\"\u003c/span\u003e\u003e \u003c/span\u003e\u003c/span\u003e\u003cspan style=\"display:flex;\"\u003e\u003cspan\u003e 右侧信息 \u003c/span\u003e\u003c/span\u003e\u003cspan style=\"display:flex;\"\u003e\u003cspan\u003e \u003c/\u003cspan style=\"color:#5bc4bf\"\u003ediv\u003c/span\u003e\u003e \u003c/span\u003e\u003c/span\u003e\u003cspan style=\"display:flex;\"\u003e\u003cspan\u003e \u003c\u003cspan style=\"color:#5bc4bf\"\u003ediv\u003c/span\u003e \u003cspan style=\"color:#06b6ef\"\u003eid\u003c/span\u003e\u003cspan style=\"color:#5bc4bf\"\u003e=\u003c/span\u003e\u003cspan style=\"color:#48b685\"\u003e\"bool\"\u003c/span\u003e \u003cspan style=\"color:#06b6ef\"\u003estyle\u003c/span\u003e\u003cspan style=\"color:#5bc4bf\"\u003e=\u003c/span\u003e\u003cspan style=\"color:#48b685\"\u003e\"background-color:#F0F8FF;clear:both;text-align:center;\"\u003c/span\u003e\u003e \u003c/span\u003e\u003c/span\u003e\u003cspan style=\"display:flex;\"\u003e\u003cspan\u003e 整体布局测试 \u003c/span\u003e\u003c/span\u003e\u003cspan style=\"display:flex;\"\u003e\u003cspan\u003e \u003c/\u003cspan style=\"color:#5bc4bf\"\u003ediv\u003c/span\u003e\u003e \u003c/span\u003e\u003c/span\u003e\u003cspan style=\"display:flex;\"\u003e\u003cspan\u003e \u003c/\u003cspan style=\"color:#5bc4bf\"\u003ediv\u003c/span\u003e\u003e \u003c/span\u003e\u003c/span\u003e\u003cspan style=\"display:flex;\"\u003e\u003cspan\u003e\u003c/\u003cspan style=\"color:#5bc4bf\"\u003ebody\u003c/span\u003e\u003e \u003c/span\u003e\u003c/span\u003e\u003cspan style=\"display:flex;\"\u003e\u003cspan\u003e\u003c/\u003cspan style=\"color:#5bc4bf\"\u003ehtml\u003c/span\u003e\u003e \u003c/span\u003e\u003c/span\u003e\u003c/code\u003e\u003c/pre\u003e\u003c/div\u003e\u003chtml\u003e \u003chead\u003e \u003cmeta charset=\"utf-8\"\u003e Div布局实例 菜单 num1 num2 num3 中间信息 右侧信息 整体布局测试 HTML 表单 表单是一个包含表单元素的区域。\n表单元素是允许用户在表单中输入内容,比如：文本域(textarea)、下拉列表、单选框(radio-buttons)、复选框(checkboxes)等等。\n表单的构建用元素\n输入元素 多数情况下被用到的表单标签是输入标签（）。输入类型是由类型属性（type）定义的。\n文本域（Text Fields） 文本域通过 标签来设定，用户可以在表单中键入字母、数字等内容\n\u003cform\u003e First name: \u003cinput type=\"text\" name=\"firstname\"\u003e\u003cbr\u003e Last name: \u003cinput type=\"text\" name=\"lastname\"\u003e \u003c/form\u003e First name: Last name: 密码字段 \u003cform\u003e Password: \u003cinput type=\"password\" name=\"pwd\"\u003e \u003c/form\u003e Password: 单选按钮（Radio Buttons） \u003cform\u003e \u003cinput type=\"radio\" name=\"sex\" value=\"male\"\u003eMale\u003cbr\u003e \u003cinput type=\"radio\" name=\"sex\" value=\"female\"\u003eFemale \u003c/form\u003e Male\nFemale 复选框（Checkboxes） \u003cform\u003e \u003cinput type=\"checkbox\" name=\"vehicle\" value=\"Bike\"\u003eI have a bike\u003cbr\u003e \u003cinput type=\"checkbox\" name=\"vehicle\" value=\"Car\"\u003eI have a car \u003c/form\u003e I have a bike\nI have a car 提交按钮(Submit Button) 定义了提交按钮. 当用户单击确认按钮时，表单的内容会被传送到另一个文件。表单的动作属性定义了目的文件的文件名。由动作属性定义的这个文件通常会对接收到的输入数据进行相关的处理。:\n\u003cform name=\"input\" action=\"html_form_action.php\" method=\"get\"\u003e Username: \u003cinput type=\"text\" name=\"user\"\u003e \u003cinput type=\"submit\" value=\"Submit\"\u003e \u003c/form\u003e Username: HTML 表单标签 标签 描述 定义供用户输入的表单 定义输入域 \u003c/code\u003e\u003c/td\u003e \u003ctd\u003e定义文本域 (一个多行的输入控件)\u003c/td\u003e \u003c/tr\u003e \u003ctr\u003e \u003ctd\u003e\u003ccode\u003e\u003clabel\u003e\u003c/code\u003e\u003c/td\u003e \u003ctd\u003e定义了 \u003ccode\u003e\u003cinput\u003e\u003c/code\u003e 元素的标签，一般为输入标题\u003c/td\u003e \u003c/tr\u003e \u003ctr\u003e \u003ctd\u003e\u003ccode\u003e\u003cfiledset\u003e\u003c/code\u003e\u003c/td\u003e \u003ctd\u003e定义了一组相关的表单元素，并使用外框包含起来\u003c/td\u003e \u003c/tr\u003e \u003ctr\u003e \u003ctd\u003e\u003ccode\u003e\u003clegend\u003e\u003c/code\u003e\u003c/td\u003e \u003ctd\u003e定义了 \u003ccode\u003e\u003cfieldset\u003e\u003c/code\u003e 元素的标题\u003c/td\u003e \u003c/tr\u003e \u003ctr\u003e \u003ctd\u003e\u003ccode\u003e\u003cselect\u003e\u003c/code\u003e\u003c/td\u003e \u003ctd\u003e定义了下拉选项列表\u003c/td\u003e \u003c/tr\u003e \u003ctr\u003e \u003ctd\u003e\u003ccode\u003e\u003coptgroup\u003e\u003c/code\u003e\u003c/td\u003e \u003ctd\u003e定义选项组\u003c/td\u003e \u003c/tr\u003e \u003ctr\u003e \u003ctd\u003e\u003ccode\u003e\u003coption\u003e\u003c/code\u003e\u003c/td\u003e \u003ctd\u003e定义下拉列表中的选项\u003c/td\u003e \u003c/tr\u003e \u003ctr\u003e \u003ctd\u003e\u003ccode\u003e\u003cbutton\u003e\u003c/code\u003e\u003c/td\u003e \u003ctd\u003e定义一个点击按钮\u003c/td\u003e \u003c/tr\u003e \u003ctr\u003e \u003ctd\u003e\u003ccode\u003e\u003cdatalist\u003e\u003c/code\u003e\u003c/td\u003e \u003ctd\u003e指定一个预先定义的输入控件选项列表\u003c/td\u003e \u003c/tr\u003e \u003ctr\u003e \u003ctd\u003e\u003ccode\u003ekeygen\u003c/code\u003e\u003c/td\u003e \u003ctd\u003e定义了表单的密钥对生成器字段\u003c/td\u003e \u003c/tr\u003e \u003ctr\u003e \u003ctd\u003e\u003ccode\u003e\u003coutput\u003e\u003c/code\u003e\u003c/td\u003e \u003ctd\u003e定义一个计算结果\u003c/td\u003e \u003c/tr\u003e \u003c/tbody\u003e \u003c/table\u003e \u003ch2 id=\"html-框架\"\u003eHTML 框架\u003c/h2\u003e \u003cp\u003e通过使用框架，你可以在同一个浏览器窗口中镶嵌其他页面。\n\u003cdiv class=\"highlight\"\u003e\u003cpre tabindex=\"0\" style=\"color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;\"\u003e\u003ccode class=\"language-html\" data-lang=\"html\"\u003e\u003cspan style=\"display:flex;\"\u003e\u003cspan\u003e\u003c\u003cspan style=\"color:#5bc4bf\"\u003eiframe\u003c/span\u003e \u003cspan style=\"color:#06b6ef\"\u003esrc\u003c/span\u003e\u003cspan style=\"color:#5bc4bf\"\u003e=\u003c/span\u003e\u003cspan style=\"color:#48b685\"\u003e\"demo_iframe.htm\"\u003c/span\u003e \u003cspan style=\"color:#06b6ef\"\u003ewidth\u003c/span\u003e\u003cspan style=\"color:#5bc4bf\"\u003e=\u003c/span\u003e\u003cspan style=\"color:#48b685\"\u003e\"200\"\u003c/span\u003e \u003cspan style=\"color:#06b6ef\"\u003eheight\u003c/span\u003e\u003cspan style=\"color:#5bc4bf\"\u003e=\u003c/span\u003e\u003cspan style=\"color:#48b685\"\u003e\"200\"\u003c/span\u003e \u003cspan style=\"color:#06b6ef\"\u003eframeborder\u003c/span\u003e\u003cspan style=\"color:#5bc4bf\"\u003e=\u003c/span\u003e\u003cspan style=\"color:#48b685\"\u003e\"0\"\u003c/span\u003e\u003e\u003c/\u003cspan style=\"color:#5bc4bf\"\u003eiframe\u003c/span\u003e\u003e \u003c/span\u003e\u003c/span\u003e\u003c/code\u003e\u003c/pre\u003e\u003c/div\u003e\u003ch2 id=\"html-脚本\"\u003eHTML 脚本\u003c/h2\u003e \u003cp\u003e\u003ccode\u003e\u003cscript\u003e\u003c/code\u003e 标签用于定义客户端脚本，比如 JavaScript。\u003ccode\u003e\u003cscript\u003e\u003c/code\u003e 元素既可包含脚本语句，也可通过 src 属性指向外部脚本文件。\u003ccode\u003e\u003cnoscript\u003e\u003c/code\u003e 标签提供无法使用脚本时的替代内容，比方在浏览器禁用脚本时，或浏览器不支持客户端脚本时。\u003ccode\u003e\u003cnoscript\u003e\u003c/code\u003e元素可包含普通 HTML 页面的 body 元素中能够找到的所有元素。\n\u003cdiv class=\"highlight\"\u003e\u003cpre tabindex=\"0\" style=\"color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;\"\u003e\u003ccode class=\"language-html\" data-lang=\"html\"\u003e\u003cspan style=\"display:flex;\"\u003e\u003cspan\u003e\u003c\u003cspan style=\"color:#5bc4bf\"\u003escript\u003c/span\u003e\u003e \u003c/span\u003e\u003c/span\u003e\u003cspan style=\"display:flex;\"\u003e\u003cspan\u003edocument.\u003cspan style=\"color:#06b6ef\"\u003ewrite\u003c/span\u003e(\u003cspan style=\"color:#48b685\"\u003e\"Hello World!\"\u003c/span\u003e) \u003c/span\u003e\u003c/span\u003e\u003cspan style=\"display:flex;\"\u003e\u003cspan\u003e\u003c/\u003cspan style=\"color:#5bc4bf\"\u003escript\u003c/span\u003e\u003e \u003c/span\u003e\u003c/span\u003e\u003cspan style=\"display:flex;\"\u003e\u003cspan\u003e\u003c\u003cspan style=\"color:#5bc4bf\"\u003enoscript\u003c/span\u003e\u003e抱歉，你的浏览器不支持 JavaScript!\u003c/\u003cspan style=\"color:#5bc4bf\"\u003enoscript\u003c/span\u003e\u003e \u003c/span\u003e\u003c/span\u003e\u003c/code\u003e\u003c/pre\u003e\u003c/div\u003e\u003chr\u003e \u003ch3 id=\"reference\"\u003eReference\u003c/h3\u003e \u003cp\u003e\u003ca href=\"https://www.runoob.com/html/html-tutorial.html\" target=\"_blank\" rel=\"noopener\" style=\"color:#42b983\";\u003e菜鸟教程\u003c/a\u003e\n",
+  "wordCount" : "4022",
+  "inLanguage": "en",
+  "image":"https://source.unsplash.com/random/400x200?code","datePublished": "2019-06-10T17:31:46+08:00",
+  "dateModified": "2024-02-28T17:31:46+08:00",
+  "author":{
+    "@type": "Person",
+    "name": "Jeason"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "http://localhost:1313/en/posts/blog/html/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Jeason's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "http://localhost:1313/img/avatar.jpeg"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="http://localhost:1313/en/" accesskey="h" title="Jeason&#39;s Blog (Alt + H)">
+                <img src="http://localhost:1313/img/avatar.jpeg" alt="" aria-label="logo"
+                    height="35">Jeason&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+                
+            </div>
+        </div>
+        <ul id="menu">
+            <li class="menu-item">
+                <a href="http://localhost:1313/en/search" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
+                    <span>🔍 搜索</span>
+                    
+                </a>
+            
+            </li>
+            <li class="menu-item">
+                <a href="http://localhost:1313/en/" title="🏡 主页">
+                    <span>🏡 主页</span>
+                    
+                </a>
+            
+            </li>
+            <li class="menu-item">
+                <a href="http://localhost:1313/en/posts" title="📚 文章">
+                    <span>📚 文章</span>
+                    
+                </a>
+            
+            </li>
+            <li class="menu-item">
+                <a href="http://localhost:1313/en/archives" title="📈 归档">
+                    <span>📈 归档</span>
+                    
+                </a>
+            
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main page">
+<article class="post-single">
+    <div id="single-content">
+        <header class="post-header">
+            <div class="breadcrumbs"><a href="http://localhost:1313/en/">主页</a>&nbsp;»&nbsp;<a href="http://localhost:1313/en/posts/">📚 文章</a>&nbsp;»&nbsp;<a href="http://localhost:1313/en/posts/blog/">🏗️ 建站</a></div>
+            <h1 class="post-title">
+                HTML基本语法
+            </h1>
+            <div class="post-description">
+                这里汇总了一些常用的HTML语法
+            </div>
+            <div class="post-meta">创建: 2019-06-10 | 更新: 2024-02-28 | 作者:Jeason
+
+
+
+
+                
+                <span id="busuanzi_container_page_pv">
+                    &nbsp;|&nbsp;访问:&nbsp;<span id="busuanzi_value_page_pv"></span>
+                </span>
+
+</div>
+        </header> <aside id="toc-container" class="toc-container wide">
+    <div class="toc">
+        <details  open>
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">文章目录</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#html" aria-label="HTML">HTML</a><ul>
+                        
+                <li>
+                    <a href="#html-%e5%85%83%e7%b4%a0" aria-label="html 元素">html 元素</a><ul>
+                        
+                <li>
+                    <a href="#html-%e5%85%83%e7%b4%a0%e8%af%ad%e6%b3%95" aria-label="HTML 元素语法">HTML 元素语法</a></li></ul>
+                </li>
+                <li>
+                    <a href="#html-%e5%b1%9e%e6%80%a7" aria-label="HTML 属性">HTML 属性</a></li>
+                <li>
+                    <a href="#html-%e6%a0%87%e9%a2%98" aria-label="HTML 标题">HTML 标题</a><ul>
+                        
+                <li>
+                    <a href="#html-%e6%b0%b4%e5%b9%b3%e7%ba%bf" aria-label="HTML 水平线">HTML 水平线</a></li>
+                <li>
+                    <a href="#html%e6%b3%a8%e9%87%8a" aria-label="HTML注释">HTML注释</a></li></ul>
+                </li>
+                <li>
+                    <a href="#html-%e6%ae%b5%e8%90%bd" aria-label="HTML 段落">HTML 段落</a></li>
+                <li>
+                    <a href="#html-%e6%a0%bc%e5%bc%8f%e5%8c%96%e6%a0%87%e7%ad%be" aria-label="HTML 格式化标签">HTML 格式化标签</a><ul>
+                        
+                <li>
+                    <a href="#html-%e6%96%87%e6%9c%ac%e6%a0%bc%e5%bc%8f%e5%8c%96%e6%a0%87%e7%ad%be" aria-label="HTML 文本格式化标签">HTML 文本格式化标签</a></li>
+                <li>
+                    <a href="#html-%e8%ae%a1%e7%ae%97%e6%9c%ba%e8%be%93%e5%87%ba-%e6%a0%87%e7%ad%be" aria-label="HTML &amp;ldquo;计算机输出&amp;rdquo; 标签">HTML &ldquo;计算机输出&rdquo; 标签</a></li>
+                <li>
+                    <a href="#html-%e5%bc%95%e6%96%87-%e5%bc%95%e7%94%a8-%e5%8f%8a%e6%a0%87%e7%ad%be%e5%ae%9a%e4%b9%89" aria-label="HTML 引文, 引用, 及标签定义">HTML 引文, 引用, 及标签定义</a></li></ul>
+                </li>
+                <li>
+                    <a href="#html%e5%a4%b4%e9%83%a8%e4%bf%a1%e6%81%af" aria-label="HTML头部信息">HTML头部信息</a><ul>
+                        
+                <li>
+                    <a href="#html-head-%e5%85%83%e7%b4%a0" aria-label="HTML &amp;lt;head&amp;gt; 元素">HTML <code>&lt;head&gt;</code> 元素</a></li>
+                <li>
+                    <a href="#html-title-%e5%85%83%e7%b4%a0" aria-label="HTML &amp;lt;title&amp;gt; 元素">HTML <code>&lt;title&gt;</code> 元素</a></li>
+                <li>
+                    <a href="#html-base-%e5%85%83%e7%b4%a0" aria-label="HTML &amp;lt;base&amp;gt; 元素">HTML <code>&lt;base&gt;</code> 元素</a></li>
+                <li>
+                    <a href="#html-link-%e5%85%83%e7%b4%a0" aria-label="HTML &amp;lt;link&amp;gt; 元素">HTML <code>&lt;link&gt;</code> 元素</a></li>
+                <li>
+                    <a href="#html-style-%e5%85%83%e7%b4%a0" aria-label="HTML &amp;lt;style&amp;gt; 元素">HTML <code>&lt;style&gt;</code> 元素</a></li>
+                <li>
+                    <a href="#html-meta-%e5%85%83%e7%b4%a0" aria-label="HTML &amp;lt;meta&amp;gt; 元素">HTML <code>&lt;meta&gt;</code> 元素</a></li>
+                <li>
+                    <a href="#html-script-%e5%85%83%e7%b4%a0" aria-label="HTML &amp;lt;script&amp;gt; 元素">HTML <code>&lt;script&gt;</code> 元素</a></li>
+                <li>
+                    <a href="#html-head-%e5%85%83%e7%b4%a0%e6%b1%87%e6%80%bb" aria-label="HTML head 元素汇总">HTML head 元素汇总</a></li></ul>
+                </li>
+                <li>
+                    <a href="#html-%e6%a0%b7%e5%bc%8f--css" aria-label="HTML 样式- CSS">HTML 样式- CSS</a></li>
+                <li>
+                    <a href="#html-%e5%9b%be%e5%83%8f" aria-label="HTML 图像">HTML 图像</a><ul>
+                        
+                <li>
+                    <a href="#alt%e5%b1%9e%e6%80%a7" aria-label="Alt属性">Alt属性</a></li>
+                <li>
+                    <a href="#%e8%ae%be%e7%bd%ae%e5%9b%be%e5%83%8f%e7%9a%84%e9%ab%98%e5%ba%a6%e4%b8%8e%e5%ae%bd%e5%ba%a6" aria-label="设置图像的高度与宽度">设置图像的高度与宽度</a></li></ul>
+                </li>
+                <li>
+                    <a href="#html-%e8%a1%a8%e6%a0%bc" aria-label="HTML 表格">HTML 表格</a></li>
+                <li>
+                    <a href="#html-%e5%88%97%e8%a1%a8" aria-label="HTML 列表">HTML 列表</a><ul>
+                        
+                <li>
+                    <a href="#html%e6%97%a0%e5%ba%8f%e5%88%97%e8%a1%a8" aria-label="HTML无序列表">HTML无序列表</a></li>
+                <li>
+                    <a href="#html-%e6%9c%89%e5%ba%8f%e5%88%97%e8%a1%a8" aria-label="HTML 有序列表">HTML 有序列表</a></li>
+                <li>
+                    <a href="#html-%e8%87%aa%e5%ae%9a%e4%b9%89%e5%88%97%e8%a1%a8" aria-label="HTML 自定义列表">HTML 自定义列表</a></li></ul>
+                </li>
+                <li>
+                    <a href="#html-%e5%8c%ba%e5%9d%97" aria-label="HTML 区块">HTML 区块</a></li>
+                <li>
+                    <a href="#html-%e5%b8%83%e5%b1%80" aria-label="HTML 布局">HTML 布局</a></li></ul>
+                </li>
+                <li>
+                    <a href="#" aria-label="Div布局实例">Div布局实例</a><ul>
+                        
+                <li>
+                    <a href="#html-%e8%a1%a8%e5%8d%95" aria-label="HTML 表单">HTML 表单</a><ul>
+                        
+                <li>
+                    <a href="#%e8%be%93%e5%85%a5%e5%85%83%e7%b4%a0" aria-label="输入元素">输入元素</a><ul>
+                        
+                <li>
+                    <a href="#%e6%96%87%e6%9c%ac%e5%9f%9ftext-fields" aria-label="文本域（Text Fields）">文本域（Text Fields）</a></li>
+                <li>
+                    <a href="#%e5%af%86%e7%a0%81%e5%ad%97%e6%ae%b5" aria-label="密码字段">密码字段</a></li>
+                <li>
+                    <a href="#%e5%8d%95%e9%80%89%e6%8c%89%e9%92%aeradio-buttons" aria-label="单选按钮（Radio Buttons）">单选按钮（Radio Buttons）</a></li>
+                <li>
+                    <a href="#%e5%a4%8d%e9%80%89%e6%a1%86checkboxes" aria-label="复选框（Checkboxes）">复选框（Checkboxes）</a></li>
+                <li>
+                    <a href="#%e6%8f%90%e4%ba%a4%e6%8c%89%e9%92%aesubmit-button" aria-label="提交按钮(Submit Button)">提交按钮(Submit Button)</a></li></ul>
+                </li>
+                <li>
+                    <a href="#html-%e8%a1%a8%e5%8d%95%e6%a0%87%e7%ad%be" aria-label="HTML 表单标签">HTML 表单标签</a></li></ul>
+                </li>
+                <li>
+                    <a href="#html-%e6%a1%86%e6%9e%b6" aria-label="HTML 框架">HTML 框架</a></li>
+                <li>
+                    <a href="#html-%e8%84%9a%e6%9c%ac" aria-label="HTML 脚本">HTML 脚本</a><ul>
+                        
+                <li>
+                    <a href="#reference" aria-label="Reference">Reference</a>
+                </li>
+            </ul>
+            </li>
+            </ul>
+            </li>
+            </ul>
+        </div>
+        </details>
+    </div>
+</aside>
+<script>
+    let activeElement;
+    let elements;
+    window.addEventListener('DOMContentLoaded', function (event) {
+        checkTocPosition();
+
+        elements = document.querySelectorAll('h1[id],h2[id],h3[id],h4[id],h5[id],h6[id]');
+        
+        activeElement = elements[0];
+        const id = encodeURI(activeElement.getAttribute('id')).toLowerCase();
+        document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+    }, false);
+
+    window.addEventListener('resize', function(event) {
+        checkTocPosition();
+    }, false);
+
+    window.addEventListener('scroll', () => {
+        
+        activeElement = Array.from(elements).find((element) => {
+            if ((getOffsetTop(element) - window.pageYOffset) > 0 &&
+                (getOffsetTop(element) - window.pageYOffset) < window.innerHeight/2) {
+                return element;
+            }
+        }) || activeElement
+
+        elements.forEach(element => {
+            const id = encodeURI(element.getAttribute('id')).toLowerCase();
+            if (element === activeElement){
+                document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+            } else {
+                document.querySelector(`.inner ul li a[href="#${id}"]`).classList.remove('active');
+            }
+        })
+    }, false);
+
+    const main = parseInt(getComputedStyle(document.body).getPropertyValue('--article-width'), 10);
+    const toc = parseInt(getComputedStyle(document.body).getPropertyValue('--toc-width'), 10);
+    const gap = parseInt(getComputedStyle(document.body).getPropertyValue('--gap'), 10);
+
+    function checkTocPosition() {
+        const width = document.body.scrollWidth;
+        if (width - main - (toc * 2) - (gap * 4) > 0) {
+            document.getElementById("toc-container").classList.add("wide");
+        } else {
+            document.getElementById("toc-container").classList.remove("wide");
+        }
+    }
+
+    function getOffsetTop(element) {
+        if (!element.getClientRects().length) {
+            return 0;
+        }
+        let rect = element.getBoundingClientRect();
+        let win = element.ownerDocument.defaultView;
+        return rect.top + win.pageYOffset;
+    }
+</script>
+        <div class="post-content"><h1 id="html">HTML<a hidden class="anchor" aria-hidden="true" href="#html">#</a></h1>
+<p>超文本标记语言（英语：HyperText Markup Language，简称：HTML）是一种用于创建网页的标准标记语言。HTML可以用 来建立自己的 WEB 站点，HTML 运行在浏览器上，由浏览器来解析。</p>
+<p>HTML 不是一种编程语言，而是一种<strong>标记</strong>语言，它使用一套标记标签(markup tag)来描述网页；HTML文档包含了HTML标签和文本内容，HTML文档也被称为web页面。</p>
+<h2 id="html-元素">html 元素<a hidden class="anchor" aria-hidden="true" href="#html-元素">#</a></h2>
+<p>HTML文档由 <strong>HTML 元素</strong>定义。HTML元素包括：<strong>开始标签</strong>，<strong>元素内容</strong>，<strong>结束标签</strong></p>
+<h3 id="html-元素语法">HTML 元素语法<a hidden class="anchor" aria-hidden="true" href="#html-元素语法">#</a></h3>
+<ul>
+<li>HTML 元素以<strong>开始标签</strong>起始</li>
+<li>HTML 元素以<strong>结束标签</strong>终止</li>
+<li><strong>元素的内容</strong>是开始标签与结束标签之间的内容</li>
+<li>某些 HTML 元素具有<strong>空内容（empty content）</strong></li>
+<li>空元素<strong>在开始标签中进行关闭</strong>（以开始标签的结束而结束）</li>
+<li>大多数 HTML 元素可拥有<strong>属性</strong></li>
+</ul>
+<blockquote>
+<p>HTML 文档是由嵌套的 HTML 元素构成的</p>
+</blockquote>
+<h2 id="html-属性">HTML 属性<a hidden class="anchor" aria-hidden="true" href="#html-属性">#</a></h2>
+<p>属性是 HTML 元素提供的附加信息。</p>
+<ul>
+<li>HTML 元素可以设置<strong>属性</strong></li>
+<li>属性可以在元素中添加<strong>附加信息</strong></li>
+<li>属性一般描述于<strong>开始标签</strong></li>
+<li>属性总是以名称/值对的形式出现，<strong>比如：name=&ldquo;value&rdquo;</strong>。</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#5bc4bf">a</span> <span style="color:#06b6ef">href</span><span style="color:#5bc4bf">=</span><span style="color:#48b685">&#34;http://www.runoob.com&#34;</span>&gt;这是一个链接&lt;/<span style="color:#5bc4bf">a</span>&gt;
+</span></span></code></pre></div><h2 id="html-标题">HTML 标题<a hidden class="anchor" aria-hidden="true" href="#html-标题">#</a></h2>
+<p>在 HTML 文档中，标题很重要。标题（Heading）是通过 <code>&lt;h1&gt; - &lt;h6&gt;</code> 标签进行定义的.<code>&lt;h1&gt;</code> 定义最大的标题。 <code>&lt;h6&gt;</code> 定义最小的标题。</p>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#5bc4bf">h1</span>&gt;这是一个标题。&lt;/<span style="color:#5bc4bf">h1</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#5bc4bf">h2</span>&gt;这是一个标题。&lt;/<span style="color:#5bc4bf">h2</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#5bc4bf">h3</span>&gt;这是一个标题。&lt;/<span style="color:#5bc4bf">h3</span>&gt;
+</span></span></code></pre></div><blockquote>
+<p>请确保将 HTML 标题 标签<strong>只用于标题</strong>。不要仅仅是为了生成<strong>粗体</strong>或<strong>大号</strong>的文本而使用标题。</p>
+</blockquote>
+<h3 id="html-水平线">HTML 水平线<a hidden class="anchor" aria-hidden="true" href="#html-水平线">#</a></h3>
+<p><code>&lt;hr&gt;</code>标签在 HTML 页面中创建水平线。  用于分隔内容。</p>
+<h3 id="html注释">HTML注释<a hidden class="anchor" aria-hidden="true" href="#html注释">#</a></h3>
+<p>可以将注释插入 HTML 代码中，这样可以提高其可读性，使代码更易被人理解。浏览器会忽略注释，也不会显示它们。</p>
+<p>注释写法如下:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span><span style="color:#776e71">&lt;!-- 这是一个注释 --&gt;</span>
+</span></span></code></pre></div><h2 id="html-段落">HTML 段落<a hidden class="anchor" aria-hidden="true" href="#html-段落">#</a></h2>
+<p>段落是通过 <code>&lt;p&gt; </code>标签定义的。如果在不产生新段落的情况下换行需要使用<code>&lt;br&gt;</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#5bc4bf">p</span>&gt;这个&lt;<span style="color:#5bc4bf">br</span>&gt;段落&lt;<span style="color:#5bc4bf">br</span>&gt;演示了分行的效果&lt;/<span style="color:#5bc4bf">p</span>&gt;
+</span></span></code></pre></div><blockquote>
+<p><code>&lt;br /&gt;</code>元素是一个空的 HTML 元素。由于关闭标签没有任何意义，因此它没有结束标签。</p>
+</blockquote>
+<h2 id="html-格式化标签">HTML 格式化标签<a hidden class="anchor" aria-hidden="true" href="#html-格式化标签">#</a></h2>
+<h3 id="html-文本格式化标签">HTML 文本格式化标签<a hidden class="anchor" aria-hidden="true" href="#html-文本格式化标签">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>标签</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>&lt;b&gt;</code></td>
+<td>定义粗体文本</td>
+</tr>
+<tr>
+<td><code>&lt;em&gt;</code></td>
+<td>定义着重文字</td>
+</tr>
+<tr>
+<td><code>&lt;i&gt;</code></td>
+<td>定义斜体字</td>
+</tr>
+<tr>
+<td><code>&lt;small&gt;</code></td>
+<td>定义小号字</td>
+</tr>
+<tr>
+<td><code>&lt;strong&gt;</code></td>
+<td>定义加重语气</td>
+</tr>
+<tr>
+<td><code>&lt;sub&gt;</code></td>
+<td>定义下标字</td>
+</tr>
+<tr>
+<td><code>&lt;sup&gt;</code></td>
+<td>定义上标字</td>
+</tr>
+<tr>
+<td><code>&lt;ins&gt;</code></td>
+<td>定义插入字</td>
+</tr>
+<tr>
+<td><code>&lt;del&gt;</code></td>
+<td>定义删除字</td>
+</tr>
+</tbody>
+</table>
+<h3 id="html-计算机输出-标签">HTML &ldquo;计算机输出&rdquo; 标签<a hidden class="anchor" aria-hidden="true" href="#html-计算机输出-标签">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>标签</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>&lt;code&gt;</code></td>
+<td>定义计算机代码</td>
+</tr>
+<tr>
+<td><code>&lt;kbd&gt;</code></td>
+<td>定义键盘码</td>
+</tr>
+<tr>
+<td><code>&lt;samp&gt;</code></td>
+<td>定义计算机代码样本</td>
+</tr>
+<tr>
+<td><code>&lt;var&gt;</code></td>
+<td>定义变量</td>
+</tr>
+<tr>
+<td><code>&lt;pre&gt;</code></td>
+<td>定义预格式文本</td>
+</tr>
+</tbody>
+</table>
+<h3 id="html-引文-引用-及标签定义">HTML 引文, 引用, 及标签定义<a hidden class="anchor" aria-hidden="true" href="#html-引文-引用-及标签定义">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>标签</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>&lt;abbr&gt;</code></td>
+<td>定义缩写</td>
+</tr>
+<tr>
+<td><code>&lt;address&gt;</code></td>
+<td>定义地址</td>
+</tr>
+<tr>
+<td><code>&lt;bdo&gt;</code></td>
+<td>定义文字方向</td>
+</tr>
+<tr>
+<td><code>&lt;blockquote&gt;</code></td>
+<td>定义长的引用</td>
+</tr>
+<tr>
+<td><code>&lt;q&gt;</code></td>
+<td>定义短的引用语</td>
+</tr>
+<tr>
+<td><code>&lt;cite&gt;</code></td>
+<td>定义引用、引证</td>
+</tr>
+<tr>
+<td><code>&lt;dfn&gt;</code></td>
+<td>定义一个定义项目</td>
+</tr>
+</tbody>
+</table>
+<h2 id="html头部信息">HTML头部信息<a hidden class="anchor" aria-hidden="true" href="#html头部信息">#</a></h2>
+<h3 id="html-head-元素">HTML <code>&lt;head&gt;</code> 元素<a hidden class="anchor" aria-hidden="true" href="#html-head-元素">#</a></h3>
+<p><code>&lt;head&gt;</code>元素包含了所有的头部标签元素。在 <code>&lt;head&gt;</code>元素中你可以插入脚本（scripts）, 样式文件（CSS），及各种meta信息。</p>
+<p>可以添加在头部区域的元素标签为: <code>&lt;title&gt;</code>,<code> &lt;style&gt;</code>, <code>&lt;meta&gt;</code>, <code>&lt;link&gt;</code>,<code> &lt;script&gt;</code>,<code>&lt;noscript&gt;</code>, and <code>&lt;base&gt;</code>.</p>
+<h3 id="html-title-元素">HTML <code>&lt;title&gt;</code> 元素<a hidden class="anchor" aria-hidden="true" href="#html-title-元素">#</a></h3>
+<p><code>&lt;title&gt;</code> 标签定义了不同文档的标题，在HTML/XHTML 文档中是必须的。</p>
+<ul>
+<li>定义了浏览器工具栏的标题</li>
+<li>当网页添加到收藏夹时，显示在收藏夹中的标题</li>
+<li>显示在搜索引擎结果页面的标题</li>
+</ul>
+<h3 id="html-base-元素">HTML <code>&lt;base&gt;</code> 元素<a hidden class="anchor" aria-hidden="true" href="#html-base-元素">#</a></h3>
+<p><code>&lt;base&gt;</code> 标签描述了基本的链接地址/链接目标，该标签作为HTML文档中所有的链接标签的默认链接.</p>
+<h3 id="html-link-元素">HTML <code>&lt;link&gt;</code> 元素<a hidden class="anchor" aria-hidden="true" href="#html-link-元素">#</a></h3>
+<p><code>&lt;link&gt;</code> 标签定义了文档与外部资源之间的关系，通常用于链接到样式表.</p>
+<h3 id="html-style-元素">HTML <code>&lt;style&gt;</code> 元素<a hidden class="anchor" aria-hidden="true" href="#html-style-元素">#</a></h3>
+<p><code>&lt;style&gt;</code> 标签定义了HTML文档的样式文件引用地址，也可以直接添加样式来渲染 HTML 文档</p>
+<h3 id="html-meta-元素">HTML <code>&lt;meta&gt;</code> 元素<a hidden class="anchor" aria-hidden="true" href="#html-meta-元素">#</a></h3>
+<p><code>&lt;meta&gt;</code> 标签提供了元数据.<strong>元数据也不显示在页面上，但会被浏览器解析</strong>。META 元素通常用于指定网页的描述，关键词，文件的最后修改时间，作者，和其他元数据。元数据可以使用于浏览器（如何显示内容或重新加载页面），搜索引擎（关键词），或其他Web服务。<code>&lt;meta&gt;</code> 一般放置于 <code>&lt;head&gt;</code> 区域</p>
+<h3 id="html-script-元素">HTML <code>&lt;script&gt;</code> 元素<a hidden class="anchor" aria-hidden="true" href="#html-script-元素">#</a></h3>
+<p><code>&lt;script&gt;</code>标签用于加载脚本文件，如： JavaScript</p>
+<h3 id="html-head-元素汇总">HTML head 元素汇总<a hidden class="anchor" aria-hidden="true" href="#html-head-元素汇总">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>标签</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>&lt;head&gt;</code></td>
+<td>定义了文档的信息</td>
+</tr>
+<tr>
+<td><code>&lt;title&gt;</code></td>
+<td>定义了文档的标题</td>
+</tr>
+<tr>
+<td><code>&lt;base&gt;</code></td>
+<td>定义了页面链接标签的默认链接地址</td>
+</tr>
+<tr>
+<td><code>&lt;link&gt;</code></td>
+<td>定义了一个文档和外部资源之间的关系</td>
+</tr>
+<tr>
+<td><code>&lt;meta&gt;</code></td>
+<td>定义了HTML文档中的元数据</td>
+</tr>
+<tr>
+<td><code>&lt;script&gt;</code></td>
+<td>定义了客户端的脚本文件</td>
+</tr>
+<tr>
+<td><code>&lt;style&gt;</code></td>
+<td>定义了HTML文档的样式文件</td>
+</tr>
+</tbody>
+</table>
+<h2 id="html-样式--css">HTML 样式- CSS<a hidden class="anchor" aria-hidden="true" href="#html-样式--css">#</a></h2>
+<p>CSS (Cascading Style Sheets) 用于渲染HTML元素标签的样式.CSS 可以通过以下方式添加到HTML中:</p>
+<ul>
+<li>内联样式- 在HTML元素中使用&quot;style&quot; <strong>属性</strong></li>
+<li>内部样式表 -在HTML文档头部 <code>&lt;head&gt;</code> 区域使用<code>&lt;style&gt;</code> <strong>元素</strong> 来包含CSS</li>
+<li>外部引用 - 使用外部 CSS <strong>文件</strong></li>
+</ul>
+<blockquote>
+<p>使用CSS最好的方式是通过外部引用CSS文件.</p>
+</blockquote>
+<h2 id="html-图像">HTML 图像<a hidden class="anchor" aria-hidden="true" href="#html-图像">#</a></h2>
+<p>在 HTML 中，图像由<code>&lt;img&gt;</code> 标签定义。<code>&lt;img&gt;</code> 是空标签，意思是说，它只包含属性，并且没有闭合标签。</p>
+<blockquote>
+<p>空格<code>&lt;br&gt;</code>也是没有闭合标签的</p>
+</blockquote>
+<p>定义图像的一般语法：</p>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#5bc4bf">img</span> <span style="color:#06b6ef">src</span><span style="color:#5bc4bf">=</span><span style="color:#48b685">&#34;url&#34;</span> <span style="color:#06b6ef">alt</span><span style="color:#5bc4bf">=</span><span style="color:#48b685">&#34;some_text&#34;</span>&gt;
+</span></span></code></pre></div><h3 id="alt属性">Alt属性<a hidden class="anchor" aria-hidden="true" href="#alt属性">#</a></h3>
+<p>alt 属性用来为图像定义一串预备的可替换的文本。在浏览器无法载入图像时，替换文本属性告诉读者她们失去的信息。此时，浏览器将显示这个替代性的文本而不是图像。</p>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#5bc4bf">img</span> <span style="color:#06b6ef">src</span><span style="color:#5bc4bf">=</span><span style="color:#48b685">&#34;boat.gif&#34;</span> <span style="color:#06b6ef">alt</span><span style="color:#5bc4bf">=</span><span style="color:#48b685">&#34;Big Boat&#34;</span>&gt;
+</span></span></code></pre></div><h3 id="设置图像的高度与宽度">设置图像的高度与宽度<a hidden class="anchor" aria-hidden="true" href="#设置图像的高度与宽度">#</a></h3>
+<p>height（高度） 与 width（宽度）属性用于设置图像的高度与宽度。</p>
+<p>属性值默认单位为像素:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#5bc4bf">img</span> <span style="color:#06b6ef">src</span><span style="color:#5bc4bf">=</span><span style="color:#48b685">&#34;pulpit.jpg&#34;</span> <span style="color:#06b6ef">alt</span><span style="color:#5bc4bf">=</span><span style="color:#48b685">&#34;Pulpit rock&#34;</span> <span style="color:#06b6ef">width</span><span style="color:#5bc4bf">=</span><span style="color:#48b685">&#34;304&#34;</span> <span style="color:#06b6ef">height</span><span style="color:#5bc4bf">=</span><span style="color:#48b685">&#34;228&#34;</span>&gt;
+</span></span></code></pre></div><h2 id="html-表格">HTML 表格<a hidden class="anchor" aria-hidden="true" href="#html-表格">#</a></h2>
+<p>表格由 <code>&lt;table&gt;</code> 标签来定义。每个表格均有若干行（由 <code>&lt;tr&gt;</code> 标签定义），每行被分割为若干单元格（由<code>&lt;td&gt;</code> 标签定义）。字母 td 指表格数据（table data），即数据单元格的内容。数据单元格可以包含文本、图片、列表、段落、表单、水平线、表格等等。</p>
+<p>表格的表头使用 <code>&lt;th&gt;</code> 标签进行定义。</p>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#5bc4bf">table</span> <span style="color:#06b6ef">border</span><span style="color:#5bc4bf">=</span><span style="color:#48b685">&#34;1&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>    &lt;<span style="color:#5bc4bf">tr</span>&gt;
+</span></span><span style="display:flex;"><span>        &lt;<span style="color:#5bc4bf">th</span>&gt;Header 1&lt;/<span style="color:#5bc4bf">th</span>&gt;
+</span></span><span style="display:flex;"><span>        &lt;<span style="color:#5bc4bf">th</span>&gt;Header 2&lt;/<span style="color:#5bc4bf">th</span>&gt;
+</span></span><span style="display:flex;"><span>    &lt;/<span style="color:#5bc4bf">tr</span>&gt;
+</span></span><span style="display:flex;"><span>    &lt;<span style="color:#5bc4bf">tr</span>&gt;
+</span></span><span style="display:flex;"><span>        &lt;<span style="color:#5bc4bf">td</span>&gt;row 1, cell 1&lt;/<span style="color:#5bc4bf">td</span>&gt;
+</span></span><span style="display:flex;"><span>        &lt;<span style="color:#5bc4bf">td</span>&gt;row 1, cell 2&lt;/<span style="color:#5bc4bf">td</span>&gt;
+</span></span><span style="display:flex;"><span>    &lt;/<span style="color:#5bc4bf">tr</span>&gt;
+</span></span><span style="display:flex;"><span>    &lt;<span style="color:#5bc4bf">tr</span>&gt;
+</span></span><span style="display:flex;"><span>        &lt;<span style="color:#5bc4bf">td</span>&gt;row 2, cell 1&lt;/<span style="color:#5bc4bf">td</span>&gt;
+</span></span><span style="display:flex;"><span>        &lt;<span style="color:#5bc4bf">td</span>&gt;row 2, cell 2&lt;/<span style="color:#5bc4bf">td</span>&gt;
+</span></span><span style="display:flex;"><span>    &lt;/<span style="color:#5bc4bf">tr</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#5bc4bf">table</span>&gt;
+</span></span></code></pre></div><table border="1">
+    <tr>
+        <th>Header 1</th>
+        <th>Header 2</th>
+    </tr>
+    <tr>
+        <td>row 1, cell 1</td>
+        <td>row 1, cell 2</td>
+    </tr>
+    <tr>
+        <td>row 2, cell 1</td>
+        <td>row 2, cell 2</td>
+    </tr>
+</table>
+<blockquote>
+<p>大多数浏览器会把表头显示为粗体居中的文本</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>标签</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>&lt;table&gt;</code></td>
+<td>定义表格</td>
+</tr>
+<tr>
+<td><code>&lt;th&gt;</code></td>
+<td>定义表格的表头</td>
+</tr>
+<tr>
+<td><code>&lt;tr&gt;</code></td>
+<td>定义表格的行</td>
+</tr>
+<tr>
+<td><code>&lt;td&gt;</code></td>
+<td>定义表格单元格</td>
+</tr>
+<tr>
+<td><code>&lt;caption&gt;</code></td>
+<td>定义表格标题</td>
+</tr>
+<tr>
+<td><code>&lt;colgroup&gt;</code></td>
+<td>定义表格列的组</td>
+</tr>
+<tr>
+<td><code>&lt;col&gt;</code></td>
+<td>定义用于表格列的属性</td>
+</tr>
+<tr>
+<td><code>&lt;thead&gt;</code></td>
+<td>定义表格的页眉</td>
+</tr>
+<tr>
+<td><code>&lt;tbody&gt;</code></td>
+<td>定义表格的主体</td>
+</tr>
+<tr>
+<td><code>&lt;tfoot&gt;</code></td>
+<td>定义表格的页脚</td>
+</tr>
+</tbody>
+</table>
+<h2 id="html-列表">HTML 列表<a hidden class="anchor" aria-hidden="true" href="#html-列表">#</a></h2>
+<h3 id="html无序列表">HTML无序列表<a hidden class="anchor" aria-hidden="true" href="#html无序列表">#</a></h3>
+<p>无序列表是一个项目的列表，此列项目使用粗体圆点（典型的小黑圆圈）进行标记。</p>
+<p>无序列表使用 <code>&lt;ul&gt;</code> 标签</p>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#5bc4bf">ul</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#5bc4bf">li</span>&gt;Coffee&lt;/<span style="color:#5bc4bf">li</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#5bc4bf">li</span>&gt;Milk&lt;/<span style="color:#5bc4bf">li</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#5bc4bf">ul</span>&gt;
+</span></span></code></pre></div><ul>
+<li>Coffee</li>
+<li>Milk</li>
+</ul>
+<h3 id="html-有序列表">HTML 有序列表<a hidden class="anchor" aria-hidden="true" href="#html-有序列表">#</a></h3>
+<p>有序列表也是一列项目，列表项目使用数字进行标记。 有序列表始于 <code>&lt;ol&gt;</code> 标签。每个列表项始于 <code>&lt;li&gt;</code> 标签。列表项使用数字来标记。</p>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#5bc4bf">ol</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#5bc4bf">li</span>&gt;Coffee&lt;/<span style="color:#5bc4bf">li</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#5bc4bf">li</span>&gt;Milk&lt;/<span style="color:#5bc4bf">li</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#5bc4bf">ol</span>&gt;
+</span></span></code></pre></div><ol>
+<li>Coffee</li>
+<li>Milk</li>
+</ol>
+<h3 id="html-自定义列表">HTML 自定义列表<a hidden class="anchor" aria-hidden="true" href="#html-自定义列表">#</a></h3>
+<p>自定义列表不仅仅是一列项目，而是项目及其注释的组合。</p>
+<p>自定义列表以 <code>&lt;dl&gt;</code> 标签开始。每个自定义列表项以 <code>&lt;dt&gt;</code> 开始。每个自定义列表项的定义以 <code>&lt;dd&gt;</code> 开始。</p>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#5bc4bf">dl</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#5bc4bf">dt</span>&gt;Coffee&lt;/<span style="color:#5bc4bf">dt</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#5bc4bf">dd</span>&gt;- black hot drink&lt;/<span style="color:#5bc4bf">dd</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#5bc4bf">dt</span>&gt;Milk&lt;/<span style="color:#5bc4bf">dt</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#5bc4bf">dd</span>&gt;- white cold drink&lt;/<span style="color:#5bc4bf">dd</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#5bc4bf">dl</span>&gt;
+</span></span></code></pre></div><dl>
+<dt>Coffee</dt>
+<dd>- black hot drink</dd>
+<dt>Milk</dt>
+<dd>- white cold drink</dd>
+</dl>
+<h2 id="html-区块">HTML 区块<a hidden class="anchor" aria-hidden="true" href="#html-区块">#</a></h2>
+<p>大多数 HTML 元素被定义为<strong>块级元素</strong>或<strong>内联元素</strong>。</p>
+<p><strong>块级元素</strong>在浏览器显示时，通常会以新行来开始（和结束）。（如：<code>&lt;h1&gt;</code>, <code>&lt;p&gt;</code>, <code>&lt;ul&gt;</code>, <code>&lt;table&gt;</code>）</p>
+<p><strong>内联元素</strong>在显示时通常不会以新行开始。（如：<code>&lt;b&gt;</code>, <code>&lt;td&gt;</code>, <code>&lt;a&gt;</code>, <code>&lt;img&gt;</code>）</p>
+<p><strong><code>&lt;div&gt;</code> 元素是块级元素</strong>，它可用于组合其他 HTML 元素的容器。<code>&lt;div&gt;</code> 元素没有特定的含义。除此之外，由于它属于块级元素，浏览器会在其前后显示折行。如果与 CSS 一同使用，<code>&lt;div&gt;</code> 元素可用于对大的内容块设置样式属性。</p>
+<p><strong><code>&lt;span&gt;</code> 元素是内联元素</strong>，可用作文本的容器。<code>&lt;span&gt;</code> 元素也没有特定的含义。当与 CSS 一同使用时，<code>&lt;span&gt;</code> 元素可用于为部分文本设置样式属性。</p>
+<h2 id="html-布局">HTML 布局<a hidden class="anchor" aria-hidden="true" href="#html-布局">#</a></h2>
+<p>大多数网站可以使用 <code>&lt;div&gt;</code> 或者 <code>&lt;table&gt;</code> 元素来创建多列。CSS 用于对元素进行定位，或者为页面创建背景以及色彩丰富的外观。</p>
+<p>例如：</p>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span><span style="color:#776e71">&lt;!DOCTYPE html&gt;</span>
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#5bc4bf">html</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#5bc4bf">head</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#5bc4bf">meta</span> <span style="color:#06b6ef">charset</span><span style="color:#5bc4bf">=</span><span style="color:#48b685">&#34;utf-8&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#5bc4bf">title</span>&gt;Demo&lt;/<span style="color:#5bc4bf">title</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#5bc4bf">head</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#5bc4bf">body</span>&gt;
+</span></span><span style="display:flex;"><span>	&lt;<span style="color:#5bc4bf">div</span> <span style="color:#06b6ef">id</span><span style="color:#5bc4bf">=</span><span style="color:#48b685">&#34;maxname&#34;</span> <span style="color:#06b6ef">style</span><span style="color:#5bc4bf">=</span><span style="color:#48b685">&#34;width:500px;&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>      &lt;<span style="color:#5bc4bf">div</span> <span style="color:#06b6ef">id</span><span style="color:#5bc4bf">=</span><span style="color:#48b685">&#34;hname&#34;</span> <span style="color:#06b6ef">style</span><span style="color:#5bc4bf">=</span><span style="color:#48b685">&#34;background-color:#666FFF;&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>        &lt;<span style="color:#5bc4bf">h1</span> <span style="color:#06b6ef">style</span><span style="color:#5bc4bf">=</span><span style="color:#48b685">&#34;margin-bottom:0;text-align:center;&#34;</span>&gt;Div布局实例&lt;/<span style="color:#5bc4bf">h1</span>&gt;
+</span></span><span style="display:flex;"><span>      &lt;/<span style="color:#5bc4bf">div</span>&gt;
+</span></span><span style="display:flex;"><span>      &lt;<span style="color:#5bc4bf">div</span> <span style="color:#06b6ef">id</span><span style="color:#5bc4bf">=</span><span style="color:#48b685">&#34;menu&#34;</span> <span style="color:#06b6ef">style</span><span style="color:#5bc4bf">=</span><span style="color:#48b685">&#34;background-color:#FFFFFF;height:200px;width:100px;float:left;&#34;</span>&gt;    
+</span></span><span style="display:flex;"><span>          菜单&lt;<span style="color:#5bc4bf">br</span>/&gt;
+</span></span><span style="display:flex;"><span>          num1&lt;<span style="color:#5bc4bf">br</span>/&gt;
+</span></span><span style="display:flex;"><span>          num2&lt;<span style="color:#5bc4bf">br</span>/&gt;
+</span></span><span style="display:flex;"><span>          num3
+</span></span><span style="display:flex;"><span>      &lt;/<span style="color:#5bc4bf">div</span>&gt;
+</span></span><span style="display:flex;"><span>      &lt;<span style="color:#5bc4bf">div</span> <span style="color:#06b6ef">id</span><span style="color:#5bc4bf">=</span><span style="color:#48b685">&#34;content&#34;</span> <span style="color:#06b6ef">style</span><span style="color:#5bc4bf">=</span><span style="color:#48b685">&#34;background-color:#FFFF00;height:200px;width:300px;float:left;&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>        中间信息
+</span></span><span style="display:flex;"><span>      &lt;/<span style="color:#5bc4bf">div</span>&gt;
+</span></span><span style="display:flex;"><span>      &lt;<span style="color:#5bc4bf">div</span> <span style="color:#06b6ef">id</span><span style="color:#5bc4bf">=</span><span style="color:#48b685">&#34;right&#34;</span> <span style="color:#06b6ef">style</span><span style="color:#5bc4bf">=</span><span style="color:#48b685">&#34;background-color:#000000;color:#FFFFFF;height:200px;width:100px;float:right;&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>          右侧信息
+</span></span><span style="display:flex;"><span>      &lt;/<span style="color:#5bc4bf">div</span>&gt;
+</span></span><span style="display:flex;"><span>      &lt;<span style="color:#5bc4bf">div</span> <span style="color:#06b6ef">id</span><span style="color:#5bc4bf">=</span><span style="color:#48b685">&#34;bool&#34;</span> <span style="color:#06b6ef">style</span><span style="color:#5bc4bf">=</span><span style="color:#48b685">&#34;background-color:#F0F8FF;clear:both;text-align:center;&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>        整体布局测试
+</span></span><span style="display:flex;"><span>      &lt;/<span style="color:#5bc4bf">div</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;/<span style="color:#5bc4bf">div</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#5bc4bf">body</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#5bc4bf">html</span>&gt;
+</span></span></code></pre></div><html>
+<head>
+<meta charset="utf-8">
+<title>Demo</title>
+</head>
+<body>
+	<div id="maxname" style="width:500px;">
+      <div id="hname" style="background-color:#666FFF;">
+        <h1 style="margin-bottom:0;text-align:center;">Div布局实例</h1>
+      </div>
+      <div id="menu" style="background-color:#FFFFFF;height:200px;width:100px;float:left;">    
+          菜单<br/>
+          num1<br/>
+          num2<br/>
+          num3
+      </div>
+      <div id="content" style="background-color:#FFFF00;height:200px;width:300px;float:left;">
+        中间信息
+      </div>
+      <div id="right" style="background-color:#000000;color:#FFFFFF;height:200px;width:100px;float:right;">
+          右侧信息
+      </div>
+      <div id="bool" style="background-color:#F0F8FF;clear:both;text-align:center;">
+        整体布局测试
+      </div>
+  </div>
+</body>
+</html>
+<h2 id="html-表单">HTML 表单<a hidden class="anchor" aria-hidden="true" href="#html-表单">#</a></h2>
+<p>表单是一个包含表单元素的区域。</p>
+<p>表单元素是允许用户在表单中输入内容,比如：文本域(textarea)、下拉列表、单选框(radio-buttons)、复选框(checkboxes)等等。</p>
+<p>表单的构建用<code>&lt;form&gt;</code>元素</p>
+<h3 id="输入元素">输入元素<a hidden class="anchor" aria-hidden="true" href="#输入元素">#</a></h3>
+<p>多数情况下被用到的表单标签是输入标签（<code>&lt;input&gt;</code>）。输入类型是由类型属性（type）定义的。</p>
+<h4 id="文本域text-fields">文本域（Text Fields）<a hidden class="anchor" aria-hidden="true" href="#文本域text-fields">#</a></h4>
+<p>文本域通过<code>&lt;input type=&quot;text&quot;&gt;</code> 标签来设定，用户可以在表单中键入字母、数字等内容</p>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#5bc4bf">form</span>&gt;
+</span></span><span style="display:flex;"><span>First name: &lt;<span style="color:#5bc4bf">input</span> <span style="color:#06b6ef">type</span><span style="color:#5bc4bf">=</span><span style="color:#48b685">&#34;text&#34;</span> <span style="color:#06b6ef">name</span><span style="color:#5bc4bf">=</span><span style="color:#48b685">&#34;firstname&#34;</span>&gt;&lt;<span style="color:#5bc4bf">br</span>&gt;
+</span></span><span style="display:flex;"><span>Last name: &lt;<span style="color:#5bc4bf">input</span> <span style="color:#06b6ef">type</span><span style="color:#5bc4bf">=</span><span style="color:#48b685">&#34;text&#34;</span> <span style="color:#06b6ef">name</span><span style="color:#5bc4bf">=</span><span style="color:#48b685">&#34;lastname&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#5bc4bf">form</span>&gt;
+</span></span></code></pre></div><form>
+First name: <input type="text" name="firstname"><br>
+Last name: <input type="text" name="lastname">
+</form>
+<h4 id="密码字段">密码字段<a hidden class="anchor" aria-hidden="true" href="#密码字段">#</a></h4>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#5bc4bf">form</span>&gt;
+</span></span><span style="display:flex;"><span>Password: &lt;<span style="color:#5bc4bf">input</span> <span style="color:#06b6ef">type</span><span style="color:#5bc4bf">=</span><span style="color:#48b685">&#34;password&#34;</span> <span style="color:#06b6ef">name</span><span style="color:#5bc4bf">=</span><span style="color:#48b685">&#34;pwd&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#5bc4bf">form</span>&gt;
+</span></span></code></pre></div><form>
+Password: <input type="password" name="pwd">
+</form>
+<h4 id="单选按钮radio-buttons">单选按钮（Radio Buttons）<a hidden class="anchor" aria-hidden="true" href="#单选按钮radio-buttons">#</a></h4>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#5bc4bf">form</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#5bc4bf">input</span> <span style="color:#06b6ef">type</span><span style="color:#5bc4bf">=</span><span style="color:#48b685">&#34;radio&#34;</span> <span style="color:#06b6ef">name</span><span style="color:#5bc4bf">=</span><span style="color:#48b685">&#34;sex&#34;</span> <span style="color:#06b6ef">value</span><span style="color:#5bc4bf">=</span><span style="color:#48b685">&#34;male&#34;</span>&gt;Male&lt;<span style="color:#5bc4bf">br</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#5bc4bf">input</span> <span style="color:#06b6ef">type</span><span style="color:#5bc4bf">=</span><span style="color:#48b685">&#34;radio&#34;</span> <span style="color:#06b6ef">name</span><span style="color:#5bc4bf">=</span><span style="color:#48b685">&#34;sex&#34;</span> <span style="color:#06b6ef">value</span><span style="color:#5bc4bf">=</span><span style="color:#48b685">&#34;female&#34;</span>&gt;Female
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#5bc4bf">form</span>&gt;
+</span></span></code></pre></div><form>
+<input type="radio" name="sex" value="male">Male<br>
+<input type="radio" name="sex" value="female">Female
+</form>
+<h4 id="复选框checkboxes">复选框（Checkboxes）<a hidden class="anchor" aria-hidden="true" href="#复选框checkboxes">#</a></h4>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#5bc4bf">form</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#5bc4bf">input</span> <span style="color:#06b6ef">type</span><span style="color:#5bc4bf">=</span><span style="color:#48b685">&#34;checkbox&#34;</span> <span style="color:#06b6ef">name</span><span style="color:#5bc4bf">=</span><span style="color:#48b685">&#34;vehicle&#34;</span> <span style="color:#06b6ef">value</span><span style="color:#5bc4bf">=</span><span style="color:#48b685">&#34;Bike&#34;</span>&gt;I have a bike&lt;<span style="color:#5bc4bf">br</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#5bc4bf">input</span> <span style="color:#06b6ef">type</span><span style="color:#5bc4bf">=</span><span style="color:#48b685">&#34;checkbox&#34;</span> <span style="color:#06b6ef">name</span><span style="color:#5bc4bf">=</span><span style="color:#48b685">&#34;vehicle&#34;</span> <span style="color:#06b6ef">value</span><span style="color:#5bc4bf">=</span><span style="color:#48b685">&#34;Car&#34;</span>&gt;I have a car 
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#5bc4bf">form</span>&gt;
+</span></span></code></pre></div><form>
+<input type="checkbox" name="vehicle" value="Bike">I have a bike<br>
+<input type="checkbox" name="vehicle" value="Car">I have a car 
+</form>
+<h4 id="提交按钮submit-button">提交按钮(Submit Button)<a hidden class="anchor" aria-hidden="true" href="#提交按钮submit-button">#</a></h4>
+<p><code>&lt;input type=&quot;submit&quot;&gt;</code> 定义了提交按钮. 当用户单击确认按钮时，表单的内容会被传送到另一个文件。表单的动作属性定义了目的文件的文件名。由动作属性定义的这个文件通常会对接收到的输入数据进行相关的处理。:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#5bc4bf">form</span> <span style="color:#06b6ef">name</span><span style="color:#5bc4bf">=</span><span style="color:#48b685">&#34;input&#34;</span> <span style="color:#06b6ef">action</span><span style="color:#5bc4bf">=</span><span style="color:#48b685">&#34;html_form_action.php&#34;</span> <span style="color:#06b6ef">method</span><span style="color:#5bc4bf">=</span><span style="color:#48b685">&#34;get&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>Username: &lt;<span style="color:#5bc4bf">input</span> <span style="color:#06b6ef">type</span><span style="color:#5bc4bf">=</span><span style="color:#48b685">&#34;text&#34;</span> <span style="color:#06b6ef">name</span><span style="color:#5bc4bf">=</span><span style="color:#48b685">&#34;user&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#5bc4bf">input</span> <span style="color:#06b6ef">type</span><span style="color:#5bc4bf">=</span><span style="color:#48b685">&#34;submit&#34;</span> <span style="color:#06b6ef">value</span><span style="color:#5bc4bf">=</span><span style="color:#48b685">&#34;Submit&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#5bc4bf">form</span>&gt;
+</span></span></code></pre></div><form name="input" action="html_form_action.php" method="get">
+Username: <input type="text" name="user">
+<input type="submit" value="Submit">
+</form>
+<h3 id="html-表单标签">HTML 表单标签<a hidden class="anchor" aria-hidden="true" href="#html-表单标签">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>标签</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>&lt;form&gt;</code></td>
+<td>定义供用户输入的表单</td>
+</tr>
+<tr>
+<td><code>&lt;input&gt;</code></td>
+<td>定义输入域</td>
+</tr>
+<tr>
+<td><code>&lt;textarea&gt;</code></td>
+<td>定义文本域 (一个多行的输入控件)</td>
+</tr>
+<tr>
+<td><code>&lt;label&gt;</code></td>
+<td>定义了 <code>&lt;input&gt;</code> 元素的标签，一般为输入标题</td>
+</tr>
+<tr>
+<td><code>&lt;filedset&gt;</code></td>
+<td>定义了一组相关的表单元素，并使用外框包含起来</td>
+</tr>
+<tr>
+<td><code>&lt;legend&gt;</code></td>
+<td>定义了 <code>&lt;fieldset&gt;</code> 元素的标题</td>
+</tr>
+<tr>
+<td><code>&lt;select&gt;</code></td>
+<td>定义了下拉选项列表</td>
+</tr>
+<tr>
+<td><code>&lt;optgroup&gt;</code></td>
+<td>定义选项组</td>
+</tr>
+<tr>
+<td><code>&lt;option&gt;</code></td>
+<td>定义下拉列表中的选项</td>
+</tr>
+<tr>
+<td><code>&lt;button&gt;</code></td>
+<td>定义一个点击按钮</td>
+</tr>
+<tr>
+<td><code>&lt;datalist&gt;</code></td>
+<td>指定一个预先定义的输入控件选项列表</td>
+</tr>
+<tr>
+<td><code>keygen</code></td>
+<td>定义了表单的密钥对生成器字段</td>
+</tr>
+<tr>
+<td><code>&lt;output&gt;</code></td>
+<td>定义一个计算结果</td>
+</tr>
+</tbody>
+</table>
+<h2 id="html-框架">HTML 框架<a hidden class="anchor" aria-hidden="true" href="#html-框架">#</a></h2>
+<p>通过使用框架，你可以在同一个浏览器窗口中镶嵌其他页面。</p>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#5bc4bf">iframe</span> <span style="color:#06b6ef">src</span><span style="color:#5bc4bf">=</span><span style="color:#48b685">&#34;demo_iframe.htm&#34;</span> <span style="color:#06b6ef">width</span><span style="color:#5bc4bf">=</span><span style="color:#48b685">&#34;200&#34;</span> <span style="color:#06b6ef">height</span><span style="color:#5bc4bf">=</span><span style="color:#48b685">&#34;200&#34;</span> <span style="color:#06b6ef">frameborder</span><span style="color:#5bc4bf">=</span><span style="color:#48b685">&#34;0&#34;</span>&gt;&lt;/<span style="color:#5bc4bf">iframe</span>&gt;
+</span></span></code></pre></div><h2 id="html-脚本">HTML 脚本<a hidden class="anchor" aria-hidden="true" href="#html-脚本">#</a></h2>
+<p><code>&lt;script&gt;</code> 标签用于定义客户端脚本，比如 JavaScript。<code>&lt;script&gt;</code> 元素既可包含脚本语句，也可通过 src 属性指向外部脚本文件。<code>&lt;noscript&gt;</code> 标签提供无法使用脚本时的替代内容，比方在浏览器禁用脚本时，或浏览器不支持客户端脚本时。<code>&lt;noscript&gt;</code>元素可包含普通 HTML 页面的 body 元素中能够找到的所有元素。</p>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#5bc4bf">script</span>&gt;
+</span></span><span style="display:flex;"><span>document.<span style="color:#06b6ef">write</span>(<span style="color:#48b685">&#34;Hello World!&#34;</span>)
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#5bc4bf">script</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#5bc4bf">noscript</span>&gt;抱歉，你的浏览器不支持 JavaScript!&lt;/<span style="color:#5bc4bf">noscript</span>&gt;
+</span></span></code></pre></div><hr>
+<h3 id="reference">Reference<a hidden class="anchor" aria-hidden="true" href="#reference">#</a></h3>
+<p><a href="https://www.runoob.com/html/html-tutorial.html" target="_blank" rel="noopener" style="color:#42b983";>菜鸟教程</a></p>
+
+
+        </div>
+
+        
+
+        <footer class="post-footer">
+            
+<nav class="paginav">
+  <a class="prev" href="http://localhost:1313/en/posts/tech/r_ubuntu/">
+    <span class="title">« 上一页</span>
+    <br>
+    <span>从源码安装R3.6(Ubuntu 18.04LTS)</span>
+  </a>
+  <a class="next" href="http://localhost:1313/en/posts/tech/advancer/">
+    <span class="title">下一页 »</span>
+    <br>
+    <span>R语言高级程序设计</span>
+  </a>
+</nav>
+
+        </footer>
+    </div>
+
+
+
+<div>
+    <div class="pagination__title">
+        <span class="pagination__title-h" style="font-size: 20px;">💬评论</span>
+        <hr />
+    </div>
+
+    <div id="tcomment"></div>
+
+    <script src="https://cdn.staticfile.org/twikoo/1.6.15/twikoo.all.min.js">
+    </script>
+    
+
+    
+
+    <script>
+        twikoo.init({
+            envId: "https://twikoo.lvbibir.cn/", 
+            el: "#tcomment",
+            lang: 'zh-CN',
+            
+            path: window.TWIKOO_MAGIC_PATH||window.location.pathname,
+            
+            
+            
+            
+            
+            
+            
+        });
+    </script>
+
+</div>
+</article>
+</main>
+
+
+<footer class="footer">
+
+    <a href="https://gohugo.io/" target="_blank">
+        
+        <img style="display: unset;" src="https://image.lvbibir.cn/blog/frame-hugo-blue.svg">
+    </a>
+    <a href="https://github.com/adityatelange/hugo-PaperMod" target="_blank">
+        
+        <img style="display: unset;" src="https://image.lvbibir.cn/blog/theme-papermod-lightgrey.svg">
+    </a>
+
+    <br>
+
+    <span id="runtime_span"></span>
+    <script
+        type="text/javascript">function show_runtime() { window.setTimeout("show_runtime()", 1000); X = new Date("7/13/2021 1:00:00"); Y = new Date(); T = (Y.getTime() - X.getTime()); M = 24 * 60 * 60 * 1000; a = T / M; A = Math.floor(a); b = (a - A) * 24; B = Math.floor(b); c = (b - B) * 60; C = Math.floor((b - B) * 60); D = Math.floor((c - C) * 60); runtime_span.innerHTML = "网站已运行" + A + "天" + B + "小时"} show_runtime();</script>
+    |
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span id="busuanzi_container">
+        
+        总访客数:  <span id="busuanzi_value_site_uv"></span>
+        |
+        总访问量:  <span id="busuanzi_value_site_pv"></span>
+    </span>
+
+    <br>
+    <span>
+        Copyright
+        &copy;
+        2021-2024
+        <a href="http://localhost:1313/en/" style="border-bottom:1px solid">Jeason&#39;s Blog</a>
+    </span>
+
+    
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <span class="topInner">
+        <svg class="topSvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+            <path d="M12 6H0l6-6z" />
+        </svg>
+        <span id="read_progress"></span>
+    </span>
+</a>
+
+<script>
+    document.addEventListener('scroll', function (e) {
+        const readProgress = document.getElementById("read_progress");
+        const scrollHeight = document.documentElement.scrollHeight;
+        const clientHeight = document.documentElement.clientHeight;
+        const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        
+        readProgress.innerText = ((scrollTop / (scrollHeight - clientHeight)).toFixed(2) * 100).toFixed(0);
+    })
+</script>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    let mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 400 || document.documentElement.scrollTop > 400) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+
+
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerText = '📄复制';
+
+        function copyingDone() {
+            copybutton.innerText = '👌🏻已复制!';
+            setTimeout(() => {
+                copybutton.innerText = '📄复制';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) {
+            }
+            ;
+            selection.removeRange(range);
+        });
+
+        let language = codeblock.className.replaceAll("language-", "")
+        let macTool = document.createElement("div")
+        let macTool1 = document.createElement("div")
+        let macTool2 = document.createElement("div")
+        let macTool3 = document.createElement("div")
+        let languageType = document.createElement("div")
+        languageType.innerText = language
+        macTool.setAttribute('class', 'mac-tool')
+        macTool1.setAttribute('class', 'mac bb1')
+        macTool2.setAttribute('class', 'mac bb2')
+        macTool3.setAttribute('class', 'mac bb3')
+        languageType.setAttribute('class', 'language-type')
+        macTool.appendChild(macTool1)
+        macTool.appendChild(macTool2)
+        macTool.appendChild(macTool3)
+        macTool.appendChild(languageType)
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+            container.appendChild(macTool)
+        } else if (container.parentNode.firstChild === container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName === "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+            container.appendChild(macTool)
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+            container.appendChild(macTool)
+        }
+    });
+</script>
+
+</body>
+
+</html>

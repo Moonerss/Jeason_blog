@@ -2,18 +2,46 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>📖 阅读 on Jeason&#39;s Blog</title>
-    <link>https://jeason.netlify.app/en/posts/read/</link>
+    <link>http://localhost:1313/en/posts/read/</link>
     <description>Recent content in 📖 阅读 on Jeason&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Wed, 28 Feb 2024 14:09:13 +0800</lastBuildDate>
-    <atom:link href="https://jeason.netlify.app/en/posts/read/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 29 Feb 2024 16:40:54 +0800</lastBuildDate>
+    <atom:link href="http://localhost:1313/en/posts/read/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>生物信息学学习资源</title>
-      <link>https://jeason.netlify.app/en/posts/read/bioinfo_resource/</link>
+      <link>http://localhost:1313/en/posts/read/bioinfo_resource/</link>
       <pubDate>Thu, 15 Feb 2024 14:09:13 +0800</pubDate>
-      <guid>https://jeason.netlify.app/en/posts/read/bioinfo_resource/</guid>
+      <guid>http://localhost:1313/en/posts/read/bioinfo_resource/</guid>
       <description>这里总结了收集到的有用的生物信息学分析学习资源</description>
+    </item>
+    <item>
+      <title>Latex 公式语法参考</title>
+      <link>http://localhost:1313/en/posts/read/latex/</link>
+      <pubDate>Tue, 12 Oct 2021 21:16:51 +0800</pubDate>
+      <guid>http://localhost:1313/en/posts/read/latex/</guid>
+      <description>本文介绍了latex公式的基本组成和各种用法</description>
+    </item>
+    <item>
+      <title>R 语言统计检验函数汇总</title>
+      <link>http://localhost:1313/en/posts/read/r_stat/</link>
+      <pubDate>Fri, 31 Jul 2020 16:40:54 +0800</pubDate>
+      <guid>http://localhost:1313/en/posts/read/r_stat/</guid>
+      <description>连续型数据 基于分布的检验 T检验 t.test(1:10, 10:20) ## ## Welch Two Sample t-test ## ## data: 1:10 and 10:20 ## t = -7, df = 19, p-value = 2e-06 ## alternative hypothesis: true difference in means is not equal to 0 ## 95 percent confidence interval: ## -12.4 -6.6 ## sample estimates: ## mean of x mean of y ## 5.5 15.0 配对 t 检验： t.test(rnorm(10), rnorm(10, mean = 1), paired = TRUE) ## ## Paired t-test ## ## data: rnorm(10) and rnorm(10, mean = 1) ## t = -2, df = 9, p-value = 0.03 ## alternative hypothesis: true difference in means is not equal to 0 ## 95 percent confidence interval: ## -1.981 -0.096 ## sample estimates: ## mean of the differences ## -1.04 使</description>
+    </item>
+    <item>
+      <title>Shell编程规范</title>
+      <link>http://localhost:1313/en/posts/read/shell_format/</link>
+      <pubDate>Mon, 14 Oct 2019 20:11:36 +0800</pubDate>
+      <guid>http://localhost:1313/en/posts/read/shell_format/</guid>
+      <description>这里介绍了编写shell脚本的代码规范</description>
+    </item>
+    <item>
+      <title>R语言代码规范</title>
+      <link>http://localhost:1313/en/posts/read/r_format/</link>
+      <pubDate>Mon, 05 Nov 2018 16:22:51 +0800</pubDate>
+      <guid>http://localhost:1313/en/posts/read/r_format/</guid>
+      <description>本文主要介绍了在书写R语言代码时的标准规范</description>
     </item>
   </channel>
 </rss>

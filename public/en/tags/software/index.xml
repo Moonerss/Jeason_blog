@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Software on Jeason&#39;s Blog</title>
+    <link>http://localhost:1313/en/tags/software/</link>
+    <description>Recent content in Software on Jeason&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Thu, 29 Feb 2024 16:24:59 +0800</lastBuildDate>
+    <atom:link href="http://localhost:1313/en/tags/software/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>nohup用法</title>
+      <link>http://localhost:1313/en/posts/tech/nohup/</link>
+      <pubDate>Tue, 04 Apr 2023 16:24:59 +0800</pubDate>
+      <guid>http://localhost:1313/en/posts/tech/nohup/</guid>
+      <description>nohup和&amp;amp;使用方法 nohup(不挂断) nohup是no hung up的缩写，意思是不挂断 。 nohup 语法格式： nohup command [arg...] 说明： 除了无法进行输入操作（比如输入命令、换行、打空格等） 外 ，标准输出 保存到 nohup.out文件中。 关闭客户端后，命令仍然会运行，不会挂断。 例如： 执行 nohup sh test.s</description>
+    </item>
+    <item>
+      <title>Conda使用指南（安装部署篇）</title>
+      <link>http://localhost:1313/en/posts/tech/conda/</link>
+      <pubDate>Tue, 10 Nov 2020 19:43:36 +0800</pubDate>
+      <guid>http://localhost:1313/en/posts/tech/conda/</guid>
+      <description>这里介绍了conda软件在安装和基本使用场景中的用法</description>
+    </item>
+    <item>
+      <title>Aspera的安装与使用</title>
+      <link>http://localhost:1313/en/posts/tech/aspera/</link>
+      <pubDate>Fri, 09 Oct 2020 20:13:35 +0800</pubDate>
+      <guid>http://localhost:1313/en/posts/tech/aspera/</guid>
+      <description>Aspera是一款高速下载工具，这里介绍它的安装和基本用法</description>
+    </item>
+    <item>
+      <title>Linux下百度云快速下载</title>
+      <link>http://localhost:1313/en/posts/tech/baiduyun_ubuntu/</link>
+      <pubDate>Thu, 19 Sep 2019 20:57:38 +0800</pubDate>
+      <guid>http://localhost:1313/en/posts/tech/baiduyun_ubuntu/</guid>
+      <description>这里介绍了在Linux环境下如何通过BaiduPCS-Go软件快速下载百度云文件</description>
+    </item>
+    <item>
+      <title>Ubuntu 系统下Rstudio不能输入中文的解决办法</title>
+      <link>http://localhost:1313/en/posts/tech/rstudio_ubuntu/</link>
+      <pubDate>Thu, 05 Sep 2019 20:39:47 +0800</pubDate>
+      <guid>http://localhost:1313/en/posts/tech/rstudio_ubuntu/</guid>
+      <description>本文介绍了在Ubuntu系统下安装Rstudio软件不能输入中文内容的解决方法</description>
+    </item>
+    <item>
+      <title>从源码安装R3.6(Ubuntu 18.04LTS)</title>
+      <link>http://localhost:1313/en/posts/tech/r_ubuntu/</link>
+      <pubDate>Wed, 28 Aug 2019 20:44:21 +0800</pubDate>
+      <guid>http://localhost:1313/en/posts/tech/r_ubuntu/</guid>
+      <description>本文介绍了在Ubuntu系统下如何通过手动编译的方式从源码安装R</description>
+    </item>
+    <item>
+      <title>linux screen 命令使用</title>
+      <link>http://localhost:1313/en/posts/tech/screen/</link>
+      <pubDate>Thu, 04 Apr 2019 20:14:50 +0800</pubDate>
+      <guid>http://localhost:1313/en/posts/tech/screen/</guid>
+      <description>screen 是一个非常有用的命令，提供从单个 SSH 会话中使用多个 shell 窗口（会话）的能力。当会话被分离或网络中断时，screen 会话中启动的进程仍将运行，你可以随时重新连接到 screen 会话。如果你想运行一个持久的进程或者从多个位置连接到 shell 会话，这也很方便。 安装screen screen 在一些流行的发行版上已经预安装了</description>
+    </item>
+  </channel>
+</rss>

@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>高通量测序常用概念 | Jeason&#39;s Blog</title>
+<meta name="keywords" content="NGS">
+<meta name="description" content="高通量测序技术（High-throughput sequencing，HTS）是对传统Sanger测序（称为一代测序技术）革命性的改变,一次对几十万到几百万条核酸分子进行序列测定, 因此在有些文献中称其为下一代测序技术(next generation sequencing，NGS )足见其划时代的改变, 同时">
+<meta name="author" content="作者:Jeason">
+<link rel="canonical" href="http://localhost:1313/en/posts/tech/ngs/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.e029fa55ed0a02bb684da89d2a53a4e1ba9e26e3719fa48460be52776460b523.css" integrity="sha256-4Cn6Ve0KArtoTaidKlOk4bqeJuNxn6SEYL5Sd2RgtSM=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:1313/img/avatar.jpeg">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/img/avatar.jpeg">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/img/avatar.jpeg">
+<link rel="apple-touch-icon" href="http://localhost:1313/img/avatar.jpeg">
+<link rel="mask-icon" href="http://localhost:1313/img/avatar.jpeg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="http://localhost:1313/en/posts/tech/ngs/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><script type="text/javascript"
+        async
+        src="https://cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\[\[','\]\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+});
+
+MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<style>
+code.has-jax {
+    font: inherit;
+    font-size: 100%;
+    background: inherit;
+    border: inherit;
+    color: #515151;
+}
+</style>
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = ""; 
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<meta property="og:title" content="高通量测序常用概念" />
+<meta property="og:description" content="高通量测序技术（High-throughput sequencing，HTS）是对传统Sanger测序（称为一代测序技术）革命性的改变,一次对几十万到几百万条核酸分子进行序列测定, 因此在有些文献中称其为下一代测序技术(next generation sequencing，NGS )足见其划时代的改变, 同时" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://localhost:1313/en/posts/tech/ngs/" />
+<meta property="og:image" content="https://source.unsplash.com/random/400x200?code" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2019-10-09T16:30:46+08:00" />
+<meta property="article:modified_time" content="2024-02-29T16:30:46+08:00" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://source.unsplash.com/random/400x200?code" />
+<meta name="twitter:title" content="高通量测序常用概念"/>
+<meta name="twitter:description" content="高通量测序技术（High-throughput sequencing，HTS）是对传统Sanger测序（称为一代测序技术）革命性的改变,一次对几十万到几百万条核酸分子进行序列测定, 因此在有些文献中称其为下一代测序技术(next generation sequencing，NGS )足见其划时代的改变, 同时"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "📚 文章",
+      "item": "http://localhost:1313/en/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "👨🏻‍💻 技术",
+      "item": "http://localhost:1313/en/posts/tech/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "高通量测序常用概念",
+      "item": "http://localhost:1313/en/posts/tech/ngs/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "高通量测序常用概念",
+  "name": "高通量测序常用概念",
+  "description": "高通量测序技术（High-throughput sequencing，HTS）是对传统Sanger测序（称为一代测序技术）革命性的改变,一次对几十万到几百万条核酸分子进行序列测定, 因此在有些文献中称其为下一代测序技术(next generation sequencing，NGS )足见其划时代的改变, 同时",
+  "keywords": [
+    "NGS"
+  ],
+  "articleBody": "高通量测序技术（High-throughput sequencing，HTS）是对传统Sanger测序（称为一代测序技术）革命性的改变,一次对几十万到几百万条核酸分子进行序列测定, 因此在有些文献中称其为下一代测序技术(next generation sequencing，NGS )足见其划时代的改变, 同时高通量测序使得对一个物种的转录组和基因组进行细致全貌的分析成为可能, 所以又被称为深度测序(Deep sequencing)。\n什么是Sanger法测序（一代测序） Sanger法测序利用一种DNA聚合酶来延伸结合在待定序列模板上的引物。直到掺入一种链终止核苷酸为止。每一次序列测定由一套四个单独的反应构成，每个反应含有所有四种脱氧核苷酸三磷酸(dNTP)，并混入限量的一种不同的双脱氧核苷三磷酸(ddNTP)。由于ddNTP缺乏延伸所需要的3-OH基团，使延长的寡聚核苷酸选择性地在G、A、T或C处终止。终止点由反应中相应的双脱氧而定。每一种dNTPs和ddNTPs的相对浓度可以调整，使反应得到一组长几百至几千碱基的链终止产物。它们具有共同的起始点，但终止在不同的的核苷酸上，可通过高分辨率变性凝胶电泳分离大小不同的片段，凝胶处理后可用X-光胶片放射自显影或非同位素标记进行检测。\n什么是基因组重测序（Genome Re-sequencing） 全基因组重测序是对基因组序列已知的个体进行基因组测序，并在个体或群体水平上进行差异性分析的方法。随着基因组测序成本的不断降低，人类疾病的致病突变研究由外显子区域扩大到全基因组范围。通过构建不同长度的插入片段文库和短序列、双末端测序相结合的策略进行高通量测序，实现在全基因组水平上检测疾病关联的常见、低频、甚至是罕见的突变位点，以及结构变异等，具有重大的科研和产业价值。\n什么是de novo测序 de novo测序也称为从头测序：其不需要任何现有的序列资料就可以对某个物 种进行测序，利用生物信息学分析手段对序列进行拼接，组装，从而获得该物种的基因组图谱。获得一个物种的全基因组序列是加快对此物种了解的重要捷径。随着新一代测序技术的飞速发展，基因组测序所需的成本和时间较传统技术都大大降低，大规模基因组测序渐入佳境，基因组学研究也迎来新的发展契机和革命性突破。利用新一代高通量、高效率测序技术以及强大的生物信息分析能力，可以高效、低成本地测定并分析所有生物的基因组序列。\n什么是外显子测序（whole exon sequencing） 外显子组测序是指利用序列捕获技术将全基因组外显子区域DNA捕捉并富集后进行高通量测序的基因组分析方法。外显子测序相对于基因组重测序成本较低，对研究已知基因的SNP、Indel等具有较大的优势，但无法研究基因组结构变异如染色体断裂重组等。\n什么是mRNA测序 （RNA-seq） 转录组学（transcriptomics）是在基因组学后新兴的一门学科，即研究特定细胞在某一功能状态下所能转录出来的所有RNA（包括mRNA和非编码RNA）的类型与拷贝数。Illumina提供的mRNA测序技术可在整个mRNA领域进行各种相关研究和新的发现。mRNA测序不对引物或探针进行设计，可自由提供关于转录的客观和权威信息。研究人员仅需要一次试验即可快速生成完整的poly-A尾的RNA完整序列信息，并分析基因表达、cSNP、全新的转录、全新异构体、剪接位点、等位基因特异性表达和罕见转录等最全面的转录组信息。简单的样品制备和数据分析软件支持在所有物种中的mRNA测序研究。\n什么是Chip-seq 染色质免疫共沉淀技术（ChromatinImmunoprecipitation，ChIP）也称结合位点分析法，是研究体内蛋白质与DNA相互作用的有力工具，通常用于转录因子结合位点或组蛋白特异性修饰位点的研究。将ChIP与第二代测序技术相结合的ChIP-Seq技术，能够高效地在全基因组范围内检测与组蛋白、转录因子等互作的DNA区段。 ChIP-Seq的原理是：首先通过染色质免疫共沉淀技术（ChIP）特异性地富集目的蛋白结合的DNA片段，并对其进行纯化与文库构建；然后对富集得到的DNA片段进行高通量测序。研究人员通过将获得的数百万条序列标签精确定位到基因组上，从而获得全基因组范围内与组蛋白、转录因子等互作的DNA区段信息。\n单核苷酸多态性 个体间基因组DNA序列同一位置单个核苷酸变异(替代、插入或缺失)所引起的多态性。不同物种、个体基因组DNA序列同一位置上的单个核苷酸存在差别的现象。有这种差别的基因座、DNA序列等可作为基因组作图的标志。人基因组上平均约每1000个核苷酸即可能出现1个单核苷酸多态性的变化，其中有些单核苷酸多态性可能与疾病有关，但可能大多数与疾病无关。单核苷酸多态性是研究人类家族和动植物品系遗传变异的重要依据。在研究癌症基因组变异时，相对于正常组织，癌症中特异的单核苷酸变异是一种体细胞突变（somatic mutation），称做SNV。\n什么是copy number variation （CNV） 基因组拷贝数变异是基因组变异的一种形式，通常使基因组中大片段的DNA形成非正常的拷贝数量。例如人类正常染色体拷贝数是2，有些染色体区域拷贝数变成1或3，这样，该区域发生拷贝数缺失或增加，位于该区域内的基因表达量也会受到影响。如果把一条染色体分成A-B-C-D四个区域，则A-B-C-C-D/A-C-B-C-D/A-C-C-B-C-D/A-B-D分别发生了C区域的扩增及缺失，扩增的位置可以是连续扩增如A-B-C-C-D也可以是在其他位置的扩增，如A-C-B-C-D。\n什么是structure variation （SV） 染色体结构变异是指在染色体上发生了大片段的变异。主要包括染色体大片段的插入和缺失（引起CNV的变化），染色体内部的某块区域发生翻转颠换，两条染色体之间发生重组（inter-chromosome trans-location）等。一般SV的展示利用Circos 软件。\n什么是RPKM、FPKM RPKM,Reads Per Kilobase of exon model per Million mapped reads, is defined in this way [Mortazavi etal., 2008]: 每1百万个map上的reads中map到外显子的每1K个碱基上的reads个数。\nFPKM(fragments per kilobase of exon per million fragments mapped). FPKM与RPKM计算方法基本一致。不同点就是FPKM计算的是fragments，而RPKM计算的是reads。Fragment比read的含义更广，因此FPKM包含的意义也更广，可以是pair-end的一个fragment，也可以是一个read。\nMAPQ值 MAPQ（Mapping Qualities） 是用来表示每条read的比对情况的质量值，MAPQ越高，表示比对质量越好，说明该read比对到参考基因组上的位置越唯一。\n根据SAM文件的官方定义：根据SAM文件的官方定义：MAPQ是mapping的质量值，计算方法与FASTQ的质量值类似。\nMAPQ=-10 * log10{mapping出错的概率}\n当MAPQ=255的时候，代表MAPQ没有意义，就是一个占位符。\n从概率的角度来看，每个read的比对都是一个真实比对的估计，它是一个随机变量，也有可能存在错误。错误的概率可以用 Phred 来衡量。一般来讲，在比对的时候，我们需要把MAPQ质量过低的reads去掉，会将mQ的值设为30，这样就相当于将比对错误率设为0.1%\n基因组重复区域MAPQ会比较低，因为会出现multiple mapping 和 reads聚集的情况；\nread 中碱基质量值，低质量值的碱基意味着序列很可能是错误的，错误的序列可能会导致错误的比对，所以MAPQ会低；\n",
+  "wordCount" : "3048",
+  "inLanguage": "en",
+  "image":"https://source.unsplash.com/random/400x200?code","datePublished": "2019-10-09T16:30:46+08:00",
+  "dateModified": "2024-02-29T16:30:46+08:00",
+  "author":{
+    "@type": "Person",
+    "name": "Jeason"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "http://localhost:1313/en/posts/tech/ngs/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Jeason's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "http://localhost:1313/img/avatar.jpeg"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="http://localhost:1313/en/" accesskey="h" title="Jeason&#39;s Blog (Alt + H)">
+                <img src="http://localhost:1313/img/avatar.jpeg" alt="" aria-label="logo"
+                    height="35">Jeason&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+                
+            </div>
+        </div>
+        <ul id="menu">
+            <li class="menu-item">
+                <a href="http://localhost:1313/en/search" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
+                    <span>🔍 搜索</span>
+                    
+                </a>
+            
+            </li>
+            <li class="menu-item">
+                <a href="http://localhost:1313/en/" title="🏡 主页">
+                    <span>🏡 主页</span>
+                    
+                </a>
+            
+            </li>
+            <li class="menu-item">
+                <a href="http://localhost:1313/en/posts" title="📚 文章">
+                    <span>📚 文章</span>
+                    
+                </a>
+            
+            </li>
+            <li class="menu-item">
+                <a href="http://localhost:1313/en/archives" title="📈 归档">
+                    <span>📈 归档</span>
+                    
+                </a>
+            
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main page">
+<article class="post-single">
+    <div id="single-content">
+        <header class="post-header">
+            <div class="breadcrumbs"><a href="http://localhost:1313/en/">主页</a>&nbsp;»&nbsp;<a href="http://localhost:1313/en/posts/">📚 文章</a>&nbsp;»&nbsp;<a href="http://localhost:1313/en/posts/tech/">👨🏻‍💻 技术</a></div>
+            <h1 class="post-title">
+                高通量测序常用概念
+            </h1>
+            <div class="post-meta">创建: 2019-10-09 | 更新: 2024-02-29 | 作者:Jeason
+
+
+
+
+                
+                <span id="busuanzi_container_page_pv">
+                    &nbsp;|&nbsp;访问:&nbsp;<span id="busuanzi_value_page_pv"></span>
+                </span>
+
+</div>
+        </header> <aside id="toc-container" class="toc-container wide">
+    <div class="toc">
+        <details  open>
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">文章目录</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#%e4%bb%80%e4%b9%88%e6%98%afsanger%e6%b3%95%e6%b5%8b%e5%ba%8f%e4%b8%80%e4%bb%a3%e6%b5%8b%e5%ba%8f" aria-label="什么是Sanger法测序（一代测序）"><strong>什么是Sanger法测序（一代测序）</strong></a></li>
+                <li>
+                    <a href="#%e4%bb%80%e4%b9%88%e6%98%af%e5%9f%ba%e5%9b%a0%e7%bb%84%e9%87%8d%e6%b5%8b%e5%ba%8fgenome-re-sequencing" aria-label="什么是基因组重测序（Genome Re-sequencing）"><strong>什么是基因组重测序（Genome Re-sequencing）</strong></a></li>
+                <li>
+                    <a href="#%e4%bb%80%e4%b9%88%e6%98%afde-novo%e6%b5%8b%e5%ba%8f" aria-label="什么是de novo测序"><strong>什么是de novo测序</strong></a></li>
+                <li>
+                    <a href="#%e4%bb%80%e4%b9%88%e6%98%af%e5%a4%96%e6%98%be%e5%ad%90%e6%b5%8b%e5%ba%8fwhole-exon-sequencing" aria-label="什么是外显子测序（whole exon sequencing）"><strong>什么是外显子测序（whole exon sequencing）</strong></a></li>
+                <li>
+                    <a href="#%e4%bb%80%e4%b9%88%e6%98%afmrna%e6%b5%8b%e5%ba%8f-rna-seq" aria-label="什么是mRNA测序 （RNA-seq）"><strong>什么是mRNA测序 （RNA-seq）</strong></a></li>
+                <li>
+                    <a href="#%e4%bb%80%e4%b9%88%e6%98%afchip-seq" aria-label="什么是Chip-seq"><strong>什么是Chip-seq</strong></a></li>
+                <li>
+                    <a href="#%e5%8d%95%e6%a0%b8%e8%8b%b7%e9%85%b8%e5%a4%9a%e6%80%81%e6%80%a7" aria-label="单核苷酸多态性"><strong>单核苷酸多态性</strong></a></li>
+                <li>
+                    <a href="#%e4%bb%80%e4%b9%88%e6%98%afcopy-number-variation-cnv" aria-label="什么是copy number variation （CNV）"><strong>什么是copy number variation （CNV）</strong></a></li>
+                <li>
+                    <a href="#%e4%bb%80%e4%b9%88%e6%98%afstructure-variation-sv" aria-label="什么是structure variation （SV）"><strong>什么是structure variation （SV）</strong></a></li>
+                <li>
+                    <a href="#%e4%bb%80%e4%b9%88%e6%98%afrpkmfpkm" aria-label="什么是RPKM、FPKM"><strong>什么是RPKM、FPKM</strong></a></li>
+                <li>
+                    <a href="#mapq%e5%80%bc" aria-label="MAPQ值">MAPQ值</a>
+                </li>
+            </ul>
+        </div>
+        </details>
+    </div>
+</aside>
+<script>
+    let activeElement;
+    let elements;
+    window.addEventListener('DOMContentLoaded', function (event) {
+        checkTocPosition();
+
+        elements = document.querySelectorAll('h1[id],h2[id],h3[id],h4[id],h5[id],h6[id]');
+        
+        activeElement = elements[0];
+        const id = encodeURI(activeElement.getAttribute('id')).toLowerCase();
+        document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+    }, false);
+
+    window.addEventListener('resize', function(event) {
+        checkTocPosition();
+    }, false);
+
+    window.addEventListener('scroll', () => {
+        
+        activeElement = Array.from(elements).find((element) => {
+            if ((getOffsetTop(element) - window.pageYOffset) > 0 &&
+                (getOffsetTop(element) - window.pageYOffset) < window.innerHeight/2) {
+                return element;
+            }
+        }) || activeElement
+
+        elements.forEach(element => {
+            const id = encodeURI(element.getAttribute('id')).toLowerCase();
+            if (element === activeElement){
+                document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+            } else {
+                document.querySelector(`.inner ul li a[href="#${id}"]`).classList.remove('active');
+            }
+        })
+    }, false);
+
+    const main = parseInt(getComputedStyle(document.body).getPropertyValue('--article-width'), 10);
+    const toc = parseInt(getComputedStyle(document.body).getPropertyValue('--toc-width'), 10);
+    const gap = parseInt(getComputedStyle(document.body).getPropertyValue('--gap'), 10);
+
+    function checkTocPosition() {
+        const width = document.body.scrollWidth;
+        if (width - main - (toc * 2) - (gap * 4) > 0) {
+            document.getElementById("toc-container").classList.add("wide");
+        } else {
+            document.getElementById("toc-container").classList.remove("wide");
+        }
+    }
+
+    function getOffsetTop(element) {
+        if (!element.getClientRects().length) {
+            return 0;
+        }
+        let rect = element.getBoundingClientRect();
+        let win = element.ownerDocument.defaultView;
+        return rect.top + win.pageYOffset;
+    }
+</script>
+        <div class="post-content"><p>高通量测序技术（High-throughput sequencing，HTS）是对传统Sanger测序（称为一代测序技术）革命性的改变,一次对几十万到几百万条核酸分子进行序列测定, 因此在有些文献中称其为下一代测序技术(next generation sequencing，NGS )足见其划时代的改变, 同时高通量测序使得对一个物种的转录组和基因组进行细致全貌的分析成为可能, 所以又被称为深度测序(Deep sequencing)。</p>
+<h2 id="什么是sanger法测序一代测序"><strong>什么是Sanger法测序（一代测序）</strong><a hidden class="anchor" aria-hidden="true" href="#什么是sanger法测序一代测序">#</a></h2>
+<p>Sanger法测序利用一种DNA聚合酶来延伸结合在待定序列模板上的引物。直到掺入一种链终止核苷酸为止。每一次序列测定由一套四个单独的反应构成，每个反应含有所有四种脱氧核苷酸三磷酸(dNTP)，并混入限量的一种不同的双脱氧核苷三磷酸(ddNTP)。由于ddNTP缺乏延伸所需要的3-OH基团，使延长的寡聚核苷酸选择性地在G、A、T或C处终止。终止点由反应中相应的双脱氧而定。每一种dNTPs和ddNTPs的相对浓度可以调整，使反应得到一组长几百至几千碱基的链终止产物。它们具有共同的起始点，但终止在不同的的核苷酸上，可通过高分辨率变性凝胶电泳分离大小不同的片段，凝胶处理后可用X-光胶片放射自显影或非同位素标记进行检测。</p>
+<h2 id="什么是基因组重测序genome-re-sequencing"><strong>什么是基因组重测序（Genome Re-sequencing）</strong><a hidden class="anchor" aria-hidden="true" href="#什么是基因组重测序genome-re-sequencing">#</a></h2>
+<p>全基因组重测序是对基因组序列已知的个体进行基因组测序，并在个体或群体水平上进行差异性分析的方法。随着基因组测序成本的不断降低，人类疾病的致病突变研究由外显子区域扩大到全基因组范围。通过构建不同长度的插入片段文库和短序列、双末端测序相结合的策略进行高通量测序，实现在全基因组水平上检测疾病关联的常见、低频、甚至是罕见的突变位点，以及结构变异等，具有重大的科研和产业价值。</p>
+<h2 id="什么是de-novo测序"><strong>什么是de novo测序</strong><a hidden class="anchor" aria-hidden="true" href="#什么是de-novo测序">#</a></h2>
+<p>de novo测序也称为从头测序：其不需要任何现有的序列资料就可以对某个物 种进行测序，利用生物信息学分析手段对序列进行拼接，组装，从而获得该物种的基因组图谱。获得一个物种的全基因组序列是加快对此物种了解的重要捷径。随着新一代测序技术的飞速发展，基因组测序所需的成本和时间较传统技术都大大降低，大规模基因组测序渐入佳境，基因组学研究也迎来新的发展契机和革命性突破。利用新一代高通量、高效率测序技术以及强大的生物信息分析能力，可以高效、低成本地测定并分析所有生物的基因组序列。</p>
+<h2 id="什么是外显子测序whole-exon-sequencing"><strong>什么是外显子测序（whole exon sequencing）</strong><a hidden class="anchor" aria-hidden="true" href="#什么是外显子测序whole-exon-sequencing">#</a></h2>
+<p>外显子组测序是指利用序列捕获技术将全基因组外显子区域DNA捕捉并富集后进行高通量测序的基因组分析方法。外显子测序相对于基因组重测序成本较低，对研究已知基因的SNP、Indel等具有较大的优势，但无法研究基因组结构变异如染色体断裂重组等。</p>
+<h2 id="什么是mrna测序-rna-seq"><strong>什么是mRNA测序 （RNA-seq）</strong><a hidden class="anchor" aria-hidden="true" href="#什么是mrna测序-rna-seq">#</a></h2>
+<p>转录组学（transcriptomics）是在基因组学后新兴的一门学科，即研究特定细胞在某一功能状态下所能转录出来的所有RNA（包括mRNA和非编码RNA）的类型与拷贝数。Illumina提供的mRNA测序技术可在整个mRNA领域进行各种相关研究和新的发现。mRNA测序不对引物或探针进行设计，可自由提供关于转录的客观和权威信息。研究人员仅需要一次试验即可快速生成完整的poly-A尾的RNA完整序列信息，并分析基因表达、cSNP、全新的转录、全新异构体、剪接位点、等位基因特异性表达和罕见转录等最全面的转录组信息。简单的样品制备和数据分析软件支持在所有物种中的mRNA测序研究。</p>
+<h2 id="什么是chip-seq"><strong>什么是Chip-seq</strong><a hidden class="anchor" aria-hidden="true" href="#什么是chip-seq">#</a></h2>
+<p>染色质免疫共沉淀技术（ChromatinImmunoprecipitation，ChIP）也称结合位点分析法，是研究体内蛋白质与DNA相互作用的有力工具，通常用于转录因子结合位点或组蛋白特异性修饰位点的研究。将ChIP与第二代测序技术相结合的ChIP-Seq技术，能够高效地在全基因组范围内检测与组蛋白、转录因子等互作的DNA区段。 ChIP-Seq的原理是：首先通过染色质免疫共沉淀技术（ChIP）特异性地富集目的蛋白结合的DNA片段，并对其进行纯化与文库构建；然后对富集得到的DNA片段进行高通量测序。研究人员通过将获得的数百万条序列标签精确定位到基因组上，从而获得全基因组范围内与组蛋白、转录因子等互作的DNA区段信息。</p>
+<h2 id="单核苷酸多态性"><strong>单核苷酸多态性</strong><a hidden class="anchor" aria-hidden="true" href="#单核苷酸多态性">#</a></h2>
+<p>个体间基因组DNA序列同一位置单个核苷酸变异(替代、插入或缺失)所引起的多态性。不同物种、个体基因组DNA序列同一位置上的单个核苷酸存在差别的现象。有这种差别的基因座、DNA序列等可作为基因组作图的标志。人基因组上平均约每1000个核苷酸即可能出现1个单核苷酸多态性的变化，其中有些单核苷酸多态性可能与疾病有关，但可能大多数与疾病无关。单核苷酸多态性是研究人类家族和动植物品系遗传变异的重要依据。在研究癌症基因组变异时，相对于正常组织，癌症中特异的单核苷酸变异是一种体细胞突变（somatic mutation），称做SNV。</p>
+<h2 id="什么是copy-number-variation-cnv"><strong>什么是copy number variation （CNV）</strong><a hidden class="anchor" aria-hidden="true" href="#什么是copy-number-variation-cnv">#</a></h2>
+<p>基因组拷贝数变异是基因组变异的一种形式，通常使基因组中大片段的DNA形成非正常的拷贝数量。例如人类正常染色体拷贝数是2，有些染色体区域拷贝数变成1或3，这样，该区域发生拷贝数缺失或增加，位于该区域内的基因表达量也会受到影响。如果把一条染色体分成A-B-C-D四个区域，则A-B-C-C-D/A-C-B-C-D/A-C-C-B-C-D/A-B-D分别发生了C区域的扩增及缺失，扩增的位置可以是连续扩增如A-B-C-C-D也可以是在其他位置的扩增，如A-C-B-C-D。</p>
+<h2 id="什么是structure-variation-sv"><strong>什么是structure variation （SV）</strong><a hidden class="anchor" aria-hidden="true" href="#什么是structure-variation-sv">#</a></h2>
+<p>染色体结构变异是指在染色体上发生了大片段的变异。主要包括染色体大片段的插入和缺失（引起CNV的变化），染色体内部的某块区域发生翻转颠换，两条染色体之间发生重组（inter-chromosome trans-location）等。一般SV的展示利用Circos 软件。</p>
+<h2 id="什么是rpkmfpkm"><strong>什么是RPKM、FPKM</strong><a hidden class="anchor" aria-hidden="true" href="#什么是rpkmfpkm">#</a></h2>
+<p><strong>RPKM,Reads Per Kilobase of exon model per Million mapped reads, is defined in this way</strong> [Mortazavi etal., 2008]: 每1百万个map上的reads中map到外显子的每1K个碱基上的reads个数。</p>
+<p><strong>FPKM</strong>(<strong>fragments per kilobase of exon per million fragments mapped</strong>). FPKM与RPKM计算方法基本一致。不同点就是FPKM计算的是fragments，而RPKM计算的是reads。Fragment比read的含义更广，因此FPKM包含的意义也更广，可以是pair-end的一个fragment，也可以是一个read。</p>
+<h2 id="mapq值">MAPQ值<a hidden class="anchor" aria-hidden="true" href="#mapq值">#</a></h2>
+<p>MAPQ（Mapping Qualities） 是用来表示每条read的比对情况的质量值，MAPQ越高，表示比对质量越好，说明该read比对到参考基因组上的位置越唯一。<br>
+根据SAM文件的官方定义：根据SAM文件的官方定义：MAPQ是mapping的质量值，计算方法与FASTQ的质量值类似。</p>
+<blockquote>
+<p>MAPQ=-10 * log10{mapping出错的概率}<br>
+当MAPQ=255的时候，代表MAPQ没有意义，就是一个占位符。</p>
+</blockquote>
+<p>从概率的角度来看，每个read的比对都是一个真实比对的估计，它是一个随机变量，也有可能存在错误。错误的概率可以用 Phred 来衡量。一般来讲，在比对的时候，我们需要把MAPQ质量过低的reads去掉，会将<code>mQ</code>的值设为30，这样就相当于将比对错误率设为0.1%</p>
+<p>基因组重复区域MAPQ会比较低，因为会出现multiple mapping 和 reads聚集的情况；<br>
+read 中碱基质量值，低质量值的碱基意味着序列很可能是错误的，错误的序列可能会导致错误的比对，所以MAPQ会低；</p>
+
+
+        </div>
+
+        
+
+        <footer class="post-footer">
+            
+<nav class="paginav">
+  <a class="prev" href="http://localhost:1313/en/posts/read/shell_format/">
+    <span class="title">« 上一页</span>
+    <br>
+    <span>Shell编程规范</span>
+  </a>
+  <a class="next" href="http://localhost:1313/en/posts/tech/sratools/">
+    <span class="title">下一页 »</span>
+    <br>
+    <span>SRAtoolkit 安装与使用</span>
+  </a>
+</nav>
+
+        </footer>
+    </div>
+
+
+
+<div>
+    <div class="pagination__title">
+        <span class="pagination__title-h" style="font-size: 20px;">💬评论</span>
+        <hr />
+    </div>
+
+    <div id="tcomment"></div>
+
+    <script src="https://cdn.staticfile.org/twikoo/1.6.15/twikoo.all.min.js">
+    </script>
+    
+
+    
+
+    <script>
+        twikoo.init({
+            envId: "https://twikoo.lvbibir.cn/", 
+            el: "#tcomment",
+            lang: 'zh-CN',
+            
+            path: window.TWIKOO_MAGIC_PATH||window.location.pathname,
+            
+            
+            
+            
+            
+            
+            
+        });
+    </script>
+
+</div>
+</article>
+</main>
+
+
+<footer class="footer">
+
+    <a href="https://gohugo.io/" target="_blank">
+        
+        <img style="display: unset;" src="https://image.lvbibir.cn/blog/frame-hugo-blue.svg">
+    </a>
+    <a href="https://github.com/adityatelange/hugo-PaperMod" target="_blank">
+        
+        <img style="display: unset;" src="https://image.lvbibir.cn/blog/theme-papermod-lightgrey.svg">
+    </a>
+
+    <br>
+
+    <span id="runtime_span"></span>
+    <script
+        type="text/javascript">function show_runtime() { window.setTimeout("show_runtime()", 1000); X = new Date("7/13/2021 1:00:00"); Y = new Date(); T = (Y.getTime() - X.getTime()); M = 24 * 60 * 60 * 1000; a = T / M; A = Math.floor(a); b = (a - A) * 24; B = Math.floor(b); c = (b - B) * 60; C = Math.floor((b - B) * 60); D = Math.floor((c - C) * 60); runtime_span.innerHTML = "网站已运行" + A + "天" + B + "小时"} show_runtime();</script>
+    |
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span id="busuanzi_container">
+        
+        总访客数:  <span id="busuanzi_value_site_uv"></span>
+        |
+        总访问量:  <span id="busuanzi_value_site_pv"></span>
+    </span>
+
+    <br>
+    <span>
+        Copyright
+        &copy;
+        2021-2024
+        <a href="http://localhost:1313/en/" style="border-bottom:1px solid">Jeason&#39;s Blog</a>
+    </span>
+
+    
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <span class="topInner">
+        <svg class="topSvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+            <path d="M12 6H0l6-6z" />
+        </svg>
+        <span id="read_progress"></span>
+    </span>
+</a>
+
+<script>
+    document.addEventListener('scroll', function (e) {
+        const readProgress = document.getElementById("read_progress");
+        const scrollHeight = document.documentElement.scrollHeight;
+        const clientHeight = document.documentElement.clientHeight;
+        const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        
+        readProgress.innerText = ((scrollTop / (scrollHeight - clientHeight)).toFixed(2) * 100).toFixed(0);
+    })
+</script>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    let mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 400 || document.documentElement.scrollTop > 400) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+
+
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerText = '📄复制';
+
+        function copyingDone() {
+            copybutton.innerText = '👌🏻已复制!';
+            setTimeout(() => {
+                copybutton.innerText = '📄复制';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) {
+            }
+            ;
+            selection.removeRange(range);
+        });
+
+        let language = codeblock.className.replaceAll("language-", "")
+        let macTool = document.createElement("div")
+        let macTool1 = document.createElement("div")
+        let macTool2 = document.createElement("div")
+        let macTool3 = document.createElement("div")
+        let languageType = document.createElement("div")
+        languageType.innerText = language
+        macTool.setAttribute('class', 'mac-tool')
+        macTool1.setAttribute('class', 'mac bb1')
+        macTool2.setAttribute('class', 'mac bb2')
+        macTool3.setAttribute('class', 'mac bb3')
+        languageType.setAttribute('class', 'language-type')
+        macTool.appendChild(macTool1)
+        macTool.appendChild(macTool2)
+        macTool.appendChild(macTool3)
+        macTool.appendChild(languageType)
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+            container.appendChild(macTool)
+        } else if (container.parentNode.firstChild === container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName === "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+            container.appendChild(macTool)
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+            container.appendChild(macTool)
+        }
+    });
+</script>
+
+</body>
+
+</html>

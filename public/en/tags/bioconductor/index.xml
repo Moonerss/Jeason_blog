@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Bioconductor on Jeason&#39;s Blog</title>
-    <link>https://jeason.netlify.app/en/tags/bioconductor/</link>
+    <link>http://localhost:1313/en/tags/bioconductor/</link>
     <description>Recent content in Bioconductor on Jeason&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <lastBuildDate>Thu, 22 Feb 2024 10:31:03 +0800</lastBuildDate>
-    <atom:link href="https://jeason.netlify.app/en/tags/bioconductor/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/en/tags/bioconductor/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>AnnotationForge包构建非模式物种Orgdb包</title>
-      <link>https://jeason.netlify.app/en/posts/tech/annotationforge/</link>
+      <link>http://localhost:1313/en/posts/tech/annotationforge/</link>
       <pubDate>Tue, 04 Apr 2023 10:31:03 +0800</pubDate>
-      <guid>https://jeason.netlify.app/en/posts/tech/annotationforge/</guid>
+      <guid>http://localhost:1313/en/posts/tech/annotationforge/</guid>
       <description>AnnotationForge包构建非模式物种Orgdb包</description>
     </item>
   </channel>

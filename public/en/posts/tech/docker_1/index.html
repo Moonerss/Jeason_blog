@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Docker | 安装与运行 | Jeason&#39;s Blog</title>
+<meta name="keywords" content="docker">
+<meta name="description" content="本文介绍一下Docker最基本的安装和使用命令">
+<meta name="author" content="作者:Jeason">
+<link rel="canonical" href="http://localhost:1313/en/posts/tech/docker_1/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.e029fa55ed0a02bb684da89d2a53a4e1ba9e26e3719fa48460be52776460b523.css" integrity="sha256-4Cn6Ve0KArtoTaidKlOk4bqeJuNxn6SEYL5Sd2RgtSM=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:1313/img/avatar.jpeg">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/img/avatar.jpeg">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/img/avatar.jpeg">
+<link rel="apple-touch-icon" href="http://localhost:1313/img/avatar.jpeg">
+<link rel="mask-icon" href="http://localhost:1313/img/avatar.jpeg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="http://localhost:1313/en/posts/tech/docker_1/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><script type="text/javascript"
+        async
+        src="https://cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\[\[','\]\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+});
+
+MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<style>
+code.has-jax {
+    font: inherit;
+    font-size: 100%;
+    background: inherit;
+    border: inherit;
+    color: #515151;
+}
+</style>
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = ""; 
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<meta property="og:title" content="Docker | 安装与运行" />
+<meta property="og:description" content="本文介绍一下Docker最基本的安装和使用命令" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://localhost:1313/en/posts/tech/docker_1/" />
+<meta property="og:image" content="https://source.unsplash.com/random/400x200?code" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2020-06-08T15:15:53+08:00" />
+<meta property="article:modified_time" content="2024-02-29T15:15:53+08:00" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://source.unsplash.com/random/400x200?code" />
+<meta name="twitter:title" content="Docker | 安装与运行"/>
+<meta name="twitter:description" content="本文介绍一下Docker最基本的安装和使用命令"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "📚 文章",
+      "item": "http://localhost:1313/en/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "👨🏻‍💻 技术",
+      "item": "http://localhost:1313/en/posts/tech/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "Docker | 安装与运行",
+      "item": "http://localhost:1313/en/posts/tech/docker_1/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Docker | 安装与运行",
+  "name": "Docker | 安装与运行",
+  "description": "本文介绍一下Docker最基本的安装和使用命令",
+  "keywords": [
+    "docker"
+  ],
+  "articleBody": "背景 Docker 是一个开源的应用容器引擎，基于 Go 语言 并遵从 Apache2.0 协议开源。\nDocker 可以让开发者打包他们的应用以及依赖包到一个轻量级、可移植的容器中，然后发布到任何流行的 Linux 机器上，也可以实现虚拟化。\nDocker的应用场景 Web 应用的自动化打包和发布。 自动化测试和持续集成、发布。 在服务型环境中部署和调整数据库或其他的后台应用。 从头编译或者扩展现有的 OpenShift 或 Cloud Foundry 平台来搭建自己的 PaaS 环境。 docker 安装 Docker 的旧版本被称为 docker，docker.io 或 docker-engine 。如果已安装，请卸载它们：\nsudo apt-get remove docker docker-engine docker.io containerd runc 首先安装依赖:\nsudo apt-get install apt-transport-https ca-certificates curl gnupg2 software-properties-common 添加信任 Docker 的 GPG 公钥:\ncurl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add - 对于 amd64 架构的计算机，添加软件仓库:\nsudo add-apt-repository \\ \"deb [arch=amd64] https://mirrors.tuna.tsinghua.edu.cn/docker-ce/linux/ubuntu \\ $(lsb_release -cs) \\ stable\" 最后安装\nsudo apt-get update sudo apt-get install docker-ce docker --version ## Docker version 19.03.11, build 42e35e61f3 Hello world Docker 允许你在容器内运行应用程序， 使用 docker run 命令来在容器内运行一个应用程序。\ndocker run ubuntu:15.10 /bin/echo \"Hello world\" ## hello world 参数解析：\ndocker : Docker 的执行命令 run : 与docker命令组合运行一个特定的容器 ubuntu:15.10 : 指定要运行的镜像，Docker 首先从本地主机上查找镜像是否存在，如果不存在，Docker 就会从镜像仓库 Docker Hub 下载公共镜像。 /bin/echo “Hello world” : 在启动的容器里执行的命令 连起来就是：Docker 以 ubuntu15.10 镜像创建一个新容器，然后在容器里执行 bin/echo \"Hello world\"，然后输出结果。\n交互运行 ubuntu@VM-0-11-ubuntu:~$ sudo docker run -i -t ubuntu:15.10 /bin/bash root@2401df9ef044:/# -t: 在新容器内指定一个伪终端或终端。 -i: 允许你对容器内的标准输入进行交互。 通过运行 exit 命令或者使用 CTRL+D 来退出容器。\n后台运行 ubuntu@VM-0-11-ubuntu:~$ sudo docker run -d ubuntu:15.10 /bin/sh -c \"while true; do echo hello world; sleep 1; done\" 9db349c972802d3a7627b27d3c9eb0c58888ad0c80a001b5d7e6f08813eed876 输出的长字符串叫做容器 ID，对每个容器来说都是唯一的，我们可以通过容器 ID 来查看对应的容器发生了什么\n可以通过 docker ps 来查看容器的运行情况\nubuntu@VM-0-11-ubuntu:~$ sudo docker ps CONTAINER ID IMAGE COMMAND CREATED STATUS PORTS NAMES 9db349c97280 ubuntu:15.10 \"/bin/sh -c 'while t…\" 11 seconds ago Up 10 seconds tender_black 输出详情介绍:\nCONTAINER ID: 容器 ID。 IMAGE: 使用的镜像。 COMMAND: 启动容器时运行的命令。 CREATED: 容器的创建时间。 STATUS: 容器状态。 PORTS: 容器的端口信息和使用的连接类型（tcp\\udp）。 NAMES: 自动分配的容器名称。 docker 运行有七种状态\ncreated（已创建） restarting（重启中） running（运行中） removing（迁移中） paused（暂停） exited（停止） dead（死亡） 使用docker logs查看输出结果\nubuntu@VM-0-11-ubuntu:~$ sudo docker logs tender_black hello world 使用docker stop停止容器\nubuntu@VM-0-11-ubuntu:~$ sudo docker stop tender_black tender_black docker 用户 docker进程使用Unix Socket而不是TCP端口。而默认情况下，Unix socket属于root用户，需要root权限才能访问。\n解决方案：\n使用sudo获取管理员权限，运行docker命令 docker守护进程启动的时候，会默认赋予名字为docker的用户组读写Unix socket的权限，因此只要创建docker用户组，并将当前用户加入到docker用户组中，那么当前用户就有权限访问Unix socket了，进而也就可以执行docker相关命令 sudo groupadd docker #添加docker用户组 sudo gpasswd -a $USER docker #将登陆用户加入到docker用户组中 newgrp docker #更新用户组 docker ps #测试docker命令是否可以使用sudo正常使用 基本概念 Docker 镜像（Image），就相当于是一个 root 文件系统。比如官方镜像 ubuntu:18.04 就包含了完整的一套 Ubuntu 18.04 最小系统的 root 文件系统。 Docker 镜像 是一个特殊的文件系统，除了提供容器运行时所需的程序、库、资源、配置等文件外，还包含了一些为运行时准备的一些配置参数（如匿名卷、环境变量、用户等）。镜像不包含任何动态数据，其内容在构建之后也不会被改变。\n容器（Container）是镜像运行时的实体。容器可以被创建、启动、停止、删除、暂停等。 仓库（Repository）是用于储存镜像的地址。镜像构建完成后，可以很容易的在当前宿主机上运行，但是，如果需要在其它服务器上使用这个镜像，我们就需要一个集中的存储、分发镜像的服务，Docker Registry 就是这样的服务。一个 Docker Registry 中可以包含多个仓库（Repository）；每个仓库可以包含多个标签（Tag）；每个标签对应一个镜像。通常，一个仓库会包含同一个软件不同版本的镜像，而标签就常用于对应该软件的各个版本。我们可以通过 \u003c仓库名\u003e:\u003c标签\u003e 的格式来指定具体是这个软件哪个版本的镜像。如果不给出标签，将以latest作为默认标签。 ",
+  "wordCount" : "1703",
+  "inLanguage": "en",
+  "image":"https://source.unsplash.com/random/400x200?code","datePublished": "2020-06-08T15:15:53+08:00",
+  "dateModified": "2024-02-29T15:15:53+08:00",
+  "author":{
+    "@type": "Person",
+    "name": "Jeason"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "http://localhost:1313/en/posts/tech/docker_1/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Jeason's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "http://localhost:1313/img/avatar.jpeg"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="http://localhost:1313/en/" accesskey="h" title="Jeason&#39;s Blog (Alt + H)">
+                <img src="http://localhost:1313/img/avatar.jpeg" alt="" aria-label="logo"
+                    height="35">Jeason&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+                
+            </div>
+        </div>
+        <ul id="menu">
+            <li class="menu-item">
+                <a href="http://localhost:1313/en/search" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
+                    <span>🔍 搜索</span>
+                    
+                </a>
+            
+            </li>
+            <li class="menu-item">
+                <a href="http://localhost:1313/en/" title="🏡 主页">
+                    <span>🏡 主页</span>
+                    
+                </a>
+            
+            </li>
+            <li class="menu-item">
+                <a href="http://localhost:1313/en/posts" title="📚 文章">
+                    <span>📚 文章</span>
+                    
+                </a>
+            
+            </li>
+            <li class="menu-item">
+                <a href="http://localhost:1313/en/archives" title="📈 归档">
+                    <span>📈 归档</span>
+                    
+                </a>
+            
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main page">
+<article class="post-single">
+    <div id="single-content">
+        <header class="post-header">
+            <div class="breadcrumbs"><a href="http://localhost:1313/en/">主页</a>&nbsp;»&nbsp;<a href="http://localhost:1313/en/posts/">📚 文章</a>&nbsp;»&nbsp;<a href="http://localhost:1313/en/posts/tech/">👨🏻‍💻 技术</a></div>
+            <h1 class="post-title">
+                Docker | 安装与运行
+            </h1>
+            <div class="post-description">
+                本文介绍一下Docker最基本的安装和使用命令
+            </div>
+            <div class="post-meta">创建: 2020-06-08 | 更新: 2024-02-29 | 作者:Jeason
+
+
+
+
+                
+                <span id="busuanzi_container_page_pv">
+                    &nbsp;|&nbsp;访问:&nbsp;<span id="busuanzi_value_page_pv"></span>
+                </span>
+
+</div>
+        </header> <aside id="toc-container" class="toc-container wide">
+    <div class="toc">
+        <details  open>
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">文章目录</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#%e8%83%8c%e6%99%af" aria-label="背景">背景</a><ul>
+                        
+                <li>
+                    <a href="#docker%e7%9a%84%e5%ba%94%e7%94%a8%e5%9c%ba%e6%99%af" aria-label="Docker的应用场景">Docker的应用场景</a></li></ul>
+                </li>
+                <li>
+                    <a href="#docker-%e5%ae%89%e8%a3%85" aria-label="docker 安装">docker 安装</a></li>
+                <li>
+                    <a href="#hello-world" aria-label="Hello world">Hello world</a></li>
+                <li>
+                    <a href="#%e4%ba%a4%e4%ba%92%e8%bf%90%e8%a1%8c" aria-label="交互运行">交互运行</a></li>
+                <li>
+                    <a href="#%e5%90%8e%e5%8f%b0%e8%bf%90%e8%a1%8c" aria-label="后台运行">后台运行</a></li>
+                <li>
+                    <a href="#docker-%e7%94%a8%e6%88%b7" aria-label="docker 用户">docker 用户</a></li>
+                <li>
+                    <a href="#%e5%9f%ba%e6%9c%ac%e6%a6%82%e5%bf%b5" aria-label="基本概念">基本概念</a>
+                </li>
+            </ul>
+        </div>
+        </details>
+    </div>
+</aside>
+<script>
+    let activeElement;
+    let elements;
+    window.addEventListener('DOMContentLoaded', function (event) {
+        checkTocPosition();
+
+        elements = document.querySelectorAll('h1[id],h2[id],h3[id],h4[id],h5[id],h6[id]');
+        
+        activeElement = elements[0];
+        const id = encodeURI(activeElement.getAttribute('id')).toLowerCase();
+        document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+    }, false);
+
+    window.addEventListener('resize', function(event) {
+        checkTocPosition();
+    }, false);
+
+    window.addEventListener('scroll', () => {
+        
+        activeElement = Array.from(elements).find((element) => {
+            if ((getOffsetTop(element) - window.pageYOffset) > 0 &&
+                (getOffsetTop(element) - window.pageYOffset) < window.innerHeight/2) {
+                return element;
+            }
+        }) || activeElement
+
+        elements.forEach(element => {
+            const id = encodeURI(element.getAttribute('id')).toLowerCase();
+            if (element === activeElement){
+                document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+            } else {
+                document.querySelector(`.inner ul li a[href="#${id}"]`).classList.remove('active');
+            }
+        })
+    }, false);
+
+    const main = parseInt(getComputedStyle(document.body).getPropertyValue('--article-width'), 10);
+    const toc = parseInt(getComputedStyle(document.body).getPropertyValue('--toc-width'), 10);
+    const gap = parseInt(getComputedStyle(document.body).getPropertyValue('--gap'), 10);
+
+    function checkTocPosition() {
+        const width = document.body.scrollWidth;
+        if (width - main - (toc * 2) - (gap * 4) > 0) {
+            document.getElementById("toc-container").classList.add("wide");
+        } else {
+            document.getElementById("toc-container").classList.remove("wide");
+        }
+    }
+
+    function getOffsetTop(element) {
+        if (!element.getClientRects().length) {
+            return 0;
+        }
+        let rect = element.getBoundingClientRect();
+        let win = element.ownerDocument.defaultView;
+        return rect.top + win.pageYOffset;
+    }
+</script>
+        <div class="post-content"><h2 id="背景">背景<a hidden class="anchor" aria-hidden="true" href="#背景">#</a></h2>
+<p><strong>Docker</strong> 是一个开源的应用容器引擎，基于 <strong>Go 语言</strong> 并遵从 <code>Apache2.0</code> 协议开源。</p>
+<p><strong>Docker</strong> 可以让开发者打包他们的应用以及依赖包到一个轻量级、可移植的容器中，然后发布到任何流行的 Linux 机器上，也可以实现虚拟化。</p>
+<h3 id="docker的应用场景">Docker的应用场景<a hidden class="anchor" aria-hidden="true" href="#docker的应用场景">#</a></h3>
+<ul>
+<li>Web 应用的自动化打包和发布。</li>
+<li>自动化测试和持续集成、发布。</li>
+<li>在服务型环境中部署和调整数据库或其他的后台应用。</li>
+<li>从头编译或者扩展现有的 OpenShift 或 Cloud Foundry 平台来搭建自己的 PaaS 环境。</li>
+</ul>
+<h2 id="docker-安装">docker 安装<a hidden class="anchor" aria-hidden="true" href="#docker-安装">#</a></h2>
+<p><code>Docker</code> 的旧版本被称为 <code>docker</code>，<code>docker.io</code> 或 <code>docker-engine</code> 。如果已安装，请卸载它们：</p>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>sudo apt-get remove docker docker-engine docker.io containerd runc
+</span></span></code></pre></div><p>首先安装依赖:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>sudo apt-get install apt-transport-https ca-certificates curl gnupg2 software-properties-common
+</span></span></code></pre></div><p>添加信任 Docker 的 GPG 公钥:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+</span></span></code></pre></div><p>对于 amd64 架构的计算机，添加软件仓库:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>sudo add-apt-repository <span style="color:#f99b15">\
+</span></span></span><span style="display:flex;"><span><span style="color:#f99b15"></span>   <span style="color:#48b685">&#34;deb [arch=amd64] https://mirrors.tuna.tsinghua.edu.cn/docker-ce/linux/ubuntu \
+</span></span></span><span style="display:flex;"><span><span style="color:#48b685">   </span><span style="color:#815ba4">$(</span>lsb_release -cs<span style="color:#815ba4">)</span><span style="color:#48b685"> \
+</span></span></span><span style="display:flex;"><span><span style="color:#48b685">   stable&#34;</span>
+</span></span></code></pre></div><p>最后安装</p>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>sudo apt-get update
+</span></span><span style="display:flex;"><span>sudo apt-get install docker-ce
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>docker --version
+</span></span><span style="display:flex;"><span><span style="color:#776e71">## Docker version 19.03.11, build 42e35e61f3</span>
+</span></span></code></pre></div><h2 id="hello-world">Hello world<a hidden class="anchor" aria-hidden="true" href="#hello-world">#</a></h2>
+<p><code>Docker</code> 允许你在容器内运行应用程序， 使用 <code>docker run</code> 命令来在容器内运行一个应用程序。</p>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>docker run ubuntu:15.10 /bin/echo <span style="color:#48b685">&#34;Hello world&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#776e71">## hello world</span>
+</span></span></code></pre></div><p>参数解析：</p>
+<ul>
+<li><strong>docker</strong> : Docker 的执行命令</li>
+<li><strong>run</strong> : 与<code>docker</code>命令组合运行一个特定的容器</li>
+<li><strong>ubuntu:15.10</strong> : 指定要运行的镜像，<code>Docker</code> 首先从本地主机上查找镜像是否存在，如果不存在，<code>Docker</code> 就会从镜像仓库 <code>Docker Hub</code> 下载公共镜像。</li>
+<li><strong>/bin/echo &ldquo;Hello world&rdquo;</strong> : 在启动的容器里执行的命令</li>
+</ul>
+<p>连起来就是：<code>Docker 以 ubuntu15.10 镜像创建一个新容器，然后在容器里执行 bin/echo &quot;Hello world&quot;，然后输出结果。</code></p>
+<h2 id="交互运行">交互运行<a hidden class="anchor" aria-hidden="true" href="#交互运行">#</a></h2>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>ubuntu@VM-0-11-ubuntu:~$ sudo docker run -i -t ubuntu:15.10 /bin/bash
+</span></span><span style="display:flex;"><span>root@2401df9ef044:/# 
+</span></span></code></pre></div><ul>
+<li><strong>-t</strong>: 在新容器内指定一个伪终端或终端。</li>
+<li><strong>-i</strong>: 允许你对容器内的标准输入进行交互。</li>
+</ul>
+<p>通过运行 <code>exit</code> 命令或者使用 <code>CTRL+D</code> 来退出容器。</p>
+<h2 id="后台运行">后台运行<a hidden class="anchor" aria-hidden="true" href="#后台运行">#</a></h2>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>ubuntu@VM-0-11-ubuntu:~$ sudo docker run -d ubuntu:15.10 /bin/sh -c <span style="color:#48b685">&#34;while true; do echo hello world; sleep 1; done&#34;</span>
+</span></span><span style="display:flex;"><span>9db349c972802d3a7627b27d3c9eb0c58888ad0c80a001b5d7e6f08813eed876
+</span></span></code></pre></div><p>输出的长字符串叫做容器 ID，对每个容器来说都是唯一的，我们可以通过容器 ID 来查看对应的容器发生了什么</p>
+<p>可以通过 <code>docker ps</code> 来查看容器的运行情况</p>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>ubuntu@VM-0-11-ubuntu:~$ sudo docker ps
+</span></span><span style="display:flex;"><span>CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS               NAMES
+</span></span><span style="display:flex;"><span>9db349c97280        ubuntu:15.10        <span style="color:#48b685">&#34;/bin/sh -c &#39;while t…&#34;</span>   <span style="color:#f99b15">11</span> seconds ago      Up <span style="color:#f99b15">10</span> seconds                           tender_black
+</span></span></code></pre></div><p>输出详情介绍:</p>
+<ul>
+<li><strong>CONTAINER ID</strong>: 容器 ID。</li>
+<li><strong>IMAGE</strong>: 使用的镜像。</li>
+<li><strong>COMMAND</strong>: 启动容器时运行的命令。</li>
+<li><strong>CREATED</strong>: 容器的创建时间。</li>
+<li><strong>STATUS</strong>: 容器状态。</li>
+<li><strong>PORTS</strong>: 容器的端口信息和使用的连接类型（tcp\udp）。</li>
+<li><strong>NAMES</strong>: 自动分配的容器名称。</li>
+</ul>
+<blockquote>
+<p>docker 运行有七种状态</p>
+<ul>
+<li>created（已创建）</li>
+<li>restarting（重启中）</li>
+<li>running（运行中）</li>
+<li>removing（迁移中）</li>
+<li>paused（暂停）</li>
+<li>exited（停止）</li>
+<li>dead（死亡）</li>
+</ul>
+</blockquote>
+<p>使用<code>docker logs</code>查看输出结果</p>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>ubuntu@VM-0-11-ubuntu:~$ sudo docker logs tender_black
+</span></span><span style="display:flex;"><span>hello world
+</span></span></code></pre></div><p>使用<code>docker stop</code>停止容器</p>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>ubuntu@VM-0-11-ubuntu:~$ sudo docker stop tender_black
+</span></span><span style="display:flex;"><span>tender_black
+</span></span></code></pre></div><h2 id="docker-用户">docker 用户<a hidden class="anchor" aria-hidden="true" href="#docker-用户">#</a></h2>
+<p>docker进程使用Unix Socket而不是TCP端口。而默认情况下，Unix socket属于root用户，需要root权限才能访问。</p>
+<p>解决方案：</p>
+<ol>
+<li>使用sudo获取管理员权限，运行docker命令</li>
+<li>docker守护进程启动的时候，会默认赋予名字为docker的用户组读写Unix socket的权限，因此只要创建docker用户组，并将当前用户加入到docker用户组中，那么当前用户就有权限访问Unix socket了，进而也就可以执行docker相关命令
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>sudo groupadd docker     <span style="color:#776e71">#添加docker用户组</span>
+</span></span><span style="display:flex;"><span>sudo gpasswd -a <span style="color:#ef6155">$USER</span> docker     <span style="color:#776e71">#将登陆用户加入到docker用户组中</span>
+</span></span><span style="display:flex;"><span>newgrp docker     <span style="color:#776e71">#更新用户组</span>
+</span></span><span style="display:flex;"><span>docker ps    <span style="color:#776e71">#测试docker命令是否可以使用sudo正常使用</span>
+</span></span></code></pre></div></li>
+</ol>
+<h2 id="基本概念">基本概念<a hidden class="anchor" aria-hidden="true" href="#基本概念">#</a></h2>
+<ul>
+<li><strong>Docker 镜像</strong>（Image），就相当于是一个 root 文件系统。比如官方镜像 ubuntu:18.04 就包含了完整的一套 Ubuntu 18.04 最小系统的 root 文件系统。
+<blockquote>
+<p><strong>Docker 镜像</strong> 是一个特殊的文件系统，除了提供容器运行时所需的程序、库、资源、配置等文件外，还包含了一些为运行时准备的一些配置参数（如匿名卷、环境变量、用户等）。镜像<strong>不包含</strong>任何动态数据，其内容在构建之后也不会被改变。</p>
+</blockquote>
+</li>
+<li><strong>容器</strong>（Container）是镜像运行时的实体。容器可以被创建、启动、停止、删除、暂停等。</li>
+<li><strong>仓库</strong>（Repository）是用于储存镜像的地址。镜像构建完成后，可以很容易的在当前宿主机上运行，但是，如果需要在其它服务器上使用这个镜像，我们就需要一个集中的存储、分发镜像的服务，<a href="">Docker Registry</a> 就是这样的服务。一个 <strong>Docker Registry</strong> 中可以包含多个<strong>仓库</strong>（Repository）；每个仓库可以包含多个<strong>标签</strong>（Tag）；每个标签对应一个镜像。通常，一个仓库会包含同一个软件不同版本的镜像，而标签就常用于对应该软件的各个版本。我们可以通过 <code>&lt;仓库名&gt;:&lt;标签&gt;</code> 的格式来指定具体是这个软件哪个版本的镜像。如果不给出标签，将以<code>latest</code>作为默认标签。</li>
+</ul>
+
+
+        </div>
+
+        
+
+        <footer class="post-footer">
+            
+<nav class="paginav">
+  <a class="prev" href="http://localhost:1313/en/posts/read/r_stat/">
+    <span class="title">« 上一页</span>
+    <br>
+    <span>R 语言统计检验函数汇总</span>
+  </a>
+  <a class="next" href="http://localhost:1313/en/posts/tech/id_convert/">
+    <span class="title">下一页 »</span>
+    <br>
+    <span>基因ID转换相关知识</span>
+  </a>
+</nav>
+
+        </footer>
+    </div>
+
+
+
+<div>
+    <div class="pagination__title">
+        <span class="pagination__title-h" style="font-size: 20px;">💬评论</span>
+        <hr />
+    </div>
+
+    <div id="tcomment"></div>
+
+    <script src="https://cdn.staticfile.org/twikoo/1.6.15/twikoo.all.min.js">
+    </script>
+    
+
+    
+
+    <script>
+        twikoo.init({
+            envId: "https://twikoo.lvbibir.cn/", 
+            el: "#tcomment",
+            lang: 'zh-CN',
+            
+            path: window.TWIKOO_MAGIC_PATH||window.location.pathname,
+            
+            
+            
+            
+            
+            
+            
+        });
+    </script>
+
+</div>
+</article>
+</main>
+
+
+<footer class="footer">
+
+    <a href="https://gohugo.io/" target="_blank">
+        
+        <img style="display: unset;" src="https://image.lvbibir.cn/blog/frame-hugo-blue.svg">
+    </a>
+    <a href="https://github.com/adityatelange/hugo-PaperMod" target="_blank">
+        
+        <img style="display: unset;" src="https://image.lvbibir.cn/blog/theme-papermod-lightgrey.svg">
+    </a>
+
+    <br>
+
+    <span id="runtime_span"></span>
+    <script
+        type="text/javascript">function show_runtime() { window.setTimeout("show_runtime()", 1000); X = new Date("7/13/2021 1:00:00"); Y = new Date(); T = (Y.getTime() - X.getTime()); M = 24 * 60 * 60 * 1000; a = T / M; A = Math.floor(a); b = (a - A) * 24; B = Math.floor(b); c = (b - B) * 60; C = Math.floor((b - B) * 60); D = Math.floor((c - C) * 60); runtime_span.innerHTML = "网站已运行" + A + "天" + B + "小时"} show_runtime();</script>
+    |
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span id="busuanzi_container">
+        
+        总访客数:  <span id="busuanzi_value_site_uv"></span>
+        |
+        总访问量:  <span id="busuanzi_value_site_pv"></span>
+    </span>
+
+    <br>
+    <span>
+        Copyright
+        &copy;
+        2021-2024
+        <a href="http://localhost:1313/en/" style="border-bottom:1px solid">Jeason&#39;s Blog</a>
+    </span>
+
+    
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <span class="topInner">
+        <svg class="topSvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+            <path d="M12 6H0l6-6z" />
+        </svg>
+        <span id="read_progress"></span>
+    </span>
+</a>
+
+<script>
+    document.addEventListener('scroll', function (e) {
+        const readProgress = document.getElementById("read_progress");
+        const scrollHeight = document.documentElement.scrollHeight;
+        const clientHeight = document.documentElement.clientHeight;
+        const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        
+        readProgress.innerText = ((scrollTop / (scrollHeight - clientHeight)).toFixed(2) * 100).toFixed(0);
+    })
+</script>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    let mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 400 || document.documentElement.scrollTop > 400) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+
+
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerText = '📄复制';
+
+        function copyingDone() {
+            copybutton.innerText = '👌🏻已复制!';
+            setTimeout(() => {
+                copybutton.innerText = '📄复制';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) {
+            }
+            ;
+            selection.removeRange(range);
+        });
+
+        let language = codeblock.className.replaceAll("language-", "")
+        let macTool = document.createElement("div")
+        let macTool1 = document.createElement("div")
+        let macTool2 = document.createElement("div")
+        let macTool3 = document.createElement("div")
+        let languageType = document.createElement("div")
+        languageType.innerText = language
+        macTool.setAttribute('class', 'mac-tool')
+        macTool1.setAttribute('class', 'mac bb1')
+        macTool2.setAttribute('class', 'mac bb2')
+        macTool3.setAttribute('class', 'mac bb3')
+        languageType.setAttribute('class', 'language-type')
+        macTool.appendChild(macTool1)
+        macTool.appendChild(macTool2)
+        macTool.appendChild(macTool3)
+        macTool.appendChild(languageType)
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+            container.appendChild(macTool)
+        } else if (container.parentNode.firstChild === container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName === "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+            container.appendChild(macTool)
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+            container.appendChild(macTool)
+        }
+    });
+</script>
+
+</body>
+
+</html>
